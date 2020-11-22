@@ -1,0 +1,61 @@
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class Login extends StatefulWidget {
+  static String id = 'login';
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+
+  String username;
+  String password;
+  final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
+
+  void dataCheck() async {
+    final userData = await _firestore.collection('users').doc(username).get();
+    print(userData.data());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        child: Column(
+          children: [
+            Text('Enter Username'),
+            TextField(
+              onChanged: (value){
+                username = value;
+              },
+            ),
+            Text('Enter Password'),
+            TextField(
+              onChanged: (value){
+                password = value;
+              },
+            ),
+            FlatButton(
+              child: Text('Login'),
+              onPressed: () async {
+                try{
+                  final newUser = await _auth.signInWithEmailAndPassword(email: username, password: password);
+                  if(newUser != null){
+                    print('Login Successful');
+                    dataCheck();
+                  }
+                }
+                catch(e){
+                  print(e);
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
