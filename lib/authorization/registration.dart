@@ -10,7 +10,7 @@ class Registration extends StatefulWidget {
 
 class _RegistrationState extends State<Registration> {
 
-  String username;
+  String emailAddress;
   String password;
   final _auth = FirebaseAuth.instance;
 
@@ -23,7 +23,7 @@ class _RegistrationState extends State<Registration> {
             Text('Enter Username'),
             TextField(
               onChanged: (value){
-                username = value;
+                emailAddress = value;
               },
             ),
             Text('Enter Password'),
@@ -36,7 +36,7 @@ class _RegistrationState extends State<Registration> {
               child: Text('Register'),
               onPressed: () async {
                 try{
-                  final newUser = await _auth.createUserWithEmailAndPassword(email: username, password: password);
+                  final newUser = await _auth.createUserWithEmailAndPassword(email: emailAddress, password: password);
                   if(newUser != null){
                     Navigator.pushNamed(context, EnterDetails.id);
                   }

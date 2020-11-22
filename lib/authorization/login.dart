@@ -10,13 +10,13 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
-  String username;
+  String emailAddress;
   String password;
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
 
   void dataCheck() async {
-    final userData = await _firestore.collection('users').doc(username).get();
+    final userData = await _firestore.collection('users').doc(emailAddress).get();
     print(userData.data());
   }
 
@@ -29,7 +29,7 @@ class _LoginState extends State<Login> {
             Text('Enter Username'),
             TextField(
               onChanged: (value){
-                username = value;
+                emailAddress = value;
               },
             ),
             Text('Enter Password'),
@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
               child: Text('Login'),
               onPressed: () async {
                 try{
-                  final newUser = await _auth.signInWithEmailAndPassword(email: username, password: password);
+                  final newUser = await _auth.signInWithEmailAndPassword(email: emailAddress, password: password);
                   if(newUser != null){
                     print('Login Successful');
                     dataCheck();
