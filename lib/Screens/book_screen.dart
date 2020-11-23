@@ -3,14 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-enum Status{
-  available,
-  unavailable,
-}
-
-Status currentStatus;
-
-
 class BookScreen extends StatefulWidget {
   BookScreen({this.bookContent});
   final bookContent;
@@ -24,6 +16,7 @@ class _BookScreenState extends State<BookScreen> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   String emailAddress;
+  bool isAvailable;
 
 
   void sendApplication(){
@@ -86,7 +79,7 @@ class _BookScreenState extends State<BookScreen> {
   void initState() {
     super.initState();
 
-    currentStatus = widget.bookContent['Total Quantity'] == widget.bookContent['Issued Quantity'] ? Status.unavailable : Status.available;
+    isAvailable = widget.bookContent['Total Quantity'] == widget.bookContent['Issued Quantity'];
 
     try{
       final user = _auth.currentUser;
@@ -111,8 +104,8 @@ class _BookScreenState extends State<BookScreen> {
             Text('${widget.bookContent['Issued Quantity']}'),
             Text('${widget.bookContent['Total Quantity']}'),
             FlatButton(
-              onPressed: currentStatus == Status.available ? checkIssued : (){},
-              child: currentStatus == Status.available ? Text('Issue') : Text('Not Available'),
+              onPressed: isAvailable ? checkIssued : (){},
+              child: isAvailable ? Text('Issue') : Text('Not Available'),
             ),
           ],
         ),
