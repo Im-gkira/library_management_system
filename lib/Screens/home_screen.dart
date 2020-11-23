@@ -22,16 +22,16 @@ class _HomeScreenState extends State<HomeScreen> {
   void fetchData() async {
     try{
       final userData = await _firestore.collection('users').doc(emailAddress).get();
-      print(userData.data());
+      // print(userData.data());
 
       final bookData = await _firestore.collection('issued books').where('Borrower',isEqualTo: emailAddress).get();
       for(var data in bookData.docs){
-        print(data.data());
+        // print(data.data());
       }
 
       final applicationData = await _firestore.collection('applications').where('Borrower',isEqualTo: emailAddress).get();
       for(var appData in applicationData.docs){
-        print(appData.data());
+        // print(appData.data());
       }
 
     }catch(e){

@@ -19,10 +19,10 @@ class _SearchScreenState extends State<SearchScreen> {
     try{
       final bookData = await _firestore.collection('books').where('Book Name', isEqualTo: bookName).get();
       if(bookData.docs.isEmpty){
-        print('Book Not Found');
+        // print('Book Not Found');
       }
       for(var book in bookData.docs) {
-        print(book.data());
+        // print(book.data());
         var bookContent = book.data();
         setState(() {
           bookWidgetList.add(BookWidget(bookContent: bookContent));
