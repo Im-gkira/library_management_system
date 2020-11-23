@@ -27,7 +27,10 @@ class _BookScreenState extends State<BookScreen> {
 
 
   void sendApplication(){
-    _firestore.collection('applications').doc(emailAddress).set({
+    String applicationId;
+    applicationId = DateTime.now().millisecondsSinceEpoch.toString()+widget.bookContent['Book Code'];
+    print(applicationId);
+    _firestore.collection('applications').doc(applicationId).set({
       'Book Code': widget.bookContent['Book Code'],
       'Borrower': emailAddress,
       'Application Date': DateTime.now(),
@@ -36,10 +39,10 @@ class _BookScreenState extends State<BookScreen> {
 
 
   void checkIssued (){
-    var usdKey = widget.bookContent['Borrower'].keys.firstWhere(
+    var isIssued = widget.bookContent['Borrower'].keys.firstWhere(
             (k) => widget.bookContent['Borrower'][k] == emailAddress, orElse: () => null);
-    print(usdKey);
-    if(usdKey != null){
+    print(isIssued);
+    if(isIssued != null){
       print('Already Issued');
       print(widget.bookContent['Borrower']);
     }

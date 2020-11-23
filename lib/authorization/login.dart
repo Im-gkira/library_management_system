@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:library_management_system/search_screen.dart';
+import 'package:library_management_system/home_screen.dart';
 
 class Login extends StatefulWidget {
   static String id = 'login';
@@ -46,7 +46,7 @@ class _LoginState extends State<Login> {
                   final newUser = await _auth.signInWithEmailAndPassword(email: emailAddress, password: password);
                   if(newUser != null){
                     print('Login Successful');
-                    Navigator.pushNamed(context, SearchScreen.id);
+                    Navigator.pushNamed(context, HomeScreen.id);
                   }
                 }
                 catch(e){

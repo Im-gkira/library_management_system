@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:library_management_system/home_screen.dart';
 
 class EnterDetails extends StatefulWidget {
   static String id = 'enter_details';
@@ -75,7 +76,7 @@ class _EnterDetailsState extends State<EnterDetails> {
                     'Email Id': emailAddress,
                     'Issued Books': issuedBooks,
                   });
-                  Navigator.pop(context);
+                  Navigator.pushNamed(context, HomeScreen.id);
                 }
                 catch(e){
                   print(e);
