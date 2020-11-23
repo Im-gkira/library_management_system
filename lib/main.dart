@@ -3,9 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:library_management_system/authorization/registration.dart';
 import 'package:library_management_system/authorization/login.dart';
 import 'package:library_management_system/authorization/enter_details.dart';
-import 'package:library_management_system/welcome_screen.dart';
-import 'package:library_management_system/search_screen.dart';
-import 'package:library_management_system/home_screen.dart';
+import 'package:library_management_system/Screens/welcome_screen.dart';
+import 'package:library_management_system/Screens/search_screen.dart';
+import 'package:library_management_system/Screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
