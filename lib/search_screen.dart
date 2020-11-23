@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:library_management_system/book_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   static String id = 'search_screen';
@@ -22,9 +23,9 @@ class _SearchScreenState extends State<SearchScreen> {
       }
       for(var book in bookData.docs) {
         print(book.data());
-        var bookCode = book.data()['Book Code'];
+        var bookContent = book.data();
         setState(() {
-          bookWidgetList.add(BookWidget(bookCode: bookCode,bookName: bookName,));
+          bookWidgetList.add(BookWidget(bookContent: bookContent));
         });
       }
     }catch(e){
@@ -64,18 +65,24 @@ class _SearchScreenState extends State<SearchScreen> {
 
 class BookWidget extends StatelessWidget {
 
-  BookWidget({this.bookCode,this.bookName});
+  BookWidget({this.bookContent});
 
-  final String bookCode;
-  final String bookName;
+  final bookContent;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: (){
-          print('$bookName with code $bookCode');
+          //Navigator.pushNamed(context,BookScreen.id,arguments: bookContent);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context){
+                    return BookScreen(bookContent: bookContent);}
+              ),
+          );
         },
-        child: Text('$bookName with code $bookCode'),
+        child: Text('${bookContent['Book Name']} with code ${bookContent['Book Code']}'),
     );
   }
 }
