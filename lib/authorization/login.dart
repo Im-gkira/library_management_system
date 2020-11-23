@@ -14,6 +14,7 @@ class _LoginState extends State<Login> {
 
   String emailAddress;
   String password;
+  bool isAdmin;
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
 
@@ -23,7 +24,6 @@ class _LoginState extends State<Login> {
   }
 
   void adminCheck() async {
-
   }
 
   @override

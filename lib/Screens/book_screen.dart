@@ -31,7 +31,7 @@ class _BookScreenState extends State<BookScreen> {
   }
 
 
-  void checkIssued (){
+  void checkIssued () {
     var isIssued = widget.bookContent['Borrower'].keys.firstWhere(
             (k) => widget.bookContent['Borrower'][k] == emailAddress, orElse: () => null);
     print(isIssued);
@@ -40,9 +40,22 @@ class _BookScreenState extends State<BookScreen> {
       print(widget.bookContent['Borrower']);
     }
     else{
-      print('Issuing Request Send');
-      sendApplication();
+      checkApplied();
     }
+  }
+
+  void checkApplied() async {
+    final userData = await _firestore.collection('users').doc(emailAddress).get();
+    print(userData.data());
+
+    // if(userData.data()['Applied']['${widget.bookContent['Book Code']}'] != null){
+    //   print('Already Applied');
+    // }
+    // else{
+    //   print(userData.data());
+    //   print('Issuing Request Send');
+    //   sendApplication();
+    // }
   }
 
 
@@ -85,7 +98,11 @@ class _BookScreenState extends State<BookScreen> {
       final user = _auth.currentUser;
       if(user != null){
         emailAddress = user.email;
+        print(emailAddress);
       }
+      checkApplied();
+      print('hi');
+
     }catch(e){
       print(e);
     }
