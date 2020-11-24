@@ -28,16 +28,18 @@ class _BookScreenState extends State<BookScreen> {
       'Borrower': emailAddress,
       'Application Date': DateTime.now(),
     });
+    _firestore.collection('users').doc(emailAddress).update({
+      'Applied.${widget.bookContent['Book Code']}': DateTime.now(),
+    });
   }
 
 
   void checkIssued () {
     var isIssued = widget.bookContent['Borrower'].keys.firstWhere(
             (k) => widget.bookContent['Borrower'][k] == emailAddress, orElse: () => null);
-    print(isIssued);
     if(isIssued != null){
-      print('Already Issued');
-      print(widget.bookContent['Borrower']);
+      // print('Already Issued');
+      // print(widget.bookContent['Borrower']);
     }
     else{
       checkApplied();
@@ -50,7 +52,6 @@ class _BookScreenState extends State<BookScreen> {
       // print('Already Applied');
     }
     else{
-      print(userData.data());
       print('Issuing Request Send');
       sendApplication();
     }
@@ -90,7 +91,7 @@ class _BookScreenState extends State<BookScreen> {
   void initState() {
     super.initState();
 
-    isAvailable = !(widget.bookContent['Total Quantity'] > widget.bookContent['Issued Quantity']);
+    isAvailable = widget.bookContent['Total Quantity'] > widget.bookContent['Issued Quantity'];
 
     try{
       final user = _auth.currentUser;

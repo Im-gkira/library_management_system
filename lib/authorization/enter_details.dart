@@ -19,6 +19,7 @@ class _EnterDetailsState extends State<EnterDetails> {
   String rollNumber;
   String branch;
   Map issuedBooks= {};
+  Map applied = {};
 
   @override
 
@@ -75,6 +76,7 @@ class _EnterDetailsState extends State<EnterDetails> {
                     'Roll Number': rollNumber,
                     'Email Id': emailAddress,
                     'Issued Books': issuedBooks,
+                    'Applied': applied,
                   });
                   Navigator.pushNamed(context, HomeScreen.id);
                 }

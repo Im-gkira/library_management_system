@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'file:///C:/Users/Keshav/AndroidStudioProjects/library_management_system/lib/Screens/book_screen.dart';
+import 'package:library_management_system/Screens/book_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   static String id = 'search_screen';

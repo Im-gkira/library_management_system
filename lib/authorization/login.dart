@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:library_management_system/Screens/home_screen.dart';
-// import 'package:library_management_system/Screens/admin_screen.dart';
-import 'package:library_management_system/Screens/search_screen.dart';
+import 'package:library_management_system/Screens/admin_screen.dart';
+import 'package:library_management_system/Screens/home_screen.dart';
+// import 'package:library_management_system/Screens/search_screen.dart';
 
 class Login extends StatefulWidget {
   static String id = 'login';
@@ -15,7 +15,7 @@ class _LoginState extends State<Login> {
 
   String emailAddress;
   String password;
-  bool isAdmin;
+  bool isAdmin = true;
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
 
@@ -25,6 +25,10 @@ class _LoginState extends State<Login> {
   }
 
   void adminCheck() async {
+    final userData = await _firestore.collection('admin').doc(emailAddress).get();
+    if (userData == null){
+      isAdmin = false;
+    }
   }
 
   @override
@@ -52,7 +56,10 @@ class _LoginState extends State<Login> {
                   final newUser = await _auth.signInWithEmailAndPassword(email: emailAddress, password: password);
                   if(newUser != null){
                     // print('Login Successful');
-                    Navigator.pushNamed(context, SearchScreen.id);
+                    adminCheck();
+                    Navigator.pushNamed(
+                        context,
+                        isAdmin ? AdminScreen.id : HomeScreen.id);
                   }
                 }
                 catch(e){
