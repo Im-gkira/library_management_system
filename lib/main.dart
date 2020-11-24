@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:library_management_system/Screens/application_screen.dart';
 import 'package:library_management_system/authorization/registration.dart';
 import 'package:library_management_system/authorization/login.dart';
 import 'package:library_management_system/authorization/enter_details.dart';
@@ -21,7 +22,8 @@ void main() async {
         EnterDetails.id: (context) => EnterDetails(),
         SearchScreen.id: (context) => SearchScreen(),
         HomeScreen.id: (context) => HomeScreen(),
-        AdminScreen.id: (context) => AdminScreen()
+        AdminScreen.id: (context) => AdminScreen(),
+        ApplicationScreen.id: (context) => ApplicationScreen(),
       }
     ),
   );

@@ -19,14 +19,15 @@ class _BookScreenState extends State<BookScreen> {
   bool isAvailable;
 
 
-  void sendApplication(){
+  void sendApplication() {
     String applicationId;
-    applicationId = DateTime.now().millisecondsSinceEpoch.toString()+widget.bookContent['Book Code'];
+    applicationId = emailAddress+widget.bookContent['Book Code'];
     print(applicationId);
     _firestore.collection('applications').doc(applicationId).set({
       'Book Code': widget.bookContent['Book Code'],
       'Borrower': emailAddress,
       'Application Date': DateTime.now(),
+      'Book Name': widget.bookContent['Book Name'],
     });
     _firestore.collection('users').doc(emailAddress).update({
       'Applied.${widget.bookContent['Book Code']}': DateTime.now(),
@@ -38,7 +39,7 @@ class _BookScreenState extends State<BookScreen> {
     var isIssued = widget.bookContent['Borrower'].keys.firstWhere(
             (k) => widget.bookContent['Borrower'][k] == emailAddress, orElse: () => null);
     if(isIssued != null){
-      // print('Already Issued');
+      print('Already Issued');
       // print(widget.bookContent['Borrower']);
     }
     else{
@@ -49,7 +50,7 @@ class _BookScreenState extends State<BookScreen> {
   void checkApplied() async {
     final userData = await _firestore.collection('users').doc(emailAddress).get();
     if(userData.data()['Applied']['${widget.bookContent['Book Code']}'] != null){
-      // print('Already Applied');
+      print('Already Applied');
     }
     else{
       print('Issuing Request Send');
@@ -57,35 +58,6 @@ class _BookScreenState extends State<BookScreen> {
     }
   }
 
-
-  // void getIssued() async {
-  //   try{
-  //     var uniqueBookCode = '10012';
-  //     int newQuantity = widget.bookContent['Issued Quantity'] + 1;
-  //     var dueDate = DateTime.parse("2021-01-01 11:59:59Z");
-  //     print(dueDate);
-  //
-  //     _firestore.collection('users').doc(emailAddress).update({
-  //       'Issued Books.$uniqueBookCode': dueDate,
-  //     });
-  //
-  //
-  //     _firestore.collection('books').doc(widget.bookContent['Book Code']).update({
-  //       'Issued Quantity': newQuantity,
-  //       'Borrower.$uniqueBookCode': emailAddress,
-  //     });
-  //
-  //     _firestore.collection('issued books').doc(uniqueBookCode).set({
-  //       'Book Code': widget.bookContent['Book Code'],
-  //       'Unique Book Code': uniqueBookCode,
-  //       'Borrower': emailAddress,
-  //       'Due Date': dueDate,
-  //     });
-  //
-  //   }catch(e){
-  //     print(e);
-  //   }
-  // }
 
   @override
   void initState() {
