@@ -13,29 +13,44 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  new GlobalKey<RefreshIndicatorState>();
+
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   DateTime currentBackPressTime;
   String emailAddress;
   List issuedBooks = [];
+  var fine;
 
-  void fetchData() async {
+  void fineCalculated(var data){
+    var due = data['Due Date'].toDate();
+    var cur = DateTime.now();
+    fine = cur.difference(due).inDays;
+    if(fine <= 0){
+      fine = 0;
+    }
+    print(fine);
+  }
+
+  Future<void> fetchData() async {
     try{
       final userData = await _firestore.collection('users').doc(emailAddress).get();
-      // print(userData.data());
+      print(userData.data());
 
       final bookData = await _firestore.collection('issued books').where('Borrower',isEqualTo: emailAddress).get();
       for(var data in bookData.docs){
-        // print(data.data());
+        print(data.data());
+        fineCalculated(data.data());
       }
 
       final applicationData = await _firestore.collection('applications').where('Borrower',isEqualTo: emailAddress).get();
       for(var appData in applicationData.docs){
-        // print(appData.data());
+        print(appData.data());
       }
 
     }catch(e){
-      print(e);
+      print('hi$e');
     }
   }
 
@@ -60,15 +75,19 @@ class _HomeScreenState extends State<HomeScreen> {
       onWillPop: onWillPop,
       child: Scaffold(
         body: Container(
-          child:Column(
-            children: [
-              FlatButton(
-                child: Text('Search'),
-                onPressed: (){
-                Navigator.pushNamed(context, SearchScreen.id);
-                },
-              ),
-            ],
+          child:RefreshIndicator(
+            key: _refreshIndicatorKey,
+            onRefresh: fetchData,
+            child: ListView(
+              children: [
+                FlatButton(
+                  child: Text('Search'),
+                  onPressed: (){
+                  Navigator.pushNamed(context, SearchScreen.id);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
