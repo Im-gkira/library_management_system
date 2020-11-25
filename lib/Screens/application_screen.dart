@@ -152,7 +152,7 @@ class _AppWidgetState extends State<AppWidget> {
           isScrollControlled: true,
         );
       },
-      child: Text('${widget.appContent['Borrower']} Applied for ${widget.appContent['Borrower']}'),
+      child: Text('${widget.appContent['Borrower']} Applied for ${widget.appContent['Book Name']}'),
     );
   }
 }

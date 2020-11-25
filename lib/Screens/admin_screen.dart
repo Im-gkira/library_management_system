@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:library_management_system/Screens/application_screen.dart';
 import 'package:library_management_system/Screens/search_screen.dart';
+import 'package:library_management_system/Screens/issued_books.dart';
 
 
 class AdminScreen extends StatefulWidget {
@@ -29,6 +30,12 @@ class _AdminScreenState extends State<AdminScreen> {
               child: Text('Search'),
               onPressed: (){
                 Navigator.pushNamed(context,SearchScreen.id);
+              },
+            ),
+            FlatButton(
+              child: Text('Issued Books'),
+              onPressed: (){
+                Navigator.pushNamed(context,IssuedBooks.id);
               },
             ),
           ],

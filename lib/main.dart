@@ -8,6 +8,7 @@ import 'package:library_management_system/Screens/welcome_screen.dart';
 import 'package:library_management_system/Screens/search_screen.dart';
 import 'package:library_management_system/Screens/home_screen.dart';
 import 'package:library_management_system/Screens/admin_screen.dart';
+import 'package:library_management_system/Screens/issued_books.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,7 @@ void main() async {
         HomeScreen.id: (context) => HomeScreen(),
         AdminScreen.id: (context) => AdminScreen(),
         ApplicationScreen.id: (context) => ApplicationScreen(),
+        IssuedBooks.id: (context) => IssuedBooks(),
       }
     ),
   );
