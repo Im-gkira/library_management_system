@@ -5,7 +5,8 @@ import 'package:library_management_system/bottom_sheet.dart';
 
 var date;
 var uniqueBookCode;
-
+List<Widget> userInfoList = [];
+bool isAvailable;
 
 class ApplicationScreen extends StatefulWidget {
   static String id = 'application_screen';
@@ -68,6 +69,18 @@ class _AppWidgetState extends State<AppWidget> {
 
   final _firestore = FirebaseFirestore.instance;
 
+  Future userInfo() async {
+    var borrower = widget.appContent['Borrower'];
+    final userData = await _firestore.collection('users').doc(borrower).get();
+    setState(() {
+      userInfoList = [];
+      userInfoList.add(Text('${userData['First Name']} ${userData['Last Name']}'));
+      userInfoList.add(Text('${userData['Branch']}'));
+      userInfoList.add(Text('${userData['Roll Number']}'));
+    });
+  }
+
+
   void getIssued() async {
     try{
       var borrower = widget.appContent['Borrower'];
@@ -77,29 +90,37 @@ class _AppWidgetState extends State<AppWidget> {
       print(uniqueBookCode);
       print(date);
 
-      final bookContent = await _firestore.collection('books').doc(bookCode).get();
+      final issuedBookContent = await _firestore.collection('issued books').doc(uniqueBookCode).get();
+
+      if(issuedBookContent.data() != null){
+        print('Enter Unique Code');
+      }
+      else{
+        print('Success');
+        final bookContent = await _firestore.collection('books').doc(bookCode).get();
 
 
-      int newQuantity = bookContent['Issued Quantity'] + 1;
+        int newQuantity = bookContent['Issued Quantity'] + 1;
 
-      _firestore.collection('users').doc(borrower).update({
-        'Issued Books.$uniqueBookCode': dueDate,
-      });
+        _firestore.collection('users').doc(borrower).update({
+          'Issued Books.$uniqueBookCode': dueDate,
+        });
 
-      _firestore.collection('books').doc(bookCode).update({
-        'Issued Quantity': newQuantity,
-        'Borrower.$uniqueBookCode': borrower,
-      });
+        _firestore.collection('books').doc(bookCode).update({
+          'Issued Quantity': newQuantity,
+          'Borrower.$uniqueBookCode': borrower,
+        });
 
-      _firestore.collection('issued books').doc(uniqueBookCode).set({
-        'Book Code': bookCode,
-        'Unique Book Code': uniqueBookCode,
-        'Borrower': borrower,
-        'Due Date': dueDate,
-        'Book Name': bookName,
-      });
+        _firestore.collection('issued books').doc(uniqueBookCode).set({
+          'Book Code': bookCode,
+          'Unique Book Code': uniqueBookCode,
+          'Borrower': borrower,
+          'Due Date': dueDate,
+          'Book Name': bookName,
+        });
 
-      deleteApplication();
+        deleteApplication();
+      }
 
     }catch(e){
       print(e);
@@ -131,21 +152,36 @@ class _AppWidgetState extends State<AppWidget> {
     }
   }
 
+  void canIssue() async {
+    var bookCode = widget.appContent['Book Code'];
+    final bookContent = await _firestore.collection('books').doc(bookCode).get();
+
+    isAvailable = !(bookContent['Total Quantity'] == bookContent['Issued Quantity']);
+  }
+
+
 
   Widget buildBottomSheet(BuildContext context) {
     return SingleChildScrollView(
       child:Container(
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         color: Color(0xff757575),
-        child: BottomSheetContents(getIssued: getIssued,deleteApplication: deleteApplication,),
+        child: BottomSheetContents(getIssued: getIssued,deleteApplication: deleteApplication),
       ),
     );
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: (){
+      onLongPress: ()async {
+        canIssue();
+        await userInfo();
         showModalBottomSheet(
           context: context,
           builder: buildBottomSheet,

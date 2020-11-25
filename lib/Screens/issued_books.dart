@@ -81,10 +81,18 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
 
   final _firestore = FirebaseFirestore.instance;
   var fine;
+  List<Widget> userInfoList = [];
+
+  Future userInfo() async {
+    var borrower = widget.issuedBookContent['Borrower'];
+    final userData = await _firestore.collection('users').doc(borrower).get();
+    userInfoList.add(Text('${userData['First Name']} ${userData['Last Name']}'));
+    userInfoList.add(Text('${userData['Branch']}'));
+    userInfoList.add(Text('${userData['Roll Number']}'));
+  }
 
 
   void fineCalculated(){
-    // var due = DateTime.fromMicrosecondsSinceEpoch(widget.issuedBookContent['Due Date']);
     var due = widget.issuedBookContent['Due Date'].toDate();
     var cur = DateTime.now();
     fine = cur.difference(due).inDays;
@@ -147,6 +155,9 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
           ),
           child: Column(
             children: [
+              Column(
+                children: userInfoList,
+              ),
               Text('$fine'),
               FlatButton(
                 child: Text('Remove'),
@@ -162,7 +173,8 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: (){
+      onLongPress: ()async{
+        await userInfo();
         fineCalculated();
         showModalBottomSheet(
           context: context,

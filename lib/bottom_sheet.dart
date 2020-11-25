@@ -3,9 +3,10 @@ import 'package:library_management_system/Screens/application_screen.dart';
 
 class BottomSheetContents extends StatefulWidget {
 
-  BottomSheetContents({this.getIssued,this.deleteApplication});
+  BottomSheetContents({this.getIssued,this.deleteApplication,});
   final VoidCallback getIssued;
   final VoidCallback deleteApplication;
+
   @override
   _BottomSheetContentsState createState() => _BottomSheetContentsState();
 }
@@ -15,9 +16,11 @@ class _BottomSheetContentsState extends State<BottomSheetContents> {
 
   List<Widget> bottomSheetItems = [];
   void bottomSheetPhaseOne() {
-    bottomSheetItems = [];
+    print(isAvailable);
+    print(userInfoList);
+    bottomSheetItems = userInfoList;
     setState(() {
-      bottomSheetItems.add(FlatButton(onPressed: bottomSheetPhaseTwo, child: Text('Accept'),),);
+      bottomSheetItems.add(isAvailable ? FlatButton(onPressed: bottomSheetPhaseTwo, child: Text('Accept'),) : FlatButton(onPressed: (){}, child: Text('Not Available'),));
       bottomSheetItems.add(FlatButton(onPressed: widget.deleteApplication, child: Text('Reject'),),);
     });
   }
