@@ -14,7 +14,7 @@ class _LoginState extends State<Login> {
 
   String emailAddress;
   String password;
-  bool isAdmin;
+  bool isAdmin = true;
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
 
@@ -23,13 +23,12 @@ class _LoginState extends State<Login> {
     print(userData.data());
   }
 
-  void adminCheck() async {
+  Future adminCheck() async {
     final userData = await _firestore.collection('admin').doc(emailAddress).get();
     if (userData.data() == null){
-      isAdmin = false;
-    }
-    else{
-      isAdmin = true;
+      setState(() {
+        isAdmin = false;
+      });
     }
   }
 
@@ -58,7 +57,7 @@ class _LoginState extends State<Login> {
                   final newUser = await _auth.signInWithEmailAndPassword(email: emailAddress, password: password);
                   if(newUser != null){
                     // print('Login Successful');
-                    adminCheck();
+                    await adminCheck();
                     Navigator.pushNamed(
                         context,
                         isAdmin ? AdminScreen.id : HomeScreen.id);

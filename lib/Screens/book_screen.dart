@@ -17,7 +17,18 @@ class _BookScreenState extends State<BookScreen> {
   final _auth = FirebaseAuth.instance;
   String emailAddress;
   bool isAvailable;
+  bool isAdmin = true;
 
+  void adminCheck() async {
+    final userData = await _firestore.collection('admin').doc(emailAddress).get();
+    if (userData.data() == null){
+      setState(() {
+        isAdmin = false;
+      });
+    }
+    print(isAdmin);
+    print(userData.data());
+  }
 
   void sendApplication() {
     String applicationId;
@@ -64,12 +75,12 @@ class _BookScreenState extends State<BookScreen> {
     super.initState();
 
     isAvailable = widget.bookContent['Total Quantity'] > widget.bookContent['Issued Quantity'];
-
     try{
       final user = _auth.currentUser;
       if(user != null){
         emailAddress = user.email;
       }
+      adminCheck();
     }catch(e){
       print(e);
     }
@@ -88,7 +99,7 @@ class _BookScreenState extends State<BookScreen> {
             Text('${widget.bookContent['Issued Quantity']}'),
             Text('${widget.bookContent['Total Quantity']}'),
             FlatButton(
-              onPressed: isAvailable ? checkIssued : (){},
+              onPressed: isAdmin ? (){print('Admin');} : isAvailable ? checkIssued : (){print('UnAvailable');},
               child: isAvailable ? Text('Issue') : Text('Not Available'),
             ),
           ],
