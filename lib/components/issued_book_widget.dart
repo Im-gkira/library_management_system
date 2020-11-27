@@ -1,75 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class IssuedBooks extends StatefulWidget {
-  static String id = 'issued_books';
-  @override
-  _IssuedBooksState createState() => _IssuedBooksState();
-}
-
-class _IssuedBooksState extends State<IssuedBooks> {
-
-  final _firestore = FirebaseFirestore.instance;
-  List<Widget> issuedBookWidgetList = [];
-  var enteredCode;
-
-  void viewIssuedBooks() async {
-    var bookData = await _firestore.collection('issued books').orderBy('Due Date').get();
-    setState(() {
-      issuedBookWidgetList = [];
-      for(var apps in bookData.docs){
-        var issuedBookContent = apps.data();
-        issuedBookWidgetList.add(IssuedBookWidget(issuedBookContent: issuedBookContent,viewIssuedBooks: viewIssuedBooks,),);
-      }
-    });
-  }
-
-  void viewEnteredBook() async {
-    var bookData = await _firestore.collection('issued books').doc(enteredCode).get();
-    setState(() {
-      issuedBookWidgetList = [];
-      issuedBookWidgetList.add(IssuedBookWidget(issuedBookContent: bookData,viewIssuedBooks: viewEnteredBook,),);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: Column(
-          children: [
-            TextField(
-              onChanged: (value){
-                enteredCode = value;
-              },
-            ),
-            Row(
-              children: [
-                FlatButton(
-                  child: Text('View Issued Books'),
-                  onPressed: viewIssuedBooks,
-                ),
-                FlatButton(
-                  child: Text('Search The Particular Books'),
-                  onPressed: viewEnteredBook,
-                ),
-              ],
-            ),
-            Expanded(
-              child: ListView(
-                children: issuedBookWidgetList,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
+// This class build the widget for the issued books displayed and also brings up the bottom sheet.
 class IssuedBookWidget extends StatefulWidget {
 
   IssuedBookWidget({this.issuedBookContent,this.viewIssuedBooks});
+  // issuedBookContents contains the data of that particular issued book that is displayed.
+  // viewIssuedBooks is called whenever changes are mad to the issued books.
   final issuedBookContent;
   final Function viewIssuedBooks;
 
@@ -79,11 +16,18 @@ class IssuedBookWidget extends StatefulWidget {
 
 class _IssuedBookWidgetState extends State<IssuedBookWidget> {
 
+  // _firestore is Firebase Firestore instance.
+  // fine is calculated by the subtracting the due date from current date.
+  // userInfoList contains the details of the borrower.
   final _firestore = FirebaseFirestore.instance;
   var fine;
   List<Widget> userInfoList = [];
 
+  // This Function fetches the data of the particular document with the borrower's email address
+  // Then adds the data to userInfoList which was public in the application_screen.dart.
+  // The userInfoList is emptied each time this function runs.
   Future userInfo() async {
+    userInfoList = [];
     var borrower = widget.issuedBookContent['Borrower'];
     final userData = await _firestore.collection('users').doc(borrower).get();
     userInfoList.add(Text('${userData['First Name']} ${userData['Last Name']}'));
@@ -91,7 +35,9 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
     userInfoList.add(Text('${userData['Roll Number']}'));
   }
 
-
+  // This function calculated the due days of each books by subtracting the due date from the current days.
+  // If it is -ve it means that the book is returned in time hence the fine is rounded to zero.
+  // If It is +ve it means that the book is returned after the due and hence the no.of extra days are displayed.
   void fineCalculated(){
     var due = widget.issuedBookContent['Due Date'].toDate();
     var cur = DateTime.now();
@@ -101,6 +47,9 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
     }
   }
 
+  // This function deletes the issued book from the issued books collection and the issued map of users.
+  // It updates the issued quantity by subtracting one.
+  // It uses the uniqueBookCode to delete the users issued map entry.
   void deleteIssuedBook() async {
     try{
       var uniqueBookCode = widget.issuedBookContent['Unique Book Code'];
@@ -139,6 +88,7 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
   }
 
 
+  // This builds the bottom sheet/
   Widget buildBottomSheet(BuildContext context) {
     return SingleChildScrollView(
       child:Container(
@@ -174,6 +124,7 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: ()async{
+        // userInfo and fineCalculated run before the bottom sheet starts building.
         await userInfo();
         fineCalculated();
         showModalBottomSheet(

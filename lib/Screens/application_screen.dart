@@ -1,8 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:library_management_system/bottom_sheet.dart';
+import 'package:library_management_system/components/app_widget.dart';
 
+//This Page can be accessed by the admin only to approve the applications send by the users.
+
+// These variables are since they are accessed by the bottom_sheet.dart will solve this later using provider package.
+// date is the due date given the user.
+// uniqueBookCode is the unique code given by the admin to recognise the book.
+// userInfoList is the text widget list with the details of the user with the respective application.
+// isAvailable is a bool which allows the book to be issued if it it is true.
 var date;
 var uniqueBookCode;
 List<Widget> userInfoList = [];
@@ -17,9 +24,14 @@ class ApplicationScreen extends StatefulWidget {
 
 class _ApplicationScreenState extends State<ApplicationScreen> {
 
+  // _firestore is the Firebase Firestore instance.
+  // appWidgetList is the widget list of all applications.
   final _firestore = FirebaseFirestore.instance;
   List<Widget> appWidgetList = [];
 
+  // reviewApplications fetches all the applications from the applications collection.
+  // For every application a appWidget is created and added to appWidgetList.
+  // appWidgetList is emptied first whenever the function is called.
   void reviewApplications() async {
     var appData = await _firestore.collection('applications').orderBy('Application Date').get();
     setState(() {
@@ -53,144 +65,3 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
     );
   }
 }
-
-
-class AppWidget extends StatefulWidget {
-
-  AppWidget({this.appContent,this.reviewAgain});
-  final appContent;
-  final Function reviewAgain;
-
-  @override
-  _AppWidgetState createState() => _AppWidgetState();
-}
-
-class _AppWidgetState extends State<AppWidget> {
-
-  final _firestore = FirebaseFirestore.instance;
-
-  Future userInfo() async {
-    var borrower = widget.appContent['Borrower'];
-    final userData = await _firestore.collection('users').doc(borrower).get();
-    setState(() {
-      userInfoList = [];
-      userInfoList.add(Text('${userData['First Name']} ${userData['Last Name']}'));
-      userInfoList.add(Text('${userData['Branch']}'));
-      userInfoList.add(Text('${userData['Roll Number']}'));
-    });
-  }
-
-
-  void getIssued() async {
-    try{
-      var borrower = widget.appContent['Borrower'];
-      var bookCode = widget.appContent['Book Code'];
-      var bookName = widget.appContent['Book Name'];
-      var dueDate = DateTime.parse(date);
-      print(uniqueBookCode);
-      print(date);
-
-      final issuedBookContent = await _firestore.collection('issued books').doc(uniqueBookCode).get();
-
-      if(issuedBookContent.data() != null){
-        print('Enter Unique Code');
-      }
-      else{
-        print('Success');
-        final bookContent = await _firestore.collection('books').doc(bookCode).get();
-
-
-        int newQuantity = bookContent['Issued Quantity'] + 1;
-
-        _firestore.collection('users').doc(borrower).update({
-          'Issued Books.$uniqueBookCode': dueDate,
-        });
-
-        _firestore.collection('books').doc(bookCode).update({
-          'Issued Quantity': newQuantity,
-          'Borrower.$uniqueBookCode': borrower,
-        });
-
-        _firestore.collection('issued books').doc(uniqueBookCode).set({
-          'Book Code': bookCode,
-          'Unique Book Code': uniqueBookCode,
-          'Borrower': borrower,
-          'Due Date': dueDate,
-          'Book Name': bookName,
-        });
-
-        deleteApplication();
-      }
-
-    }catch(e){
-      print(e);
-    }
-  }
-
-  void deleteApplication() async {
-    try{
-      var borrower = widget.appContent['Borrower'];
-      var bookCode = widget.appContent['Book Code'];
-      Map applied = {};
-      var applicationId = borrower+bookCode;
-
-      final userData = await _firestore.collection('users').doc(borrower).get();
-      applied = userData.data()['Applied'];
-
-      applied.remove(bookCode);
-      _firestore.collection('users').doc(borrower).update({
-        'Applied': applied,
-      });
-
-      _firestore.collection('applications').doc(applicationId).delete();
-      Navigator.pop(context);
-      setState(() {
-        widget.reviewAgain();
-      });
-    }catch(e){
-      print(e);
-    }
-  }
-
-  void canIssue() async {
-    var bookCode = widget.appContent['Book Code'];
-    final bookContent = await _firestore.collection('books').doc(bookCode).get();
-
-    isAvailable = !(bookContent['Total Quantity'] == bookContent['Issued Quantity']);
-  }
-
-
-
-  Widget buildBottomSheet(BuildContext context) {
-    return SingleChildScrollView(
-      child:Container(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        color: Color(0xff757575),
-        child: BottomSheetContents(getIssued: getIssued,deleteApplication: deleteApplication),
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onLongPress: ()async {
-        canIssue();
-        await userInfo();
-        showModalBottomSheet(
-          context: context,
-          builder: buildBottomSheet,
-          isScrollControlled: true,
-        );
-      },
-      child: Text('${widget.appContent['Borrower']} Applied for ${widget.appContent['Book Name']}'),
-    );
-  }
-}
-
-
