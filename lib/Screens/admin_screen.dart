@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -85,27 +86,27 @@ class _AdminScreenState extends State<AdminScreen> {
           onItemSelected: (index) => setState(() {
             _currentIndex = index;
             _pageController.animateToPage(index,
-                duration: Duration(milliseconds: 300), curve: Curves.ease);
+                duration: Duration(milliseconds: 400), curve: Curves.ease);
           }),
           items: [
             BottomNavyBarItem(
               icon: Icon(Icons.apps),
-              title: Text('Home'),
+              title: AutoSizeText('Home'),
               activeColor: Colors.red,
             ),
             BottomNavyBarItem(
                 icon: Icon(Icons.people),
-                title: Text('Users'),
+                title: AutoSizeText('Users'),
                 activeColor: Colors.purpleAccent
             ),
             BottomNavyBarItem(
                 icon: Icon(Icons.search),
-                title: Text('Search'),
+                title: AutoSizeText('Search'),
                 activeColor: Colors.pink
             ),
             BottomNavyBarItem(
                 icon: Icon(Icons.library_books_outlined),
-                title: Text('Books'),
+                title: AutoSizeText('Issued Books'),
                 activeColor: Colors.blue
             ),
           ],
