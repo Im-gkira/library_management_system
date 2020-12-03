@@ -92,6 +92,10 @@ class _IssuedBooksState extends State<IssuedBooks> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: TabBar(
+            onTap: (value){
+              SystemChannels.textInput.invokeMethod('TextInput.hide');
+              SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+            },
             labelPadding: EdgeInsets.only(top: 10.0),
             labelStyle: GoogleFonts.montserrat(
                 textStyle: TextStyle(
