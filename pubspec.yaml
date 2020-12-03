@@ -19,6 +19,8 @@ dependencies:
   drawing_animation: ^0.1.1
   spring: ^1.0.4
   auto_size_text: ^2.1.0
+  bottom_navy_bar: ^5.6.0
+  flashy_tab_bar: ^0.0.3
 
 dev_dependencies:
   flutter_test:
