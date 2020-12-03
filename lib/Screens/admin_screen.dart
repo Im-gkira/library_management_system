@@ -1,3 +1,4 @@
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:library_management_system/Screens/application_screen.dart';
@@ -13,36 +14,165 @@ class AdminScreen extends StatefulWidget {
 }
 
 class _AdminScreenState extends State<AdminScreen> {
+
+  int _currentIndex = 0;
+  PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          children: [
-            FlatButton(
-              child: Text('Applications'),
-              onPressed: (){
-                // Takes the user to the Application screen
-                Navigator.pushNamed(context,ApplicationScreen.id);
-              },
+      body: SizedBox.expand(
+        child: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() => _currentIndex = index);
+            },
+          children:[
+            Container(
+            child: Column(
+              children: [
+                FlatButton(
+                  child: Text('Applications'),
+                  onPressed: (){
+                    // Takes the user to the Application screen
+                    Navigator.pushNamed(context,ApplicationScreen.id);
+                  },
+                ),
+                FlatButton(
+                  child: Text('Search'),
+                  onPressed: (){
+                    // Takes the user to the Application screen
+                    Navigator.pushNamed(context,SearchScreen.id);
+                  },
+                ),
+                FlatButton(
+                  child: Text('Issued Books'),
+                  onPressed: (){
+                    // Takes the user to the Application screen
+                    Navigator.pushNamed(context,IssuedBooks.id);
+                  },
+                ),
+              ],
             ),
-            FlatButton(
-              child: Text('Search'),
-              onPressed: (){
-                // Takes the user to the Application screen
-                Navigator.pushNamed(context,SearchScreen.id);
-              },
+          ),
+          Container(
+            child: ApplicationScreen(),
+          ),
+            Container(
+              child: SearchScreen(),
             ),
-            FlatButton(
-              child: Text('Issued Books'),
-              onPressed: (){
-                // Takes the user to the Application screen
-                Navigator.pushNamed(context,IssuedBooks.id);
-              },
+            Container(
+              child: IssuedBooks(),
+            )
+          ]
+        ),
+      ),
+        bottomNavigationBar: BottomNavyBar(
+          selectedIndex: _currentIndex,
+          showElevation: true, // use this to remove appBar's elevation
+          onItemSelected: (index) => setState(() {
+            _currentIndex = index;
+            _pageController.animateToPage(index,
+                duration: Duration(milliseconds: 300), curve: Curves.ease);
+          }),
+          items: [
+            BottomNavyBarItem(
+              icon: Icon(Icons.apps),
+              title: Text('Home'),
+              activeColor: Colors.red,
+            ),
+            BottomNavyBarItem(
+                icon: Icon(Icons.people),
+                title: Text('Users'),
+                activeColor: Colors.purpleAccent
+            ),
+            BottomNavyBarItem(
+                icon: Icon(Icons.search),
+                title: Text('Search'),
+                activeColor: Colors.pink
+            ),
+            BottomNavyBarItem(
+                icon: Icon(Icons.library_books_outlined),
+                title: Text('Books'),
+                activeColor: Colors.blue
             ),
           ],
+        )
+    );
+  }
+}
+
+class _MyHomePageState extends State<AdminScreen> {
+
+  int _currentIndex = 0;
+  PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Bottom Nav Bar")),
+      body: SizedBox.expand(
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() => _currentIndex = index);
+          },
+          children: <Widget>[
+            Container(color: Colors.blueGrey,),
+            Container(color: Colors.red,),
+            Container(color: Colors.green,),
+            Container(color: Colors.blue,),
+          ],
         ),
+      ),
+      bottomNavigationBar: BottomNavyBar(
+        selectedIndex: _currentIndex,
+        onItemSelected: (index) {
+          setState(() => _currentIndex = index);
+          _pageController.jumpToPage(index);
+        },
+        items: <BottomNavyBarItem>[
+          BottomNavyBarItem(
+              title: Text('Item One'),
+              icon: Icon(Icons.home)
+          ),
+          BottomNavyBarItem(
+              title: Text('Item Two'),
+              icon: Icon(Icons.apps)
+          ),
+          BottomNavyBarItem(
+              title: Text('Item Three'),
+              icon: Icon(Icons.chat_bubble)
+          ),
+          BottomNavyBarItem(
+              title: Text('Item Four'),
+              icon: Icon(Icons.settings)
+          ),
+        ],
       ),
     );
   }
