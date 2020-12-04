@@ -1,10 +1,11 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // This class build the widget for the issued books displayed and also brings up the bottom sheet.
 class IssuedBookWidget extends StatefulWidget {
-
-  IssuedBookWidget({this.issuedBookContent,this.viewIssuedBooks});
+  IssuedBookWidget({this.issuedBookContent, this.viewIssuedBooks});
   // issuedBookContents contains the data of that particular issued book that is displayed.
   // viewIssuedBooks is called whenever changes are mad to the issued books.
   final issuedBookContent;
@@ -15,7 +16,6 @@ class IssuedBookWidget extends StatefulWidget {
 }
 
 class _IssuedBookWidgetState extends State<IssuedBookWidget> {
-
   // _firestore is Firebase Firestore instance.
   // fine is calculated by the subtracting the due date from current date.
   // userInfoList contains the details of the borrower.
@@ -30,19 +30,43 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
     userInfoList = [];
     var borrower = widget.issuedBookContent['Borrower'];
     final userData = await _firestore.collection('users').doc(borrower).get();
-    userInfoList.add(Text('${userData['First Name']} ${userData['Last Name']}'));
-    userInfoList.add(Text('${userData['Branch']}'));
-    userInfoList.add(Text('${userData['Roll Number']}'));
+    userInfoList.add(Text(
+      '${userData['First Name']} ${userData['Last Name']}',
+      style: GoogleFonts.montserrat(
+        textStyle: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    ));
+    userInfoList.add(Text(
+      '${userData['Branch']}',
+      style: GoogleFonts.montserrat(
+        textStyle: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    ));
+    userInfoList.add(Text(
+      '${userData['Roll Number']}',
+      style: GoogleFonts.montserrat(
+        textStyle: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    ));
   }
 
   // This function calculated the due days of each books by subtracting the due date from the current days.
   // If it is -ve it means that the book is returned in time hence the fine is rounded to zero.
   // If It is +ve it means that the book is returned after the due and hence the no.of extra days are displayed.
-  void fineCalculated(){
+  void fineCalculated() {
     var due = widget.issuedBookContent['Due Date'].toDate();
     var cur = DateTime.now();
     fine = cur.difference(due).inDays;
-    if(fine <= 0){
+    if (fine <= 0) {
       fine = 0;
     }
   }
@@ -51,7 +75,7 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
   // It updates the issued quantity by subtracting one.
   // It uses the uniqueBookCode to delete the users issued map entry.
   void deleteIssuedBook() async {
-    try{
+    try {
       var uniqueBookCode = widget.issuedBookContent['Unique Book Code'];
       var borrower = widget.issuedBookContent['Borrower'];
       var bookCode = widget.issuedBookContent['Book Code'];
@@ -82,38 +106,151 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
       setState(() {
         widget.viewIssuedBooks();
       });
-    }catch(e){
+    } catch (e) {
       print(e);
     }
   }
 
-
   // This builds the bottom sheet/
   Widget buildBottomSheet(BuildContext context) {
     return SingleChildScrollView(
-      child:Container(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        color: Color(0xff757575),
+      child: Container(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Container(
-          padding: EdgeInsets.all(30.0),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
+          color: Color(0Xff757575),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0),
+              ),
             ),
-          ),
-          child: Column(
-            children: [
-              Column(
-                children: userInfoList,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+              child: Column(
+                children: [
+                  Text(
+                    '☞ Student Details ',
+                    style: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                        decoration: TextDecoration.underline,
+                        decorationThickness: 4.0,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15.0,),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(35.0)),
+                    elevation: 26.0,
+                    shadowColor: Colors.black,
+                    color: Color(0Xff757575),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            SizedBox(height: 15.0),
+                            Text(
+                              '• Name     : ',
+                              style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 15.0),
+                            Text('• Branch  : ',
+                                style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )),
+                            SizedBox(height: 15.0),
+                            Text('• Roll No  : ',
+                                style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )),
+                            SizedBox(height: 15.0),
+                            Text('• Fine        : ',
+                                style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )),
+                            SizedBox(height: 15.0),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 15.0),
+                            userInfoList[0],
+                            SizedBox(height: 15.0),
+                            userInfoList[1],
+                            SizedBox(height: 15.0),
+                            userInfoList[2],
+                            SizedBox(height: 15.0),
+                            Text('$fine',style: GoogleFonts.montserrat(
+                              textStyle: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),),),
+                            SizedBox(height: 15.0),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 15.0,),
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.centerRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Color(0XaaDD4040),
+                            Color(0XaaDD4040),
+                          ]),
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black,
+                          blurRadius: 2.0,
+                          spreadRadius: 0.0,
+                          offset: Offset(
+                              2.0, 2.0), // shadow direction: bottom right
+                        )
+                      ],
+                    ),
+                    child: FlatButton(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 120.0),
+                      child: Text('Remove',
+                        style: GoogleFonts.montserrat(
+                          textStyle: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          ),),),
+                      onPressed: deleteIssuedBook,
+                    ),
+                  ),
+                ],
               ),
-              Text('$fine'),
-              FlatButton(
-                child: Text('Remove'),
-                onPressed: deleteIssuedBook,
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -123,7 +260,7 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: ()async{
+      onLongPress: () async {
         // userInfo and fineCalculated run before the bottom sheet starts building.
         await userInfo();
         fineCalculated();
@@ -133,7 +270,8 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
           isScrollControlled: true,
         );
       },
-      child: Text('${widget.issuedBookContent['Book Name']} with the unique code ${widget.issuedBookContent['Unique Book Code']} is due for ${widget.issuedBookContent['Due Date'].toDate()}'),
+      child: Text(
+          '${widget.issuedBookContent['Book Name']} with the unique code ${widget.issuedBookContent['Unique Book Code']} is due for ${widget.issuedBookContent['Due Date'].toDate()}'),
     );
   }
 }

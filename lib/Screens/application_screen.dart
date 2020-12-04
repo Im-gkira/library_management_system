@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_system/components/app_widget.dart';
 
@@ -47,6 +48,8 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     return Scaffold(
       body: Container(
         child: Column(
@@ -112,15 +115,40 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
                 ),
               ),
             ),
-            FlatButton(
-              child: Text('View Applications'),
-              onPressed: reviewApplications,
-            ),
-            Expanded(
-              child: ListView(
-                children: appWidgetList,
+            Card(
+              shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(35.0)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 50.0, vertical: 50.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.centerRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color(0XaaDD4040),
+                          Color(0XaaDD4040),
+                        ]),
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black,
+                        blurRadius: 2.0,
+                        spreadRadius: 0.0,
+                        offset: Offset(
+                            2.0, 2.0), // shadow direction: bottom right
+                      )
+                    ],
+                  ),
+                  child: FlatButton(
+                    child: Text('View Applications'),
+                    onPressed: reviewApplications,
+                  ),
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),

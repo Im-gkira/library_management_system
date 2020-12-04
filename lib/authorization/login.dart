@@ -55,6 +55,7 @@ class _LoginState extends State<Login> {
       resizeToAvoidBottomInset: false,
       body: Container(
         decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage('images/fun.png'),fit: BoxFit.cover),
             gradient: LinearGradient(
                 begin: Alignment.centerRight,
                 end: Alignment.bottomLeft,
@@ -63,10 +64,12 @@ class _LoginState extends State<Login> {
               Color(0Xff294D64),
             ])),
         child: Card(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(35.0)),
           margin: EdgeInsets.symmetric(horizontal: 40.0,vertical: 210.0),
           elevation: 26.0,
           shadowColor: Colors.black,
-          color: Color(0Xff294D64),
+          color: Color(0Xaa294D64).withOpacity(0.4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -113,7 +116,7 @@ class _LoginState extends State<Login> {
                     ),
                     fillColor: Colors.white,
                     border: new OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(35.0),
+                      borderRadius: new BorderRadius.circular(45.0),
                       borderSide: new BorderSide(
                       ),
                     ),
@@ -142,8 +145,8 @@ class _LoginState extends State<Login> {
                         begin: Alignment.centerRight,
                         end: Alignment.bottomLeft,
                         colors: [
-                          Color(0XaaF4A521),
-                          Color(0XaaF4A521),
+                          Color(0Xff393e46),
+                          Color(0Xaa393e46),
                         ]),
                     borderRadius: BorderRadius.circular(30.0),
                     color: Colors.white,
