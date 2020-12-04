@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_system/components/app_widget.dart';
 
 //This Page can be accessed by the admin only to approve the applications send by the users.
@@ -49,7 +50,68 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
     return Scaffold(
       body: Container(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            Container(
+                child: Center(
+                  child: Text(
+                    'To view Please Press the Button',
+                    style: GoogleFonts.montserrat(
+                      fontSize: 19.0,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                )),
+            Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(35.0)),
+              margin: EdgeInsets.symmetric(
+                  horizontal: 40.0, vertical: 20.0),
+              elevation: appWidgetList.length == 0 ? 0 : 26.0,
+              shadowColor: Colors.black,
+              color: Color(0Xff294D64),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 30.0, horizontal: 10.0),
+                  child: DefaultTextStyle(
+                    style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.normal,
+                          letterSpacing: 1.6,
+                        )),
+                    child: Builder(
+                      builder: (context) {
+                        return SizedBox(
+                          height: 400.0,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                                children: List.generate(
+                                    appWidgetList.length,
+                                        (index) {
+                                      return Column(children: [
+                                        appWidgetList[index],
+                                        SizedBox(
+                                          height: 15.0,
+                                        ),
+                                        Text("****"),
+                                        SizedBox(
+                                          height: 15.0,
+                                        )
+                                      ]);
+                                    })),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
             FlatButton(
               child: Text('View Applications'),
               onPressed: reviewApplications,

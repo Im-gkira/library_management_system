@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:library_management_system/authorization/registration.dart';
 import 'package:library_management_system/authorization/login.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,12 +20,24 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  CrossFadeState _crossFadeState = CrossFadeState.showFirst;
+  void initState() {
+    super.initState();
+
+    Future.delayed(const Duration(seconds: 5), () {
+      setState(() {
+        _crossFadeState = CrossFadeState.showSecond;
+      });
+    });
+  }
+
   bool run = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
+          // image: Image(image: AssetImage('images/books-124590.jpg')),
             gradient: LinearGradient(
                 begin: Alignment.centerRight,
                 end: Alignment.bottomLeft,
@@ -38,20 +51,26 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           children: [
             Container(
               alignment: Alignment.center,
-              height: 200.0,
-              child: AnimatedDrawing.svg(
-                "images/LMS logo.svg",
-                width: 180.0,
-                lineAnimation: LineAnimation.oneByOne,
-                scaleToViewport: true,
-                run: this.run,
-                duration: new Duration(seconds: 3),
-                onFinish: () => setState(() {
-                  this.run = false;
-                }),
+              height: 300.0,
+              child: AnimatedCrossFade(
+                secondCurve: Curves.ease,
+                duration: Duration(seconds: 4),
+                firstChild: AnimatedDrawing.svg(
+                  "images/logo copy 4.svg",
+                  width: 180.0,
+                  lineAnimation: LineAnimation.oneByOne,
+                  scaleToViewport: true,
+                  run: this.run,
+                  duration: new Duration(seconds: 4),
+                  onFinish: () => setState(() {
+                    this.run = false;
+                  }),
+                ),
+                secondChild: SvgPicture.asset('images/LMS logo.svg',alignment: Alignment.center,width: 320,color: Colors.black38),
+                crossFadeState: _crossFadeState,
               ),
             ),
-            // SvgPicture.asset('images/LMS logo.svg',alignment: Alignment.center,height: 250.0,color: Colors.black38),
+            //
             //   ),
             Padding(
               padding:
