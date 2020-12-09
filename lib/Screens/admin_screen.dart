@@ -9,6 +9,7 @@ import 'package:library_management_system/Screens/application_screen.dart';
 import 'package:library_management_system/Screens/search_screen.dart';
 import 'package:library_management_system/Screens/issued_books_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:library_management_system/Screens/add_books_screen.dart';
 
 // This Screen is the home screen of the admin and provides different options than the home screen of the user.
 class AdminScreen extends StatefulWidget {
@@ -197,6 +198,13 @@ class _AdminScreenState extends State<AdminScreen> {
                     child: IssuedBooks(),
                   )
                 ]),
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: (){
+              // Takes the user to the Application screen
+              Navigator.pushNamed(context,AddBooks.id);
+            },
           ),
           bottomNavigationBar: BottomNavyBar(
             selectedIndex: _currentIndex,
