@@ -14,33 +14,38 @@ class AdminSearchScreen extends StatefulWidget {
 }
 
 class _AdminSearchScreenState extends State<AdminSearchScreen> {
-
   // bookName is entered by the user.
   // _firestore is the Firestore Instance.
   // bookWidgetList are the search results for the entered name.
   String bookName;
   final _firestore = FirebaseFirestore.instance;
-  List <Widget> bookWidgetList = [];
-
+  List<Widget> bookWidgetList = [];
 
   // This functions searches for the books with the name entered by the user.
   // Then for each book found, it adds a BookWidget to bookWidgetsList.
   // bookWidgetsList is emptied before every search.
   void bookSearch(String bookName) async {
-    try{
+    try {
       bookWidgetList = [];
-      final bookData = await _firestore.collection('books').where('Book Name', isEqualTo: bookName).get();
-      if(bookData.docs.isEmpty){
-        Fluttertoast.showToast(msg: 'Book Not Found',);
+      final bookData = await _firestore
+          .collection('books')
+          .where('Book Name', isEqualTo: bookName)
+          .get();
+      if (bookData.docs.isEmpty) {
+        Fluttertoast.showToast(
+          msg: 'Book Not Found',
+        );
       }
-      for(var book in bookData.docs) {
+      for (var book in bookData.docs) {
         var bookContent = book.data();
         setState(() {
           bookWidgetList.add(BookWidget(bookContent: bookContent));
         });
       }
-    }catch(e){
-      Fluttertoast.showToast(msg: e.toString(),);
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+      );
     }
   }
 
@@ -51,28 +56,22 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
       body: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.centerRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Color(0Xff294D64),
-                  Color(0Xff294D64),
-                ])),
+          image: DecorationImage(image: AssetImage("images/Search.png")),
+            color: Colors.white),
         child: Container(
-          margin: EdgeInsets.only(top: 160),
+          margin: EdgeInsets.only(top: 60),
           child: Column(
             children: [
               Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(35.0)),
-                margin: EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 30.0),
+                margin: EdgeInsets.symmetric(horizontal: 40.0, vertical: 30.0),
                 elevation: 26.0,
                 shadowColor: Colors.black,
-                color: Color(0Xff294D64),
+                color: Color(0Xaa555555).withOpacity(0.2),
                 child: TextFormField(
                   autofocus: true,
-                  onChanged: (value){
+                  onChanged: (value) {
                     bookName = value;
                   },
                   validator: (val) {
@@ -89,15 +88,22 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                   ),
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.search,color: Colors.white,),
-                      onPressed: (){
+                      icon: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
                         bookSearch(bookName.toLowerCase());
                         bookWidgetList = [];
-                      },),
+                      },
+                    ),
                     labelText: "Search Books",
-                    labelStyle: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
+                    labelStyle: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                      ),
                     ),
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
@@ -105,11 +111,11 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                       borderSide: BorderSide(color: Colors.white),
                     ),
                   ),
-
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0, vertical: 10.0),
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -127,18 +133,19 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                         blurRadius: 2.0,
                         spreadRadius: 0.0,
                         offset:
-                        Offset(2.0, 2.0), // shadow direction: bottom right
+                            Offset(2.0, 2.0), // shadow direction: bottom right
                       )
                     ],
                   ),
                   child: FlatButton(
                     padding: EdgeInsets.symmetric(horizontal: 40.0),
-                    onPressed: (){
+                    onPressed: () {
                       FocusScopeNode currentFocus = FocusScope.of(context);
                       if (!currentFocus.hasPrimaryFocus) {
                         currentFocus.unfocus();
                       }
-                      bookSearch(bookName == null ? bookName : bookName.toLowerCase());
+                      bookSearch(
+                          bookName == null ? bookName : bookName.toLowerCase());
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
@@ -157,8 +164,7 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
               Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(35.0)),
-                margin: EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 20.0),
+                margin: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
                 elevation: bookWidgetList.length == 0 ? 0 : 26.0,
                 shadowColor: Colors.black,
                 color: Color(0Xff294D64),
@@ -169,11 +175,11 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                     child: DefaultTextStyle(
                       style: GoogleFonts.montserrat(
                           textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.normal,
-                            letterSpacing: 1.6,
-                          )),
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.normal,
+                        letterSpacing: 1.6,
+                      )),
                       child: Builder(
                         builder: (context) {
                           return Column(
