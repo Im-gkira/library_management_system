@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_system/Screens/application_screen.dart';
 import 'package:library_management_system/Screens/search_screen.dart';
 import 'package:library_management_system/Screens/issued_books_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // This Screen is the home screen of the admin and provides different options than the home screen of the user.
 class AdminScreen extends StatefulWidget {
@@ -24,27 +25,33 @@ class _AdminScreenState extends State<AdminScreen> {
   PageController _pageController;
 
   void countBooks() async {
-    QuerySnapshot _myDoc =
-        await Firestore.instance.collection('books').getDocuments();
-    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-    var s = 0;
-    for (var i = 0; i < _myDocCount.length; i++) {
-      s = s + _myDocCount[i]['Total Quantity'];
-    }
-    setState(() {
-      x = s;
-      print(x);
-    }); // Count of Documents in Collection
+    try{
+      QuerySnapshot _myDoc =
+      await FirebaseFirestore.instance.collection('books').get();
+      List<DocumentSnapshot> _myDocCount = _myDoc.docs;
+      var s = 0;
+      for (var i = 0; i < _myDocCount.length; i++) {
+        s = s + _myDocCount[i]['Total Quantity'];
+      }
+      setState(() {
+        x = s;
+      });
+    }catch(e){
+      Fluttertoast.showToast(msg: e.toString(),);
+    } // Count of Documents in Collection
   }
 
   void countIssuedBook() async {
-    QuerySnapshot _myDoc =
-        await Firestore.instance.collection('issued books').getDocuments();
-    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-    setState(() {
-      y = _myDocCount.length;
-      print(y);
-    }); // Count of Documents in Collection
+    try{
+      QuerySnapshot _myDoc =
+      await FirebaseFirestore.instance.collection('issued books').get();
+      List<DocumentSnapshot> _myDocCount = _myDoc.docs;
+      setState(() {
+        y = _myDocCount.length;
+      });
+    }catch(e) {
+      Fluttertoast.showToast(msg: e.toString(),);
+    }// Count of Documents in Collection
   }
 
   @override

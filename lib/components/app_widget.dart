@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:library_management_system/Screens/application_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // This is the widget of each search result of application_screen it brings out a bottom sheet for more options.
 class AppWidget extends StatefulWidget {
@@ -24,14 +25,18 @@ class _AppWidgetState extends State<AppWidget> {
   // Then adds the data to userInfoList which was public in the application_screen.dart.
   // The userInfoList is emptied each time this function runs.
   Future userInfo() async {
-    var borrower = widget.appContent['Borrower'];
-    final userData = await _firestore.collection('users').doc(borrower).get();
-    setState(() {
-      userInfoList = [];
-      userInfoList.add(Text('${userData['First Name']} ${userData['Last Name']}'));
-      userInfoList.add(Text('${userData['Branch']}'));
-      userInfoList.add(Text('${userData['Roll Number']}'));
-    });
+    try{
+      var borrower = widget.appContent['Borrower'];
+      final userData = await _firestore.collection('users').doc(borrower).get();
+      setState(() {
+        userInfoList = [];
+        userInfoList.add(Text('${userData['First Name']} ${userData['Last Name']}'));
+        userInfoList.add(Text('${userData['Branch']}'));
+        userInfoList.add(Text('${userData['Roll Number']}'));
+      });
+    }catch(e){
+      Fluttertoast.showToast(msg: e.toString(),);
+    }
   }
 
   // This function issues the book for the user.
@@ -45,17 +50,18 @@ class _AppWidgetState extends State<AppWidget> {
       var borrower = widget.appContent['Borrower'];
       var bookCode = widget.appContent['Book Code'];
       var bookName = widget.appContent['Book Name'];
-      var dueDate = DateTime.parse(date);
-      print(uniqueBookCode);
-      print(date);
+      var dueDate = date;
+      // print(uniqueBookCode);
+      // print(date);
 
       final issuedBookContent = await _firestore.collection('issued books').doc(uniqueBookCode).get();
 
       if(issuedBookContent.data() != null){
-        print('Enter Unique Code');
+        Fluttertoast.showToast(msg: 'Enter Unique Code',);
+        // print('Enter Unique Code');
       }
       else{
-        print('Success');
+        // print('Success');
         final bookContent = await _firestore.collection('books').doc(bookCode).get();
 
 
@@ -82,7 +88,7 @@ class _AppWidgetState extends State<AppWidget> {
       }
 
     }catch(e){
-      print(e);
+      Fluttertoast.showToast(msg: e.toString(),);
     }
   }
 
@@ -108,20 +114,25 @@ class _AppWidgetState extends State<AppWidget> {
       _firestore.collection('applications').doc(applicationId).delete();
       Navigator.pop(context);
       setState(() {
+        Fluttertoast.showToast(msg: 'Application Updated',);
         widget.reviewAgain();
       });
     }catch(e){
-      print(e);
+      Fluttertoast.showToast(msg: e.toString(),);
     }
   }
 
   // This Function checks if the books are available or not.
   // Changes the isAvailable to false if the book's total quantity is equal to the issued quantity.
   void canIssue() async {
-    var bookCode = widget.appContent['Book Code'];
-    final bookContent = await _firestore.collection('books').doc(bookCode).get();
+    try{
+      var bookCode = widget.appContent['Book Code'];
+      final bookContent = await _firestore.collection('books').doc(bookCode).get();
 
-    isAvailable = !(bookContent['Total Quantity'] == bookContent['Issued Quantity']);
+      isAvailable = !(bookContent['Total Quantity'] == bookContent['Issued Quantity']);
+    }catch(e){
+      Fluttertoast.showToast(msg: e.toString(),);
+    }
   }
 
 
@@ -177,12 +188,22 @@ class _BottomSheetContentsState extends State<BottomSheetContents> {
   // bottomSheetItems contains item that will be displayed on the bottom sheet.
   List<Widget> bottomSheetItems = [];
 
+  Future pickDate() async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+    );
+    date = picked;
+  }
+
   // This Functions puts the initial widgets to be displayed.
   // It shows Accept or the Not Available depending on the isAvailable button.
   // The Reject button deletes the application using deleteApplication().
   void bottomSheetPhaseOne() {
-    print(isAvailable);
-    print(userInfoList);
+    // print(isAvailable);
+    // print(userInfoList);
     bottomSheetItems = userInfoList;
     setState(() {
       bottomSheetItems.add(isAvailable ? FlatButton(onPressed: bottomSheetPhaseTwo, child: Text('Accept'),) : FlatButton(onPressed: (){}, child: Text('Not Available'),));
@@ -194,7 +215,7 @@ class _BottomSheetContentsState extends State<BottomSheetContents> {
   // This function takes the uniqueBookCode and due date from the admin when the Accept button is pressed calls getIssued to issue the book.
   void bottomSheetPhaseTwo() {
     setState(() {
-      print('Phase 2 going on!');
+      // print('Phase 2 going on!');
       bottomSheetItems = [];
       bottomSheetItems.add(Text('Enter Unique Code'),);
       bottomSheetItems.add(TextField(
@@ -202,11 +223,15 @@ class _BottomSheetContentsState extends State<BottomSheetContents> {
           uniqueBookCode = value;
         },
       ),);
-      bottomSheetItems.add(Text('Enter Due Date in yyyy-mm-dd'),);
-      bottomSheetItems.add(TextField(
-        onChanged: (value){
-          date = value;
-        },
+      // bottomSheetItems.add(Text('Enter Due Date in yyyy-mm-dd'),);
+      // bottomSheetItems.add(TextField(
+      //   onChanged: (value){
+      //     date = value;
+      //   },
+      // ),);
+      bottomSheetItems.add(RaisedButton(
+        child: Icon(Icons.calendar_today,),
+        onPressed:pickDate,
       ),);
       bottomSheetItems.add(FlatButton(onPressed: widget.getIssued, child: Text('Accept'),),);
     });

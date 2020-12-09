@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_system/components/issued_book_widget.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // This Class removes the books that are returned.
 class IssuedBooks extends StatefulWidget {
@@ -20,6 +21,7 @@ class _IssuedBooksState extends State<IssuedBooks> {
   // enteredCode is the unique code of the book to be returned.
   final _firestore = FirebaseFirestore.instance;
   List<Widget> issuedBookWidgetList = [];
+  List<Widget> enteredBookWidgetList = [];
   var enteredCode;
 
   // Gets the information of all the books that are issued.
@@ -27,8 +29,9 @@ class _IssuedBooksState extends State<IssuedBooks> {
   // The list is emptied in the beginning.
   // The data is sorted in accordance to the due date to show the whose date is near on the top.
   void viewIssuedBooks() async {
-    var bookData =
-        await _firestore.collection('issued books').orderBy('Due Date').get();
+    try{
+      var bookData =
+    await _firestore.collection('issued books').orderBy('Due Date').get();
     setState(() {
       issuedBookWidgetList = [];
       for (var apps in bookData.docs) {
@@ -41,6 +44,10 @@ class _IssuedBooksState extends State<IssuedBooks> {
         );
       }
     });
+    }
+    catch(e){
+      Fluttertoast.showToast(msg: e.toString(),);
+    }
   }
 
   // This function display the issued book whose unique code is entered if such book exists.
@@ -50,11 +57,12 @@ class _IssuedBooksState extends State<IssuedBooks> {
       var bookData =
           await _firestore.collection('issued books').doc(enteredCode).get();
       if (bookData.data() == null) {
-        print('Book Not Found');
+        Fluttertoast.showToast(msg: 'Book Not Found',);
+        // print('Book Not Found');
       } else {
         setState(() {
-          issuedBookWidgetList = [];
-          issuedBookWidgetList.add(Column(
+          enteredBookWidgetList = [];
+          enteredBookWidgetList.add(Column(
             children: [
               IssuedBookWidget(
                   issuedBookContent: bookData,
@@ -64,11 +72,11 @@ class _IssuedBooksState extends State<IssuedBooks> {
         });
       }
     } catch (e) {
-      print(e);
+      Fluttertoast.showToast(msg: e.toString(),);
     }
   }
 
-  int _currentIndex = 0;
+  //int _currentIndex = 0;
   PageController _pageController;
 
   @override
@@ -126,7 +134,7 @@ class _IssuedBooksState extends State<IssuedBooks> {
                       Color(0Xff294D64),
                       Color(0Xff294D64),
                     ])),
-                child: Column(
+                child: ListView(
                   children: [
                     Card(
                       shape: RoundedRectangleBorder(
@@ -144,6 +152,7 @@ class _IssuedBooksState extends State<IssuedBooks> {
                         },
                         validator: (val) {
                           if (val.length == 0) {
+                            Fluttertoast.showToast(msg: 'Type The Book Code',);
                             return "Please type the code of the book";
                           } else {
                             return null;
@@ -175,7 +184,7 @@ class _IssuedBooksState extends State<IssuedBooks> {
                           borderRadius: BorderRadius.circular(35.0)),
                       margin: EdgeInsets.symmetric(
                           horizontal: 40.0, vertical: 20.0),
-                      elevation: issuedBookWidgetList.length == 0 ? 0 : 26.0,
+                      elevation: enteredBookWidgetList.length == 0 ? 0 : 26.0,
                       shadowColor: Colors.black,
                       color: Color(0Xff294D64),
                       child: SingleChildScrollView(
@@ -193,7 +202,7 @@ class _IssuedBooksState extends State<IssuedBooks> {
                             child: Builder(
                               builder: (context) {
                                 return Column(
-                                  children: issuedBookWidgetList,
+                                  children: enteredBookWidgetList,
                                 );
                               },
                             ),
@@ -205,9 +214,9 @@ class _IssuedBooksState extends State<IssuedBooks> {
                 ),
               ),
               Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.end,
+                child: ListView(
+                  //crossAxisAlignment: CrossAxisAlignment.stretch,
+                  //mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
                         child: Center(
@@ -311,7 +320,8 @@ class _IssuedBooksState extends State<IssuedBooks> {
                 ),
               ),
             ],
-          )),
+          ),
+      ),
     );
   }
 }

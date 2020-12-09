@@ -1,7 +1,8 @@
-import 'package:auto_size_text/auto_size_text.dart';
+// import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // This class build the widget for the issued books displayed and also brings up the bottom sheet.
 class IssuedBookWidget extends StatefulWidget {
@@ -21,53 +22,64 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
   // userInfoList contains the details of the borrower.
   final _firestore = FirebaseFirestore.instance;
   var fine;
+  var trimmedDate;
   List<Widget> userInfoList = [];
 
   // This Function fetches the data of the particular document with the borrower's email address
   // Then adds the data to userInfoList which was public in the application_screen.dart.
   // The userInfoList is emptied each time this function runs.
   Future userInfo() async {
-    userInfoList = [];
-    var borrower = widget.issuedBookContent['Borrower'];
-    final userData = await _firestore.collection('users').doc(borrower).get();
-    userInfoList.add(Text(
-      '${userData['First Name']} ${userData['Last Name']}',
-      style: GoogleFonts.montserrat(
-        textStyle: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
+    try{
+      userInfoList = [];
+      var borrower = widget.issuedBookContent['Borrower'];
+      final userData = await _firestore.collection('users').doc(borrower).get();
+      userInfoList.add(Text(
+        '${userData['First Name']} ${userData['Last Name']}',
+        style: GoogleFonts.montserrat(
+          textStyle: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-      ),
-    ));
-    userInfoList.add(Text(
-      '${userData['Branch']}',
-      style: GoogleFonts.montserrat(
-        textStyle: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
+      ));
+      userInfoList.add(Text(
+        '${userData['Branch']}',
+        style: GoogleFonts.montserrat(
+          textStyle: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-      ),
-    ));
-    userInfoList.add(Text(
-      '${userData['Roll Number']}',
-      style: GoogleFonts.montserrat(
-        textStyle: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
+      ));
+      userInfoList.add(Text(
+        '${userData['Roll Number']}',
+        style: GoogleFonts.montserrat(
+          textStyle: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-      ),
-    ));
+      ));
+    }catch(e){
+      Fluttertoast.showToast(msg: e.toString(),);
+    }
   }
 
   // This function calculated the due days of each books by subtracting the due date from the current days.
   // If it is -ve it means that the book is returned in time hence the fine is rounded to zero.
   // If It is +ve it means that the book is returned after the due and hence the no.of extra days are displayed.
   void fineCalculated() {
-    var due = widget.issuedBookContent['Due Date'].toDate();
-    var cur = DateTime.now();
-    fine = cur.difference(due).inDays;
-    if (fine <= 0) {
-      fine = 0;
+    try{
+      var due = widget.issuedBookContent['Due Date'].toDate();
+      var cur = DateTime.now();
+      fine = cur.difference(due).inDays;
+      if (fine <= 0) {
+        fine = 0;
+      }
+      trimmedDate = due.toString().split(" ")[0];
+      trimmedDate = trimmedDate.split('-').reversed.join('-');
+    }catch(e){
+      Fluttertoast.showToast(msg: e.toString(),);
     }
   }
 
@@ -105,9 +117,10 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
       Navigator.pop(context);
       setState(() {
         widget.viewIssuedBooks();
+        Fluttertoast.showToast(msg: 'Books Updated',);
       });
     } catch (e) {
-      print(e);
+      Fluttertoast.showToast(msg: e.toString(),);
     }
   }
 
@@ -190,6 +203,14 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
                                   ),
                                 )),
                             SizedBox(height: 15.0),
+                            Text('• Due Date        : ',
+                                style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )),
+                            SizedBox(height: 15.0),
                           ],
                         ),
                         Column(
@@ -203,6 +224,12 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
                             userInfoList[2],
                             SizedBox(height: 15.0),
                             Text('$fine',style: GoogleFonts.montserrat(
+                              textStyle: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),),),
+                            SizedBox(height: 15.0),
+                            Text('$trimmedDate',style: GoogleFonts.montserrat(
                               textStyle: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
@@ -271,7 +298,7 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
         );
       },
       child: Text(
-          '${widget.issuedBookContent['Book Name']} with the unique code ${widget.issuedBookContent['Unique Book Code']} is due for ${widget.issuedBookContent['Due Date'].toDate()}'),
+          '${widget.issuedBookContent['Book Name']} with the unique code ${widget.issuedBookContent['Unique Book Code']}'),
     );
   }
 }

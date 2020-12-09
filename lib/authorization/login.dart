@@ -6,6 +6,7 @@ import 'package:library_management_system/Screens/admin_screen.dart';
 import 'package:library_management_system/Screens/home_screen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // The Login Page is the Main Gateway To The App.
 // It takes the already Registered user to the home screen or the admin screen depending upon isAdmin.
@@ -27,24 +28,21 @@ class _LoginState extends State<Login> {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
 
-  // This Function is not fully implemented.
-  // It's task was to check whether or not user completed their registration correctly.
-  void dataCheck() async {
-    final userData =
-        await _firestore.collection('users').doc(emailAddress).get();
-    print(userData.data());
-  }
 
   // This Function Checks whether the current user is admin or not.
   // It accesses the admin collection in firestore and checks if their is any entry with the current emailAddress.
   // It returns false and then uses setState to change isAdmin to new value, if the user has no entry in admin collection means the user is not an admin.
   Future adminCheck() async {
-    final userData =
-        await _firestore.collection('admin').doc(emailAddress).get();
-    if (userData.data() == null) {
-      setState(() {
-        isAdmin = false;
-      });
+    try{
+      final userData =
+      await _firestore.collection('admin').doc(emailAddress).get();
+      if (userData.data() == null) {
+        setState(() {
+          isAdmin = false;
+        });
+      }
+    }catch(e){
+      Fluttertoast.showToast(msg: e.toString(),);
     }
   }
 
@@ -70,9 +68,9 @@ class _LoginState extends State<Login> {
           elevation: 26.0,
           shadowColor: Colors.black,
           color: Color(0Xaa294D64).withOpacity(0.4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
+            // crossAxisAlignment: CrossAxisAlignment.stretch,
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 20.0),
@@ -123,7 +121,8 @@ class _LoginState extends State<Login> {
                   ),
                   validator: (val) {
                     if(val.length==0) {
-                      return "Email cannot be empty";
+                      Fluttertoast.showToast(msg: 'Password cannot be empty',);
+                      return "Password cannot be empty";
                     }else{
                       return null;
                     }
@@ -185,7 +184,7 @@ class _LoginState extends State<Login> {
                               context, isAdmin ? AdminScreen.id : HomeScreen.id);
                         }
                       } catch (e) {
-                        print(e);
+                        Fluttertoast.showToast(msg: e.toString(),);
                       }
                     },
                   ),

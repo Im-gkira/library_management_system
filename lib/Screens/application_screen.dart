@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_system/components/app_widget.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 //This Page can be accessed by the admin only to approve the applications send by the users.
 
@@ -35,15 +36,18 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
   // For every application a appWidget is created and added to appWidgetList.
   // appWidgetList is emptied first whenever the function is called.
   void reviewApplications() async {
-    var appData = await _firestore.collection('applications').orderBy('Application Date').get();
-    setState(() {
-      appWidgetList = [];
-      for(var apps in appData.docs){
-        var appContent = apps.data();
-        appWidgetList.add(AppWidget(appContent: appContent,reviewAgain: reviewApplications,),);
-      }
-    });
-
+   try{
+     var appData = await _firestore.collection('applications').orderBy('Application Date').get();
+     setState(() {
+       appWidgetList = [];
+       for(var apps in appData.docs){
+         var appContent = apps.data();
+         appWidgetList.add(AppWidget(appContent: appContent,reviewAgain: reviewApplications,),);
+       }
+     });
+   }catch(e){
+     Fluttertoast.showToast(msg: e.toString(),);
+   }
   }
 
   @override
@@ -52,9 +56,9 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     return Scaffold(
       body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.end,
+        child: ListView(
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
+          //mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
                 child: Center(

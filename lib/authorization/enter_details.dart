@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_system/Screens/home_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // This Takes the Info of the newly registered users so that it can be utilized when the user apply for a book to be issued.
 
@@ -42,7 +43,7 @@ class _EnterDetailsState extends State<EnterDetails> {
       }
     }
     catch(e){
-      print(e);
+      Fluttertoast.showToast(msg: e.toString(),);
     }
   }
 
@@ -83,7 +84,8 @@ class _EnterDetailsState extends State<EnterDetails> {
                   ),
                   validator: (val) {
                     if(val.length==0) {
-                      return "Email cannot be empty";
+                      Fluttertoast.showToast(msg: 'First Name cannot be empty',);
+                      return "First Name cannot be empty";
                     }else{
                       return null;
                     }
@@ -114,7 +116,8 @@ class _EnterDetailsState extends State<EnterDetails> {
                   ),
                   validator: (val) {
                     if(val.length==0) {
-                      return "Email cannot be empty";
+                      Fluttertoast.showToast(msg: 'Last Name cannot be empty',);
+                      return "Last Name cannot be empty";
                     }else{
                       return null;
                     }
@@ -145,7 +148,8 @@ class _EnterDetailsState extends State<EnterDetails> {
                   ),
                   validator: (val) {
                     if(val.length==0) {
-                      return "Email cannot be empty";
+                      Fluttertoast.showToast(msg: 'Roll Number cannot be empty',);
+                      return "Roll Number cannot be empty";
                     }else{
                       return null;
                     }
@@ -176,7 +180,8 @@ class _EnterDetailsState extends State<EnterDetails> {
                   ),
                   validator: (val) {
                     if(val.length==0) {
-                      return "Email cannot be empty";
+                      Fluttertoast.showToast(msg: 'Branch Name cannot be empty',);
+                      return "Branch Name cannot be empty";
                     }else{
                       return null;
                     }
@@ -243,7 +248,7 @@ class _EnterDetailsState extends State<EnterDetails> {
                         Navigator.pushNamed(context, HomeScreen.id);
                       }
                       catch(e){
-                        print(e);
+                        Fluttertoast.showToast(msg: e.toString(),);
                       }
                     },
                   ),

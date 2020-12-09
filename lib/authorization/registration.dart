@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:library_management_system/authorization/enter_details.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // The Registration Page creates a new account using the Firebase Authorization.
 
@@ -59,6 +60,7 @@ class _RegistrationState extends State<Registration> {
                   ),
                   validator: (val) {
                     if(val.length==0) {
+                      Fluttertoast.showToast(msg: 'Email cannot be empty',);
                       return "Email cannot be empty";
                     }else{
                       return null;
@@ -92,7 +94,8 @@ class _RegistrationState extends State<Registration> {
                   ),
                   validator: (val) {
                     if(val.length==0) {
-                      return "Email cannot be empty";
+                      Fluttertoast.showToast(msg: 'password cannot be empty',);
+                      return "Password cannot be empty";
                     }else{
                       return null;
                     }
@@ -153,7 +156,7 @@ class _RegistrationState extends State<Registration> {
                       }
                     }
                     catch(e){
-                      print(e);
+                      Fluttertoast.showToast(msg: e.toString(),);
                     }
                   },
                 ),

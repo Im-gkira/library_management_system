@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:library_management_system/Screens/search_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:library_management_system/components/home_screen_widgets.dart';
+import 'package:library_management_system/Screens/search_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // This is the home screen of the normal user and displays all the information of the user.
 class HomeScreen extends StatefulWidget {
@@ -19,25 +22,35 @@ class _HomeScreenState extends State<HomeScreen> {
   // _auth is Firebase Authorization Instance.
   // _firestore is Firebase Firestore Instance.
   // emailAddress is taken with the help of loggedInUser which automatically fetches user's email address using Firebase Authorization.
- // fine is the fine calculated for the issued/due books.
+  // fine is the fine calculated for the issued/due books.
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   DateTime currentBackPressTime;
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   String emailAddress;
   var fine;
+  Map userData = {
+    'First Name' : ' ',
+    'Last Name' : ' ',
+    'Applied' : {},
+    'Branch' : ' ',
+    'Issued Books' : {},
+    'Roll Number' : ' ',
+    'Email Id' : ' ',
+  };
+  List<String> bookNameList = [];
+  List<Widget> applicationList = [];
 
   // This function calculated the due days of each books by subtracting the due date from the current days.
   // If it is -ve it means that the book is returned in time hence the fine is rounded to zero.
   // If It is +ve it means that the book is returned after the due and hence the no.of extra days are displayed.
   void fineCalculated(var data){
-    var due = data['Due Date'].toDate();
-    var cur = DateTime.now();
-    fine = cur.difference(due).inDays;
+    var dueDate = data['Due Date'].toDate();
+    var currentDate = DateTime.now();
+    fine = currentDate.difference(dueDate).inDays;
     if(fine <= 0){
       fine = 0;
     }
-    print(fine);
   }
 
   // This function fetches the all the data of the users including the details, issued books and applications you send for the various books.
@@ -46,22 +59,33 @@ class _HomeScreenState extends State<HomeScreen> {
   // applicationData fetches the specific doc data where the borrower == logged in users's email Address, from the applications collection
   Future<void> fetchData() async {
     try{
-      final userData = await _firestore.collection('users').doc(emailAddress).get();
-      print(userData.data());
+      var trimmedDate;
+      var dueDate;
+      final uData = await _firestore.collection('users').doc(emailAddress).get();
 
+      bookNameList = [];
       final bookData = await _firestore.collection('issued books').where('Borrower',isEqualTo: emailAddress).get();
       for(var data in bookData.docs){
-        print(data.data());
         fineCalculated(data.data());
+        dueDate = data.data()['Due Date'].toDate().toString();
+        trimmedDate = dueDate.split(" ")[0];
+        trimmedDate = trimmedDate.split('-').reversed.join('-');
+
+        bookNameList.add('Book Code: ${data.data()['Book Code']} \nBook Name: ${data.data()['Book Name']} \nUnique Book Code: ${data.data()['Unique Book Code']} \nDue Date: $trimmedDate \nFine: $fine');
       }
 
+      applicationList = [];
       final applicationData = await _firestore.collection('applications').where('Borrower',isEqualTo: emailAddress).get();
       for(var appData in applicationData.docs){
-        print(appData.data());
+        applicationList.add(ApplicationWidget(appData: appData,));
       }
 
+      setState(() {
+        userData = uData.data();
+      });
+
     }catch(e){
-      print(e);
+      Fluttertoast.showToast(msg: e.toString(),);
     }
   }
 
@@ -73,7 +97,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (currentBackPressTime == null ||
         now.difference(currentBackPressTime) > Duration(seconds: 2)) {
       currentBackPressTime = now;
-      print('Back Button Pressed');
       return Future.value(false);
     }
     SystemNavigator.pop();
@@ -92,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       fetchData();
     }catch(e){
-      print(e);
+      Fluttertoast.showToast(msg: e.toString(),);
     }
   }
 
@@ -104,6 +127,12 @@ class _HomeScreenState extends State<HomeScreen> {
       onWillPop: onWillPop,
       child: Scaffold(
         body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('images/unsplash.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
           child:RefreshIndicator(
             // RefreshIndicator is added to bring the scroll down to refresh functionality.
             // key takes the global key declared.
@@ -113,12 +142,36 @@ class _HomeScreenState extends State<HomeScreen> {
             onRefresh: fetchData,
             child: ListView(
               children: [
-                FlatButton(
-                  child: Text('Search'),
-                  onPressed: (){
-                  Navigator.pushNamed(context, SearchScreen.id);
-                  },
+                DivisionTitle(
+                  title: 'Profile',
+                  colour: Color(0xDDff499e),
                 ),
+                UserDataWidget(userData:userData,),
+                DivisionTitle(
+                  title: 'Issued Books',
+                  colour: Color(0xDDd264b6),
+                ),
+                Carousel(bookNameList: bookNameList),
+                Stack(
+                  alignment: AlignmentDirectional.centerEnd,
+                  children: [
+                    DivisionTitle(
+                      title: 'Applications',
+                      colour: Color(0xCCaf2bbf),
+                    ),
+                    SmallButton(
+                      buttonString: 'Apply',
+                      onPressed: (){
+                        Navigator.pushNamed(context, SearchScreen.id);
+                      },
+                      colour: Color(0xFFaf2bbf),
+                    ),
+                  ],
+                ),
+                Column(
+                  children: applicationList,
+                ),
+                SizedBox(height: 40.0,),
               ],
             ),
           ),
