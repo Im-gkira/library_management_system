@@ -26,7 +26,6 @@ class ApplicationScreen extends StatefulWidget {
 }
 
 class _ApplicationScreenState extends State<ApplicationScreen> {
-
   // _firestore is the Firebase Firestore instance.
   // appWidgetList is the widget list of all applications.
   final _firestore = FirebaseFirestore.instance;
@@ -36,18 +35,28 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
   // For every application a appWidget is created and added to appWidgetList.
   // appWidgetList is emptied first whenever the function is called.
   void reviewApplications() async {
-   try{
-     var appData = await _firestore.collection('applications').orderBy('Application Date').get();
-     setState(() {
-       appWidgetList = [];
-       for(var apps in appData.docs){
-         var appContent = apps.data();
-         appWidgetList.add(AppWidget(appContent: appContent,reviewAgain: reviewApplications,),);
-       }
-     });
-   }catch(e){
-     Fluttertoast.showToast(msg: e.toString(),);
-   }
+    try {
+      var appData = await _firestore
+          .collection('applications')
+          .orderBy('Application Date')
+          .get();
+      setState(() {
+        appWidgetList = [];
+        for (var apps in appData.docs) {
+          var appContent = apps.data();
+          appWidgetList.add(
+            AppWidget(
+              appContent: appContent,
+              reviewAgain: reviewApplications,
+            ),
+          );
+        }
+      });
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+      );
+    }
   }
 
   @override
@@ -56,28 +65,34 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     return Scaffold(
       body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('images/applications.png'),
+                fit: BoxFit.fitWidth),
+                color:Colors.white
+        ),
         child: ListView(
           //crossAxisAlignment: CrossAxisAlignment.stretch,
           //mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
+              margin: EdgeInsets.only(top: 20.0),
                 child: Center(
-                  child: Text(
-                    'To view Please Press the Button',
-                    style: GoogleFonts.montserrat(
-                      fontSize: 19.0,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                )),
+                   child: Text(
+                'To view Please Press the Button',
+                style: GoogleFonts.montserrat(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            )),
             Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(35.0)),
-              margin: EdgeInsets.symmetric(
-                  horizontal: 40.0, vertical: 20.0),
+              margin: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
               elevation: appWidgetList.length == 0 ? 0 : 26.0,
               shadowColor: Colors.black,
-              color: Color(0Xff294D64),
+              color: Color(0Xff294D64).withOpacity(0.3),
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -85,11 +100,11 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
                   child: DefaultTextStyle(
                     style: GoogleFonts.montserrat(
                         textStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal,
-                          letterSpacing: 1.6,
-                        )),
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.normal,
+                      letterSpacing: 1.6,
+                    )),
                     child: Builder(
                       builder: (context) {
                         return SizedBox(
@@ -97,20 +112,19 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
                           child: SingleChildScrollView(
                             scrollDirection: Axis.vertical,
                             child: Column(
-                                children: List.generate(
-                                    appWidgetList.length,
-                                        (index) {
-                                      return Column(children: [
-                                        appWidgetList[index],
-                                        SizedBox(
-                                          height: 15.0,
-                                        ),
-                                        Text("****"),
-                                        SizedBox(
-                                          height: 15.0,
-                                        )
-                                      ]);
-                                    })),
+                                children: List.generate(appWidgetList.length,
+                                    (index) {
+                              return Column(children: [
+                                appWidgetList[index],
+                                SizedBox(
+                                  height: 15.0,
+                                ),
+                                Text("xxxx"),
+                                SizedBox(
+                                  height: 15.0,
+                                )
+                              ]);
+                            })),
                           ),
                         );
                       },
@@ -120,11 +134,13 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
               ),
             ),
             Card(
+              elevation: 20.0,
+              margin: EdgeInsets.only(top: 80, left: 30.0, right: 30.0),
               shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(35.0)),
+                  borderRadius: BorderRadius.circular(10.0)),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 50.0, vertical: 50.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -141,13 +157,21 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
                         color: Colors.black,
                         blurRadius: 2.0,
                         spreadRadius: 0.0,
-                        offset: Offset(
-                            2.0, 2.0), // shadow direction: bottom right
+                        offset:
+                            Offset(2.0, 2.0), // shadow direction: bottom right
                       )
                     ],
                   ),
                   child: FlatButton(
-                    child: Text('View Applications'),
+                    child: Text(
+                      'View Applications',
+                      style: GoogleFonts.montserrat(
+                          textStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                      )),
+                    ),
                     onPressed: reviewApplications,
                   ),
                 ),
