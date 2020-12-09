@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:library_management_system/components/book_screen_widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // This screens shows the contents of the book that was tapped in the search screen.
 // If the user is an admin he can only view the status of the book but not apply for the book.
