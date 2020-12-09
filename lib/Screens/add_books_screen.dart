@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AddBooks extends StatefulWidget {
   static String id = 'add_books';
@@ -90,9 +91,11 @@ class _AddBooksState extends State<AddBooks> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage("images/demo.png"),fit: BoxFit.cover),
             gradient: LinearGradient(
                 begin: Alignment.centerRight,
                 end: Alignment.bottomLeft,
@@ -100,216 +103,234 @@ class _AddBooksState extends State<AddBooks> {
               Color(0Xff294D64),
               Color(0Xff294D64),
             ])),
-        child: ListView(
-          children: [
-            Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 100,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 70.0),
-                    child: TextFormField(
-                      autofocus: true,
+        child: Card(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(35.0)),
+          margin: EdgeInsets.symmetric(horizontal: 40.0,vertical: 210.0),
+          elevation: 26.0,
+          shadowColor: Colors.black54,
+          color: Color(0Xaaaaaaaa).withOpacity(0.4),
+          child: ListView(
+            children: [
+              SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 70.0),
+                child: TextFormField(
+                  autofocus: true,
 
-                      decoration: InputDecoration(
-                        labelText: "Enter Book Code",
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
+                  decoration: InputDecoration(
+                    labelText: "Enter Book Code",
+                    labelStyle: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                        fontWeight:FontWeight.w500,
+                        color: Colors.black87,
                       ),
-                      validator: (val) {
-                        if (val.length == 0) {
-                          return "Email cannot be empty";
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        color: Colors.white,
-                      ),
-                      onChanged: (value) {
-                        bookCode = value == '' ? null : value;
-                      },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 70.0),
-                    child: TextFormField(
-                      autofocus: true,
-                      decoration: InputDecoration(
-                        labelText: "Enter Book Name",
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      validator: (val) {
-                        if (val.length == 0) {
-                          return "Email cannot be empty";
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        color: Colors.white,
-                      ),
-                      onChanged: (value) {
-                        bookName = value == '' ? null : value.toLowerCase();
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 70.0),
-                    child: TextFormField(
-                      autofocus: true,
-                      decoration: InputDecoration(
-                        labelText: "Enter Edition Year",
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      validator: (val) {
-                        if (val.length == 0) {
-                          return "Email cannot be empty";
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        color: Colors.white,
-                      ),
-                      onChanged: (value) {
-                        editionYear = value == '' ? null : value;
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 70.0),
-                    child: TextFormField(
-                      autofocus: true,
-                      decoration: InputDecoration(
-                        labelText: "Enter Author Name",
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      validator: (val) {
-                        if (val.length == 0) {
-                          return "Email cannot be empty";
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        color: Colors.white,
-                      ),
-                      onChanged: (value) {
-                        author = value == '' ? null : value.toLowerCase();
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 70.0),
-                    child: TextFormField(
-                      autofocus: true,
-                      decoration: InputDecoration(
-                        labelText: "Enter Total Quantity",
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      validator: (val) {
-                        if (val.length == 0) {
-                          return "Email cannot be empty";
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        color: Colors.white,
-                      ),
-                      onChanged: (value) {
-                        totalQuantity = int.parse(value);
-                      },
-                    ),
-                  ),
-                ]),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 100.0,vertical: 50.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.centerRight,
-                      end: Alignment.bottomLeft,
-                      colors: [
-                        Color(0Xff393e46),
-                        Color(0Xaa393e46),
-                      ]),
-                  borderRadius: BorderRadius.circular(30.0),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black,
-                      blurRadius: 2.0,
-                      spreadRadius: 0.0,
-                      offset:
-                      Offset(2.0, 2.0), // shadow direction: bottom right
-                    )
-                  ],
-                ),
-                child: FlatButton(
-                  child: Text('Add Book'),
-                  onPressed: () {
-                    FocusScopeNode currentFocus = FocusScope.of(context);
-                    if (!currentFocus.hasPrimaryFocus) {
-                      currentFocus.unfocus();
+                  validator: (val) {
+                    if (val.length == 0) {
+                      return "Email cannot be empty";
+                    } else {
+                      return null;
                     }
-                    showDialog(
-                      context: context,
-                      builder: (_) => AlertDialog(
-                        title: Text('WARNING!'),
-                        content: Text(
-                            'We currently do not have the ability to update book contents. So please be extra sure.'),
-                        actions: [
-                          FlatButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              bookDataCheck();
-                            },
-                            child: Text('Proceed'),
-                          ),
-                          FlatButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('ReCheck'),
-                          ),
-                        ],
-                        elevation: 20.0,
-                      ),
-                      barrierDismissible: true,
-                    );
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    color: Colors.black,
+                  ),
+                  onChanged: (value) {
+                    bookCode = value == '' ? null : value;
                   },
                 ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 70.0),
+                child: TextFormField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    labelText: "Enter Book Name",
+                    labelStyle: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                        fontWeight:FontWeight.w500,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                  validator: (val) {
+                    if (val.length == 0) {
+                      return "Email cannot be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    color: Colors.black54,
+                  ),
+                  onChanged: (value) {
+                    bookName = value == '' ? null : value.toLowerCase();
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 70.0),
+                child: TextFormField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    labelText: "Enter Edition Year",
+                    labelStyle: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                        fontWeight:FontWeight.w500,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                  validator: (val) {
+                    if (val.length == 0) {
+                      return "Email cannot be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    color: Colors.black54,
+                  ),
+                  onChanged: (value) {
+                    editionYear = value == '' ? null : value;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 70.0),
+                child: TextFormField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    labelText: "Enter Author Name",
+                    labelStyle: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                        fontWeight:FontWeight.w500,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                  validator: (val) {
+                    if (val.length == 0) {
+                      return "Email cannot be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    color: Colors.black54,
+                  ),
+                  onChanged: (value) {
+                    author = value == '' ? null : value.toLowerCase();
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 70.0),
+                child: TextFormField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    labelText: "Enter Total Quantity",
+                    labelStyle: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                        fontWeight:FontWeight.w500,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                  validator: (val) {
+                    if (val.length == 0) {
+                      return "Email cannot be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(
+                    fontFamily: "Poppins",
+                    color: Colors.white,
+                  ),
+                  onChanged: (value) {
+                    totalQuantity = int.parse(value);
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 100.0,vertical: 50.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.centerRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color(0Xff393e46),
+                          Color(0Xaa393e46),
+                        ]),
+                    borderRadius: BorderRadius.circular(30.0),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black,
+                        blurRadius: 2.0,
+                        spreadRadius: 0.0,
+                        offset:
+                        Offset(2.0, 2.0), // shadow direction: bottom right
+                      )
+                    ],
+                  ),
+                  child: FlatButton(
+                    child: Text('Add Book'),
+                    onPressed: () {
+                      FocusScopeNode currentFocus = FocusScope.of(context);
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: Text('WARNING!'),
+                          content: Text(
+                              'We currently do not have the ability to update book contents. So please be extra sure.'),
+                          actions: [
+                            FlatButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                bookDataCheck();
+                              },
+                              child: Text('Proceed'),
+                            ),
+                            FlatButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('ReCheck'),
+                            ),
+                          ],
+                          elevation: 20.0,
+                        ),
+                        barrierDismissible: true,
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
