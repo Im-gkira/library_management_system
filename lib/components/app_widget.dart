@@ -50,7 +50,7 @@ class _AppWidgetState extends State<AppWidget> {
       var borrower = widget.appContent['Borrower'];
       var bookCode = widget.appContent['Book Code'];
       var bookName = widget.appContent['Book Name'];
-      var dueDate = DateTime.parse(date);
+      var dueDate = date;
       // print(uniqueBookCode);
       // print(date);
 
@@ -188,6 +188,16 @@ class _BottomSheetContentsState extends State<BottomSheetContents> {
   // bottomSheetItems contains item that will be displayed on the bottom sheet.
   List<Widget> bottomSheetItems = [];
 
+  Future pickDate() async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+    );
+    date = picked;
+  }
+
   // This Functions puts the initial widgets to be displayed.
   // It shows Accept or the Not Available depending on the isAvailable button.
   // The Reject button deletes the application using deleteApplication().
@@ -213,11 +223,15 @@ class _BottomSheetContentsState extends State<BottomSheetContents> {
           uniqueBookCode = value;
         },
       ),);
-      bottomSheetItems.add(Text('Enter Due Date in yyyy-mm-dd'),);
-      bottomSheetItems.add(TextField(
-        onChanged: (value){
-          date = value;
-        },
+      // bottomSheetItems.add(Text('Enter Due Date in yyyy-mm-dd'),);
+      // bottomSheetItems.add(TextField(
+      //   onChanged: (value){
+      //     date = value;
+      //   },
+      // ),);
+      bottomSheetItems.add(RaisedButton(
+        child: Icon(Icons.calendar_today,),
+        onPressed:pickDate,
       ),);
       bottomSheetItems.add(FlatButton(onPressed: widget.getIssued, child: Text('Accept'),),);
     });

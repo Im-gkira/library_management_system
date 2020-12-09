@@ -1,4 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
+// import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,6 +22,7 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
   // userInfoList contains the details of the borrower.
   final _firestore = FirebaseFirestore.instance;
   var fine;
+  var trimmedDate;
   List<Widget> userInfoList = [];
 
   // This Function fetches the data of the particular document with the borrower's email address
@@ -75,6 +76,8 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
       if (fine <= 0) {
         fine = 0;
       }
+      trimmedDate = due.toString().split(" ")[0];
+      trimmedDate = trimmedDate.split('-').reversed.join('-');
     }catch(e){
       Fluttertoast.showToast(msg: e.toString(),);
     }
@@ -200,6 +203,14 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
                                   ),
                                 )),
                             SizedBox(height: 15.0),
+                            Text('• Due Date        : ',
+                                style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )),
+                            SizedBox(height: 15.0),
                           ],
                         ),
                         Column(
@@ -213,6 +224,12 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
                             userInfoList[2],
                             SizedBox(height: 15.0),
                             Text('$fine',style: GoogleFonts.montserrat(
+                              textStyle: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),),),
+                            SizedBox(height: 15.0),
+                            Text('$trimmedDate',style: GoogleFonts.montserrat(
                               textStyle: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
@@ -281,7 +298,7 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
         );
       },
       child: Text(
-          '${widget.issuedBookContent['Book Name']} with the unique code ${widget.issuedBookContent['Unique Book Code']} is due for ${widget.issuedBookContent['Due Date'].toDate()}'),
+          '${widget.issuedBookContent['Book Name']} with the unique code ${widget.issuedBookContent['Unique Book Code']}'),
     );
   }
 }
