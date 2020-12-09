@@ -17,11 +17,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  // emailAddress Stores The email address entered by the user.
-  // password saves the password entered by the user.
-  // isAdmin is bool which is true if the user is an Admin and false if it is a normal user. Its true since it can't be null when the widgets are build.
-  // _auth is Firebase Authorization Instance.
-  // _firestore is Firebase Firestore Instance.
   String emailAddress;
   String password;
   bool isAdmin = true;
