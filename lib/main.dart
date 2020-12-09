@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:library_management_system/Screens/admin_search_screen.dart';
 import 'package:library_management_system/Screens/application_screen.dart';
 import 'package:library_management_system/authorization/registration.dart';
 import 'package:library_management_system/authorization/login.dart';
@@ -32,6 +33,7 @@ void main() async {
         ApplicationScreen.id: (context) => ApplicationScreen(),
         IssuedBooks.id: (context) => IssuedBooks(),
         AddBooks.id:(context) => AddBooks(),
+        AdminSearchScreen.id:(context) => AdminSearchScreen(),
       }
     ),
   );

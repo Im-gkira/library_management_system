@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_system/Screens/application_screen.dart';
-import 'package:library_management_system/Screens/search_screen.dart';
+import 'package:library_management_system/Screens/admin_search_screen.dart';
 import 'package:library_management_system/Screens/issued_books_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:library_management_system/Screens/add_books_screen.dart';
@@ -192,7 +192,7 @@ class _AdminScreenState extends State<AdminScreen> {
                     child: ApplicationScreen(),
                   ),
                   Container(
-                    child: SearchScreen(),
+                    child: AdminSearchScreen(),
                   ),
                   Container(
                     child: IssuedBooks(),
