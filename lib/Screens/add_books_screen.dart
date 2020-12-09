@@ -106,18 +106,18 @@ class _AddBooksState extends State<AddBooks> {
         child: Card(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(35.0)),
-          margin: EdgeInsets.symmetric(horizontal: 40.0,vertical: 210.0),
+          margin: EdgeInsets.only(top: 210.0,left:40.0,right:40.0,bottom:170.0),
           elevation: 26.0,
           shadowColor: Colors.black54,
-          color: Color(0Xaabbbbbb).withOpacity(0.4),
+          color: Color(0X00aaaaaa).withOpacity(0.4),
           child: ListView(
             children: [
               SizedBox(
-                height: 50,
+                height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 70.0),
+                padding: const EdgeInsets.only(
+                    left: 30.0,right: 70.0),
                 child: TextFormField(
                   autofocus: true,
 
@@ -148,8 +148,8 @@ class _AddBooksState extends State<AddBooks> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 70.0),
+                padding: const EdgeInsets.only(
+                    left: 30.0,right: 70.0),
                 child: TextFormField(
                   autofocus: true,
                   decoration: InputDecoration(
@@ -179,8 +179,8 @@ class _AddBooksState extends State<AddBooks> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 70.0),
+                padding: const EdgeInsets.only(
+                    left: 30.0,right: 70.0),
                 child: TextFormField(
                   autofocus: true,
                   decoration: InputDecoration(
@@ -210,7 +210,8 @@ class _AddBooksState extends State<AddBooks> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 70.0),
+                padding: const EdgeInsets.only(
+                    left: 30.0,right: 70.0),
                 child: TextFormField(
                   autofocus: true,
                   decoration: InputDecoration(
@@ -240,8 +241,8 @@ class _AddBooksState extends State<AddBooks> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 70.0),
+                padding: const EdgeInsets.only(
+                    left: 30.0,right: 70.0),
                 child: TextFormField(
                   autofocus: true,
                   decoration: InputDecoration(
