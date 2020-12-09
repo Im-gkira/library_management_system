@@ -33,7 +33,6 @@ class _AdminScreenState extends State<AdminScreen> {
     }
     setState(() {
       x = s;
-      print(x);
     }); // Count of Documents in Collection
   }
 
@@ -43,7 +42,6 @@ class _AdminScreenState extends State<AdminScreen> {
     List<DocumentSnapshot> _myDocCount = _myDoc.docs;
     setState(() {
       y = _myDocCount.length;
-      print(y);
     }); // Count of Documents in Collection
   }
 

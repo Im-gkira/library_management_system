@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_system/Screens/book_screen.dart';
 
 // BookWidget takes the bookContent fetched by firestore for each book that matches search.
@@ -34,10 +35,11 @@ class BookWidget extends StatelessWidget {
         child: Center(
           child: Text(
             '${bookContent['Book Name']}\n${bookContent['Book Code']}',
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Permanent Marker',
-              fontSize: 18.0,
+            style: GoogleFonts.permanentMarker(
+              textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+              ),
             ),
           ),
         ),
@@ -68,10 +70,11 @@ class TitleBar extends StatelessWidget {
           margin: EdgeInsets.only(right: 20.0,top: 20.0,bottom: 20.0),
           child: Text(
             title,
-            style: TextStyle(
-                fontFamily: 'Concert One',
-                fontSize: 40.0,
-                color: colour
+            style: GoogleFonts.concertOne(
+              textStyle: TextStyle(
+                  fontSize: 40.0,
+                  color: colour
+              ),
             ),
           ),
         ),
@@ -108,11 +111,11 @@ class SearchBox extends StatelessWidget {
                 hintText: 'Book Name',
               ),
               cursorColor: Colors.black,
-              autofocus: true,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Colors.black,
-                fontFamily: 'Permanent Marker',
+              style: GoogleFonts.permanentMarker(
+                textStyle: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.black,
+                ),
               ),
               onChanged: onChanged,
             ),

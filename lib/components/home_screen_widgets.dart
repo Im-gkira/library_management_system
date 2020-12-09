@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Carousel extends StatelessWidget {
   Carousel({this.bookNameList});
@@ -22,10 +23,11 @@ class Carousel extends StatelessWidget {
           ),
           child: Center(
             child: Text(item,
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Permanent Marker',
-                fontSize: 18.0,
+              style: GoogleFonts.permanentMarker(
+                textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                ),
               ),
             ),
           ),
@@ -83,10 +85,11 @@ class UserDataWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('${userData['First Name']} ${userData['Last Name']} \n${userData['Branch']} \n${userData['Roll Number']}',
-            style: TextStyle(
-              fontFamily: 'Pacifico',
-              fontSize: 18.0,
-              color: Colors.white,
+            style: GoogleFonts.concertOne(
+              textStyle: TextStyle(
+                fontSize: 18.0,
+                color: Colors.white,
+              ),
             ),
           ),
         ],
@@ -121,10 +124,11 @@ class DivisionTitle extends StatelessWidget {
           ),
           child: Text(
             title,
-            style: TextStyle(
-                fontFamily: 'Concert One',
-                fontSize: 40.0,
-                color: colour
+            style: GoogleFonts.concertOne(
+              textStyle: TextStyle(
+                  fontSize: 40.0,
+                  color: colour
+              ),
             ),
           ),
         ),
@@ -150,10 +154,11 @@ class ApplicationWidget extends StatelessWidget {
       ),
       child: Center(
         child: Text('Book Name: ${appData.data()['Book Name']} \nBook Code: ${appData.data()['Book Code']}',
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: 'Permanent Marker',
-            fontSize: 18.0,
+          style: GoogleFonts.permanentMarker(
+            textStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
+            ),
           ),
         ),
       ),

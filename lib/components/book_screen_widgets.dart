@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TitleBar extends StatelessWidget {
 
@@ -22,10 +23,11 @@ class TitleBar extends StatelessWidget {
           margin: EdgeInsets.only(right: 20.0,top: 15.0,bottom: 20.0),
           child: Text(
             title,
-            style: TextStyle(
-                fontFamily: 'Permanent Marker',
-                fontSize: 25.0,
-                color: colour
+            style: GoogleFonts.permanentMarker(
+              textStyle: TextStyle(
+                  fontSize: 25.0,
+                  color: colour
+              ),
             ),
           ),
         ),
@@ -56,10 +58,11 @@ class Details extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Concert One',
-              fontSize: 20.0,
+            style: GoogleFonts.concertOne(
+              textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 20.0,
+              ),
             ),
           ),
           Row(
@@ -74,10 +77,11 @@ class Details extends StatelessWidget {
               ),
               Text(
                 value,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Concert One',
-                  fontSize: 30.0,
+                style: GoogleFonts.concertOne(
+                  textStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 30.0,
+                  ),
                 ),
               ),
             ],
@@ -106,10 +110,11 @@ class IssueButton extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: TextStyle(
-          color: textColour,
-          fontFamily: 'Concert One',
-          fontSize: 30.0,
+        style: GoogleFonts.concertOne(
+          textStyle: TextStyle(
+            color: textColour,
+            fontSize: 30.0,
+          ),
         ),
       ),
     );
