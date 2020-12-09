@@ -109,7 +109,7 @@ class _AddBooksState extends State<AddBooks> {
           margin: EdgeInsets.symmetric(horizontal: 40.0,vertical: 210.0),
           elevation: 26.0,
           shadowColor: Colors.black54,
-          color: Color(0Xaaaaaaaa).withOpacity(0.4),
+          color: Color(0Xaabbbbbb).withOpacity(0.4),
           child: ListView(
             children: [
               SizedBox(
