@@ -10,7 +10,6 @@ class AddBooks extends StatefulWidget {
 }
 
 class _AddBooksState extends State<AddBooks> {
-
   final _firestore = FirebaseFirestore.instance;
   String bookCode;
   String bookName;
@@ -24,22 +23,29 @@ class _AddBooksState extends State<AddBooks> {
     bool check = true;
     String toastMessage;
 
-    if(bookName == null || bookCode == null || totalQuantity == null || editionYear == null || author == null){
+    if (bookName == null ||
+        bookCode == null ||
+        totalQuantity == null ||
+        editionYear == null ||
+        author == null) {
       toastMessage = 'Data Entry Not Correct';
       check = false;
-    }
-    else{
-
-      final checkData = await _firestore.collection('books').doc(bookCode).get();
-      if(checkData.data() != null){
+    } else {
+      final checkData =
+          await _firestore.collection('books').doc(bookCode).get();
+      if (checkData.data() != null) {
         toastMessage = 'Code Not Unique';
         check = false;
-      }
-      else{
-        final bookData = await _firestore.collection('books').where('Book Name', isEqualTo: bookName).get();
-        for(var data in bookData.docs){
-          if(data.data()['Author'] == author && data.data()['Edition Year'] == editionYear){
-            toastMessage = '${data.data()['Book Code']} contains identical data';
+      } else {
+        final bookData = await _firestore
+            .collection('books')
+            .where('Book Name', isEqualTo: bookName)
+            .get();
+        for (var data in bookData.docs) {
+          if (data.data()['Author'] == author &&
+              data.data()['Edition Year'] == editionYear) {
+            toastMessage =
+                '${data.data()['Book Code']} contains identical data';
             check = false;
             break;
           }
@@ -47,10 +53,11 @@ class _AddBooksState extends State<AddBooks> {
       }
     }
 
-    if(!check){
-      Fluttertoast.showToast(msg: toastMessage,);
-    }
-    else{
+    if (!check) {
+      Fluttertoast.showToast(
+        msg: toastMessage,
+      );
+    } else {
       addBook();
     }
   }
@@ -59,7 +66,7 @@ class _AddBooksState extends State<AddBooks> {
   // The document id is the emailAddress of the user filling the details.
   // After all the details are filled it takes the user to the home screen.
   void addBook() async {
-    try{
+    try {
       _firestore.collection('books').doc(bookCode).set({
         'Book Code': bookCode,
         'Book Name': bookName,
@@ -70,82 +77,237 @@ class _AddBooksState extends State<AddBooks> {
         'Borrower': borrower,
       });
       Navigator.pop(context);
-      Fluttertoast.showToast(msg: 'Record Updated',);
-    }
-    catch(e){
-      Fluttertoast.showToast(msg: e.toString(),);
+      Fluttertoast.showToast(
+        msg: 'Record Updated',
+      );
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+      );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerRight,
+                end: Alignment.bottomLeft,
+                colors: [
+              Color(0Xff294D64),
+              Color(0Xff294D64),
+            ])),
         child: ListView(
           children: [
-            Text('Enter Book Code'),
-            TextField(
-              onChanged: (value){
-                bookCode = value == '' ? null : value;
-              },
-            ),
-            Text('Enter Book Name'),
-            TextField(
-              onChanged: (value){
-                bookName = value == '' ? null : value.toLowerCase();
-              },
-            ),
-            Text('Enter Edition Year'),
-            TextField(
-              onChanged: (value){
-                editionYear = value == '' ? null : value;
-              },
-            ),
-            Text('Enter Author Name'),
-            TextField(
-              onChanged: (value){
-                author = value == '' ? null : value.toLowerCase();
-              },
-            ),
-            Text('Enter Total Quantity'),
-            TextField(
-              onChanged: (value){
-                totalQuantity = int.parse(value);
-              },
-            ),
-            FlatButton(
-              child: Text('Add Book'),
-              onPressed: (){
-                FocusScopeNode currentFocus = FocusScope.of(context);
-                if (!currentFocus.hasPrimaryFocus) {
-                  currentFocus.unfocus();
-                }
-                showDialog(
-                  context: context,
-                  builder: (_) => AlertDialog(
-                    title: Text('WARNING!'),
-                    content: Text('We currently do not have the ability to update book contents. So please be extra sure.'),
-                    actions: [
-                      FlatButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                          bookDataCheck();
-                        },
-                        child: Text('Proceed'),
-                      ),
-                      FlatButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                        child: Text('ReCheck'),
-                      ),
-                    ],
-                    elevation: 20.0,
+            Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 100,
                   ),
-                  barrierDismissible: true,
-                );
-              },
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 70.0),
+                    child: TextFormField(
+                      autofocus: true,
+
+                      decoration: InputDecoration(
+                        labelText: "Enter Book Code",
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      validator: (val) {
+                        if (val.length == 0) {
+                          return "Email cannot be empty";
+                        } else {
+                          return null;
+                        }
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        color: Colors.white,
+                      ),
+                      onChanged: (value) {
+                        bookCode = value == '' ? null : value;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 70.0),
+                    child: TextFormField(
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        labelText: "Enter Book Name",
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      validator: (val) {
+                        if (val.length == 0) {
+                          return "Email cannot be empty";
+                        } else {
+                          return null;
+                        }
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        color: Colors.white,
+                      ),
+                      onChanged: (value) {
+                        bookName = value == '' ? null : value.toLowerCase();
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 70.0),
+                    child: TextFormField(
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        labelText: "Enter Edition Year",
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      validator: (val) {
+                        if (val.length == 0) {
+                          return "Email cannot be empty";
+                        } else {
+                          return null;
+                        }
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        color: Colors.white,
+                      ),
+                      onChanged: (value) {
+                        editionYear = value == '' ? null : value;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 70.0),
+                    child: TextFormField(
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        labelText: "Enter Author Name",
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      validator: (val) {
+                        if (val.length == 0) {
+                          return "Email cannot be empty";
+                        } else {
+                          return null;
+                        }
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        color: Colors.white,
+                      ),
+                      onChanged: (value) {
+                        author = value == '' ? null : value.toLowerCase();
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 70.0),
+                    child: TextFormField(
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        labelText: "Enter Total Quantity",
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      validator: (val) {
+                        if (val.length == 0) {
+                          return "Email cannot be empty";
+                        } else {
+                          return null;
+                        }
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      style: TextStyle(
+                        fontFamily: "Poppins",
+                        color: Colors.white,
+                      ),
+                      onChanged: (value) {
+                        totalQuantity = int.parse(value);
+                      },
+                    ),
+                  ),
+                ]),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 100.0,vertical: 50.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.centerRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        Color(0Xff393e46),
+                        Color(0Xaa393e46),
+                      ]),
+                  borderRadius: BorderRadius.circular(30.0),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black,
+                      blurRadius: 2.0,
+                      spreadRadius: 0.0,
+                      offset:
+                      Offset(2.0, 2.0), // shadow direction: bottom right
+                    )
+                  ],
+                ),
+                child: FlatButton(
+                  child: Text('Add Book'),
+                  onPressed: () {
+                    FocusScopeNode currentFocus = FocusScope.of(context);
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.unfocus();
+                    }
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: Text('WARNING!'),
+                        content: Text(
+                            'We currently do not have the ability to update book contents. So please be extra sure.'),
+                        actions: [
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              bookDataCheck();
+                            },
+                            child: Text('Proceed'),
+                          ),
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('ReCheck'),
+                          ),
+                        ],
+                        elevation: 20.0,
+                      ),
+                      barrierDismissible: true,
+                    );
+                  },
+                ),
+              ),
             ),
           ],
         ),
