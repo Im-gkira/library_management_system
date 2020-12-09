@@ -199,7 +199,7 @@ class _AddBooksState extends State<AddBooks> {
                       return null;
                     }
                   },
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.datetime,
                   style: TextStyle(
                     fontFamily: "Poppins",
                     color: Colors.black54,
@@ -230,7 +230,7 @@ class _AddBooksState extends State<AddBooks> {
                       return null;
                     }
                   },
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.name,
                   style: TextStyle(
                     fontFamily: "Poppins",
                     color: Colors.black54,
@@ -261,7 +261,7 @@ class _AddBooksState extends State<AddBooks> {
                       return null;
                     }
                   },
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.number,
                   style: TextStyle(
                     fontFamily: "Poppins",
                     color: Colors.white,
