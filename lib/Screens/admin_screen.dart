@@ -84,23 +84,25 @@ class _AdminScreenState extends State<AdminScreen> {
                 children: [
                   Container(
                     decoration: BoxDecoration(
+                      image:DecorationImage(image: AssetImage("images/admin.png"),fit: BoxFit.fitWidth),
                         gradient: LinearGradient(
                             begin: Alignment.centerRight,
                             end: Alignment.bottomLeft,
                             colors: [
-                          Color(0Xff294D64),
-                          Color(0Xff294D64),
+                          Colors.white,
+                          Colors.white,
                         ])),
-                    child: Column(
+                    child: ListView(
                       children: [
+
                         Card(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(35.0)),
                           margin: EdgeInsets.symmetric(
                               horizontal: 40.0, vertical: 30.0),
                           elevation: 26.0,
-                          shadowColor: Colors.black,
-                          color: Color(0Xff294D64),
+                          shadowColor: Colors.white,
+                          color: Color(0X00aaaaaa).withOpacity(0.2),
                           child: Container(
                             margin: EdgeInsets.only(left: 20.0,right: 20.0,top: 20.0),
                             child: Column(
@@ -161,12 +163,13 @@ class _AdminScreenState extends State<AdminScreen> {
                                         PieChartSectionData(
                                           value: ((y / x) * 100).roundToDouble(),
                                           title: '${((y / x) * 100).roundToDouble()}%',
-                                          color: Colors.blue,
+                                          color: Color(0Xaa231084).withOpacity(0.4),
                                           radius: 100.0,
                                         ),
                                         PieChartSectionData(
                                           value:((x - y) * 100 / x).roundToDouble(),
                                           radius:  100.0,
+                                          color: Color(0Xaf831014).withOpacity(0.4),
                                           title: '${((x - y) * 100 / x).roundToDouble()}%',
                                         ),
                                       ],
@@ -185,6 +188,14 @@ class _AdminScreenState extends State<AdminScreen> {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: 70.0,
+                        ),
+                        Container(
+                          alignment: Alignment.bottomCenter,
+                            height: 240,
+                            width: 240,
+                            child: Image(image: AssetImage("images/sonepat.png"))),
                       ],
                     ),
                   ),

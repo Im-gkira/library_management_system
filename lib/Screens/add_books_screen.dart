@@ -109,7 +109,7 @@ class _AddBooksState extends State<AddBooks> {
           margin: EdgeInsets.only(top: 210.0,left:40.0,right:40.0,bottom:170.0),
           elevation: 26.0,
           shadowColor: Colors.black54,
-          color: Color(0X00aaaaaa).withOpacity(0.4),
+          color: Color(0X00aaaaaa).withOpacity(0.8),
           child: ListView(
             children: [
               SizedBox(
@@ -295,7 +295,14 @@ class _AddBooksState extends State<AddBooks> {
                     ],
                   ),
                   child: FlatButton(
-                    child: Text('Add Book'),
+                    child: Text('Add Book',
+                    style: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                      )
+                    ),),
                     onPressed: () {
                       FocusScopeNode currentFocus = FocusScope.of(context);
                       if (!currentFocus.hasPrimaryFocus) {
