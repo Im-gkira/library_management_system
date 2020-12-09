@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:library_management_system/components/book_screen_widgets.dart';
 
 // This screens shows the contents of the book that was tapped in the search screen.
 // If the user is an admin he can only view the status of the book but not apply for the book.
@@ -23,35 +25,40 @@ class _BookScreenState extends State<BookScreen> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   String emailAddress;
-  bool isAvailable;
+  bool isAvailable = true;
   bool isAdmin = true;
 
   // This Function Checks whether the current user is admin or not.
   // It accesses the admin collection in firestore and checks if their is any entry with the current emailAddress.
   // It returns false and then uses setState to change isAdmin to new value, if the user has no entry in admin collection means the user is not an admin.
   void adminCheck() async {
-    final userData = await _firestore.collection('admin').doc(emailAddress).get();
-    if (userData.data() == null){
-      setState(() {
-        isAdmin = false;
-      });
+    try{
+      final userData = await _firestore.collection('admin').doc(emailAddress).get();
+      if (userData.data() == null){
+        setState(() {
+          isAdmin = false;
+        });
+      }
+    }catch(e){
+      Fluttertoast.showToast(msg: e.toString(),);
     }
-    print(isAdmin);
-    print(userData.data());
   }
 
   // This function checks whether the book being applied is already issued by the user or not.
   // This function checks if any documents in issued books collections is having the current user's email address in the Borrower map.
   // we use the firstWhere to check for the condition and if it is issued the user's application is not send.
   void checkIssued () {
-    var isIssued = widget.bookContent['Borrower'].keys.firstWhere(
-            (k) => widget.bookContent['Borrower'][k] == emailAddress, orElse: () => null);
-    if(isIssued != null){
-      print('Already Issued');
-      // print(widget.bookContent['Borrower']);
-    }
-    else{
-      checkApplied();
+    try{
+      var isIssued = widget.bookContent['Borrower'].keys.firstWhere(
+              (k) => widget.bookContent['Borrower'][k] == emailAddress, orElse: () => null);
+      if(isIssued != null){
+        Fluttertoast.showToast(msg: 'Already Issued',);
+      }
+      else{
+        checkApplied();
+      }
+    }catch(e){
+      Fluttertoast.showToast(msg: e.toString(),);
     }
   }
 
@@ -59,13 +66,16 @@ class _BookScreenState extends State<BookScreen> {
   // This function checks whether the particular user's doc in users collection contains the map applied with the particular book code being applied for.
   // This Function will limit the no.of applications for the book to one per person.
   void checkApplied() async {
-    final userData = await _firestore.collection('users').doc(emailAddress).get();
-    if(userData.data()['Applied']['${widget.bookContent['Book Code']}'] != null){
-      print('Already Applied');
-    }
-    else{
-      print('Issuing Request Send');
-      sendApplication();
+    try{
+      final userData = await _firestore.collection('users').doc(emailAddress).get();
+      if(userData.data()['Applied']['${widget.bookContent['Book Code']}'] != null){
+        Fluttertoast.showToast(msg: 'Already Applied',);
+      }
+      else{
+        sendApplication();
+      }
+    }catch(e){
+      Fluttertoast.showToast(msg: e.toString(),);
     }
   }
 
@@ -74,18 +84,26 @@ class _BookScreenState extends State<BookScreen> {
   // It creates a new doc in the applications collection and a new entry in the applied of the user doc in users collection.
   // The Application id is simply the emailAddress of the user + BookCode
   void sendApplication() {
-    String applicationId;
-    applicationId = emailAddress+widget.bookContent['Book Code'];
-    print(applicationId);
-    _firestore.collection('applications').doc(applicationId).set({
-      'Book Code': widget.bookContent['Book Code'],
-      'Borrower': emailAddress,
-      'Application Date': DateTime.now(),
-      'Book Name': widget.bookContent['Book Name'],
-    });
-    _firestore.collection('users').doc(emailAddress).update({
-      'Applied.${widget.bookContent['Book Code']}': DateTime.now(),
-    });
+    try{
+      String applicationId;
+      applicationId = emailAddress+widget.bookContent['Book Code'];
+      print(applicationId);
+      _firestore.collection('applications').doc(applicationId).set({
+        'Book Code': widget.bookContent['Book Code'],
+        'Borrower': emailAddress,
+        'Application Date': DateTime.now(),
+        'Book Name': widget.bookContent['Book Name'],
+      });
+      _firestore.collection('users').doc(emailAddress).update({
+        'Applied.${widget.bookContent['Book Code']}': DateTime.now(),
+      });
+      Fluttertoast.showToast(
+        msg: 'Issuing Request Send',
+        backgroundColor: Color(0xDD286053),
+      );
+    }catch(e){
+      Fluttertoast.showToast(msg: e.toString(),);
+    }
   }
 
   // This function is executed as soon as the widget is build.
@@ -94,6 +112,8 @@ class _BookScreenState extends State<BookScreen> {
   @override
   void initState() {
     super.initState();
+    print('Icon made by Freepik from www.flaticon.com');
+    print('Icon made by Darius Dan from www.flaticon.com');
     isAvailable = widget.bookContent['Total Quantity'] > widget.bookContent['Issued Quantity'];
     try{
       final user = _auth.currentUser;
@@ -102,7 +122,7 @@ class _BookScreenState extends State<BookScreen> {
       }
       adminCheck();
     }catch(e){
-      print(e);
+      Fluttertoast.showToast(msg: e.toString(),);
     }
   }
 
@@ -111,18 +131,68 @@ class _BookScreenState extends State<BookScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/background.jpg'),
+            fit: BoxFit.cover,
+          ),
+          color: Colors.black,
+        ),
+        child: ListView(
           children: [
-            Text('${widget.bookContent['Book Name']}'),
-            Text('${widget.bookContent['Book Code']}'),
-            Text('${widget.bookContent['Issued Quantity']}'),
-            Text('${widget.bookContent['Total Quantity']}'),
+            TitleBar(
+              title: '${widget.bookContent['Book Name']}'.toUpperCase(),
+              colour: Colors.white,
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                height: 100.0,
+                width: 100.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: Image(
+                  image: AssetImage('images/dictionary.png'),
+                ),
+              ),
+            ),
+            SizedBox(height: 20.0,),
+            Details(
+              title: 'Book Code',
+              value: '${widget.bookContent['Book Code']}',
+              imageName: 'qr-code.png',
+            ),
+            Details(
+              title: 'Author',
+              value: '${widget.bookContent['Author']}',
+              imageName: 'writer.png',
+            ),
+            Details(
+              title: 'Edition Year',
+              value: '${widget.bookContent['Edition Year']}',
+              imageName: 'calendar.png',
+            ),
+            Details(
+              title: 'Issued Quantity',
+              value: '${widget.bookContent['Issued Quantity']}',
+              imageName: 'book.png',
+            ),
+            Details(
+              title: 'Total quantity',
+              value:'${widget.bookContent['Total Quantity']}',
+              imageName: 'bookshelf.png',
+            ),
             FlatButton(
               // If the isAdmin is true the user can cannot issue the book.
               // If the isAvailable is true the user cannot issue the book.
-              onPressed: isAdmin ? (){print('Admin');} : isAvailable ? checkIssued : (){print('UnAvailable');},
-              child: isAvailable ? Text('Issue') : Text('Not Available'),
+              onPressed: isAdmin ? (){} : isAvailable ? checkIssued : (){
+                Fluttertoast.showToast(msg: 'Unavailable',);
+              },
+              child: isAvailable ?
+              IssueButton(text: 'Request Book',colour: Color(0xDD286053),textColour: Color(0xFF3DD597),) :
+              IssueButton(text: 'Not Available', colour: Color(0xDD623A42),textColour: Color(0xFFFC555C),),
             ),
           ],
         ),

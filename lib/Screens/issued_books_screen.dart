@@ -68,7 +68,7 @@ class _IssuedBooksState extends State<IssuedBooks> {
     }
   }
 
-  int _currentIndex = 0;
+  //int _currentIndex = 0;
   PageController _pageController;
 
   @override
@@ -126,7 +126,7 @@ class _IssuedBooksState extends State<IssuedBooks> {
                       Color(0Xff294D64),
                       Color(0Xff294D64),
                     ])),
-                child: Column(
+                child: ListView(
                   children: [
                     Card(
                       shape: RoundedRectangleBorder(
@@ -205,9 +205,9 @@ class _IssuedBooksState extends State<IssuedBooks> {
                 ),
               ),
               Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.end,
+                child: ListView(
+                  //crossAxisAlignment: CrossAxisAlignment.stretch,
+                  //mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
                         child: Center(
@@ -311,7 +311,8 @@ class _IssuedBooksState extends State<IssuedBooks> {
                 ),
               ),
             ],
-          )),
+          ),
+      ),
     );
   }
 }

@@ -25,8 +25,8 @@ class _AdminScreenState extends State<AdminScreen> {
 
   void countBooks() async {
     QuerySnapshot _myDoc =
-        await Firestore.instance.collection('books').getDocuments();
-    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
+        await FirebaseFirestore.instance.collection('books').get();
+    List<DocumentSnapshot> _myDocCount = _myDoc.docs;
     var s = 0;
     for (var i = 0; i < _myDocCount.length; i++) {
       s = s + _myDocCount[i]['Total Quantity'];
@@ -39,8 +39,8 @@ class _AdminScreenState extends State<AdminScreen> {
 
   void countIssuedBook() async {
     QuerySnapshot _myDoc =
-        await Firestore.instance.collection('issued books').getDocuments();
-    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
+        await FirebaseFirestore.instance.collection('issued books').get();
+    List<DocumentSnapshot> _myDocCount = _myDoc.docs;
     setState(() {
       y = _myDocCount.length;
       print(y);

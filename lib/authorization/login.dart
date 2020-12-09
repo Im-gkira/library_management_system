@@ -70,9 +70,9 @@ class _LoginState extends State<Login> {
           elevation: 26.0,
           shadowColor: Colors.black,
           color: Color(0Xaa294D64).withOpacity(0.4),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
+            // crossAxisAlignment: CrossAxisAlignment.stretch,
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 20.0),

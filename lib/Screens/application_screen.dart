@@ -52,9 +52,9 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     return Scaffold(
       body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.end,
+        child: ListView(
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
+          //mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
                 child: Center(
