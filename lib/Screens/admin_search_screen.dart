@@ -94,7 +94,8 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                           color: Colors.white,
                         ),
                         onPressed: () {
-                          bookSearch(bookName.toLowerCase());
+                          bookSearch(
+                              bookName == null ? '' : bookName.toLowerCase());
                           bookWidgetList = [];
                         },
                       ),
@@ -145,9 +146,9 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                         if (!currentFocus.hasPrimaryFocus) {
                           currentFocus.unfocus();
                         }
-                        bookSearch(
-                            bookName == null ? bookName : bookName.toLowerCase());
-                      },
+                        bookSearch(bookName == null ? '' : bookName.toLowerCase());
+                        bookWidgetList = [];
+                        },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
