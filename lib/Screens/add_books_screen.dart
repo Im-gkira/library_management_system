@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
 class AddBooks extends StatefulWidget {
   static String id = 'add_books';
@@ -120,9 +121,15 @@ class _AddBooksState extends State<AddBooks> {
               SizedBox(
                 height: 20,
               ),
-              FlatButton(onPressed: () async {
-                barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-                    'Colors.black', 'cancel', true, ScanMode.BARCODE);
+              FlatButton(onPressed: ()  {
+                try{
+                setState(() async {
+                  barcodeScanRes = await scanner.scan();
+                });}
+                catch(e){
+                  print(e);
+                }
+                print(barcodeScanRes);
               }, child: Text('scan') ),
               Padding(
                 padding: const EdgeInsets.only(left: 30.0, right: 70.0),
