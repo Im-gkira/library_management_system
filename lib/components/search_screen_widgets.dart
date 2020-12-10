@@ -29,11 +29,13 @@ class BookWidget extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.0),
+          color: Colors.black54,
         ),
         margin: EdgeInsets.symmetric(vertical: 2.0,horizontal: 35.0),
-        child: Text(
-          'Name:${bookContent['Book Name']}\nBook ID:${bookContent['Book Code']}\n',
-          style: GoogleFonts.montserrat(
+        child: Center(
+          child: Text(
+            '${bookContent['Book Name']}\n${bookContent['Book Code']}',
+            style: GoogleFonts.permanentMarker(
               textStyle: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -41,6 +43,7 @@ class BookWidget extends StatelessWidget {
             ),
           ),
         ),
+      ),
     );
     // child:
   }

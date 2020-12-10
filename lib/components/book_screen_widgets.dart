@@ -75,12 +75,18 @@ class Details extends StatelessWidget {
                   image: AssetImage('images/$imageName'),
                 ),
               ),
-              Text(
-                value,
-                style: GoogleFonts.concertOne(
-                  textStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 30.0,
+              Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  child: Text(
+                    value,
+                    style: GoogleFonts.concertOne(
+                      textStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30.0,
+                      ),
+                    ),
                   ),
                 ),
               ),
