@@ -32,14 +32,13 @@ class BookWidget extends StatelessWidget {
           color: Colors.black54,
         ),
         margin: EdgeInsets.symmetric(vertical: 2.0,horizontal: 35.0),
-        child: Center(
-          child: Text(
-            '${bookContent['Book Name']}\n${bookContent['Book Code']}',
-            style: GoogleFonts.permanentMarker(
-              textStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-              ),
+        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.15),
+        child: Text(
+          '${bookContent['Book Name']}\n${bookContent['Book Code']}',
+          style: GoogleFonts.permanentMarker(
+            textStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
             ),
           ),
         ),
