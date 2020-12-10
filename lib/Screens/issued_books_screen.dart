@@ -29,24 +29,25 @@ class _IssuedBooksState extends State<IssuedBooks> {
   // The list is emptied in the beginning.
   // The data is sorted in accordance to the due date to show the whose date is near on the top.
   void viewIssuedBooks() async {
-    try{
+    try {
       var bookData =
-    await _firestore.collection('issued books').orderBy('Due Date').get();
-    setState(() {
-      issuedBookWidgetList = [];
-      for (var apps in bookData.docs) {
-        var issuedBookContent = apps.data();
-        issuedBookWidgetList.add(
-          IssuedBookWidget(
-            issuedBookContent: issuedBookContent,
-            viewIssuedBooks: viewIssuedBooks,
-          ),
-        );
-      }
-    });
-    }
-    catch(e){
-      Fluttertoast.showToast(msg: e.toString(),);
+          await _firestore.collection('issued books').orderBy('Due Date').get();
+      setState(() {
+        issuedBookWidgetList = [];
+        for (var apps in bookData.docs) {
+          var issuedBookContent = apps.data();
+          issuedBookWidgetList.add(
+            IssuedBookWidget(
+              issuedBookContent: issuedBookContent,
+              viewIssuedBooks: viewIssuedBooks,
+            ),
+          );
+        }
+      });
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+      );
     }
   }
 
@@ -57,7 +58,9 @@ class _IssuedBooksState extends State<IssuedBooks> {
       var bookData =
           await _firestore.collection('issued books').doc(enteredCode).get();
       if (bookData.data() == null) {
-        Fluttertoast.showToast(msg: 'Book Not Found',);
+        Fluttertoast.showToast(
+          msg: 'Book Not Found',
+        );
         // print('Book Not Found');
       } else {
         setState(() {
@@ -72,7 +75,9 @@ class _IssuedBooksState extends State<IssuedBooks> {
         });
       }
     } catch (e) {
-      Fluttertoast.showToast(msg: e.toString(),);
+      Fluttertoast.showToast(
+        msg: e.toString(),
+      );
     }
   }
 
@@ -98,229 +103,243 @@ class _IssuedBooksState extends State<IssuedBooks> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: TabBar(
-            onTap: (value){
-              SystemChannels.textInput.invokeMethod('TextInput.hide');
-              SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
-            },
-            labelPadding: EdgeInsets.only(top: 10.0),
-            labelStyle: GoogleFonts.montserrat(
-                textStyle: TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w500,
-            )),
-            labelColor: Colors.black,
-            tabs: [
-              Tab(
-                icon: Icon(Icons.search),
-                text: 'Search',
-                iconMargin: EdgeInsets.all(0.0),
-              ),
-              Tab(
-                  icon: Icon(Icons.list),
-                  text: 'All',
-                  iconMargin: EdgeInsets.all(0.0)),
-            ],
-          ),
-          body: TabBarView(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.centerRight,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                      Color(0Xff294D64),
-                      Color(0Xff294D64),
-                    ])),
-                child: ListView(
-                  children: [
-                    Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(35.0)),
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 40.0, vertical: 30.0),
-                      elevation: 26.0,
-                      shadowColor: Colors.black,
-                      color: Color(0Xff294D64),
-                      child: TextFormField(
-                        autofocus: true,
-                        keyboardAppearance: Brightness.dark,
-                        onChanged: (value) {
-                          enteredCode = value;
-                        },
-                        validator: (val) {
-                          if (val.length == 0) {
-                            Fluttertoast.showToast(msg: 'Type The Book Code',);
-                            return "Please type the code of the book";
-                          } else {
-                            return null;
-                          }
-                        },
-                        keyboardType: TextInputType.number,
-                        style: new TextStyle(
-                          fontFamily: "Poppins",
-                          color: Colors.white,
-                        ),
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                              icon: Icon(Icons.search),
-                              onPressed: viewEnteredBook),
-                          labelText: "Enter Unique Code of the Book",
-                          labelStyle: TextStyle(
-                            color: Colors.white,
-                          ),
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(35.0),
-                            borderSide: BorderSide(),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(35.0)),
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 40.0, vertical: 20.0),
-                      elevation: enteredBookWidgetList.length == 0 ? 0 : 26.0,
-                      shadowColor: Colors.black,
-                      color: Color(0Xff294D64),
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 10.0),
-                          child: DefaultTextStyle(
-                            style: GoogleFonts.montserrat(
-                                textStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.normal,
-                              letterSpacing: 1.6,
-                            )),
-                            child: Builder(
-                              builder: (context) {
-                                return Column(
-                                  children: enteredBookWidgetList,
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+        resizeToAvoidBottomInset: false,
+        appBar: TabBar(
+          onTap: (value) {
+            SystemChannels.textInput.invokeMethod('TextInput.hide');
+            SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+          },
+          labelPadding: EdgeInsets.only(top: 10.0),
+          labelStyle: GoogleFonts.montserrat(
+              textStyle: TextStyle(
+            fontSize: 14.0,
+            fontWeight: FontWeight.w500,
+          )),
+          labelColor: Colors.black,
+          tabs: [
+            Tab(
+              icon: Icon(Icons.search),
+              text: 'Search',
+              iconMargin: EdgeInsets.all(0.0),
+            ),
+            Tab(
+                icon: Icon(Icons.list),
+                text: 'All',
+                iconMargin: EdgeInsets.all(0.0)),
+          ],
+        ),
+        body: TabBarView(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("images/allBooks.png"),
                 ),
+                color: Colors.white,
               ),
-              Container(
-                child: ListView(
-                  //crossAxisAlignment: CrossAxisAlignment.stretch,
-                  //mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                        child: Center(
-                      child: Text(
-                        'To view Please Press the Button',
-                        style: GoogleFonts.montserrat(
-                          fontSize: 19.0,
-                          fontWeight: FontWeight.w900,
+              child: ListView(
+                children: [
+                  Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(35.0)),
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 40.0, vertical: 30.0),
+                    elevation: 26.0,
+                    shadowColor: Colors.black,
+                    color: Color(0Xaa999999).withOpacity(0.3),
+                    child: TextFormField(
+                      autofocus: true,
+                      keyboardAppearance: Brightness.dark,
+                      onChanged: (value) {
+                        enteredCode = value;
+                      },
+                      validator: (val) {
+                        if (val.length == 0) {
+                          Fluttertoast.showToast(
+                            msg: 'Type The Book Code',
+                          );
+                          return "Please type the code of the book";
+                        } else {
+                          return null;
+                        }
+                      },
+                      keyboardType: TextInputType.number,
+                      style: new TextStyle(
+                        fontFamily: "Poppins",
+                        color: Colors.black87,
+                      ),
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            icon: Icon(Icons.search),
+                            onPressed: viewEnteredBook),
+                        labelText: "Enter Unique Code of the Book",
+                        labelStyle: GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w500,
+                        )),
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(35.0),
+                          borderSide: BorderSide(),
                         ),
                       ),
-                    )),
-                    Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(35.0)),
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 40.0, vertical: 20.0),
-                      elevation: issuedBookWidgetList.length == 0 ? 0 : 26.0,
-                      shadowColor: Colors.black,
-                      color: Color(0Xff294D64),
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 30.0, horizontal: 10.0),
-                          child: DefaultTextStyle(
-                            style: GoogleFonts.montserrat(
-                                textStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.normal,
-                              letterSpacing: 1.6,
-                            )),
-                            child: Builder(
-                              builder: (context) {
-                                return SizedBox(
-                                  height: 400.0,
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.vertical,
-                                    child: Column(
-                                        children: List.generate(
-                                            issuedBookWidgetList.length,
-                                            (index) {
-                                      return Column(children: [
-                                        issuedBookWidgetList[index],
-                                        SizedBox(
-                                          height: 15.0,
-                                        ),
-                                        Text("****"),
-                                        SizedBox(
-                                          height: 15.0,
-                                        )
-                                      ]);
-                                    })),
-                                  ),
-                                );
-                              },
-                            ),
+                    ),
+                  ),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(35.0)),
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+                    elevation: enteredBookWidgetList.length == 0 ? 0 : 26.0,
+                    shadowColor: Colors.black,
+                    color: Color(0Xff294D64),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: enteredBookWidgetList.length == 0
+                            ? EdgeInsets.all(0)
+                            : const EdgeInsets.symmetric(
+                                vertical: 20.0, horizontal: 10.0),
+                        child: DefaultTextStyle(
+                          style: GoogleFonts.montserrat(
+                              textStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.normal,
+                            letterSpacing: 1.6,
+                          )),
+                          child: Builder(
+                            builder: (context) {
+                              return Column(
+                                children: enteredBookWidgetList,
+                              );
+                            },
                           ),
                         ),
                       ),
                     ),
-                    Card(
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("images/allBooks.png"),
+                ),
+                color: Colors.white,
+              ),
+              child: ListView(
+                //crossAxisAlignment: CrossAxisAlignment.stretch,
+                //mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 20.0),
+                      child: Center(
+                    child: Text(
+                      'To view Please Press the Button',
+                      style: GoogleFonts.montserrat(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  )),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(35.0)),
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+                    elevation: issuedBookWidgetList.length == 0 ? 0 : 26.0,
+                    shadowColor: Colors.white,
+                    color: Color(0X00FFFFFF).withOpacity(0.1),
+                    child: SingleChildScrollView(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 50.0, vertical: 50.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.centerRight,
-                                end: Alignment.bottomLeft,
-                                colors: [
-                                  Color(0XaaDD4040),
-                                  Color(0XaaDD4040),
-                                ]),
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black,
-                                blurRadius: 2.0,
-                                spreadRadius: 0.0,
-                                offset: Offset(
-                                    2.0, 2.0), // shadow direction: bottom right
-                              )
-                            ],
-                          ),
-                          child: FlatButton(
-                            child: AutoSizeText('Check All Issued Books',
-                                maxLines: 1,
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w800,
-                                  letterSpacing: 1.6,
-                                  color: Colors.white,
-                                )),
-                            onPressed: viewIssuedBooks,
+                            vertical: 30.0, horizontal: 15.0),
+                        child: DefaultTextStyle(
+                          style: GoogleFonts.montserrat(
+                              textStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 1.6,
+                          )),
+                          child: Builder(
+                            builder: (context) {
+                              return SizedBox(
+                                height: 400.0,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Column(
+                                      children: List.generate(
+                                          issuedBookWidgetList.length, (index) {
+                                    return Column(children: [
+                                      issuedBookWidgetList[index],
+                                      SizedBox(
+                                        height: 15.0,
+                                      ),
+                                      Text("****"),
+                                      SizedBox(
+                                        height: 15.0,
+                                      )
+                                    ]);
+                                  })),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  Card(
+                    margin: EdgeInsets.only(left: 40,right: 40,top: 10),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5.0, vertical: 5.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.centerRight,
+                              end: Alignment.bottomLeft,
+                              colors: [
+                                Color(0XaaDD4040),
+                                Color(0XaaDD4040),
+                              ]),
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black,
+                              blurRadius: 2.0,
+                              spreadRadius: 0.0,
+                              offset: Offset(
+                                  2.0, 2.0), // shadow direction: bottom right
+                            )
+                          ],
+                        ),
+                        child: FlatButton(
+                          child: AutoSizeText('Check All Issued Books',
+                              maxLines: 1,
+                              style: GoogleFonts.montserrat(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: 1.6,
+                                color: Colors.white,
+                              )),
+                          onPressed: viewIssuedBooks,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
+        ),
       ),
     );
   }
