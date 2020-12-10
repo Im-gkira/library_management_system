@@ -20,6 +20,7 @@ class AdminScreen extends StatefulWidget {
 }
 
 class _AdminScreenState extends State<AdminScreen> {
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   int x;
   int y;
   int _currentIndex = 0;
@@ -82,121 +83,131 @@ class _AdminScreenState extends State<AdminScreen> {
                   setState(() => _currentIndex = index);
                 },
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      image:DecorationImage(image: AssetImage("images/admin.png"),fit: BoxFit.fitWidth),
-                        gradient: LinearGradient(
-                            begin: Alignment.centerRight,
-                            end: Alignment.bottomLeft,
-                            colors: [
-                          Colors.white,
-                          Colors.white,
-                        ])),
-                    child: ListView(
-                      children: [
+                  RefreshIndicator(
+                    key: _refreshIndicatorKey,
+                    onRefresh: ()async{
+                      countIssuedBook();
+                      countBooks();
+                      // setState(() {
+                      //   return AdminScreen();
+                      // });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image:DecorationImage(image: AssetImage("images/admin.png"),fit: BoxFit.fitWidth),
+                          gradient: LinearGradient(
+                              begin: Alignment.centerRight,
+                              end: Alignment.bottomLeft,
+                              colors: [
+                            Colors.white,
+                            Colors.white,
+                          ])),
+                      child: ListView(
+                        children: [
 
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(35.0)),
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 40.0, vertical: 30.0),
-                          elevation: 26.0,
-                          shadowColor: Colors.white,
-                          color: Color(0X00aaaaaa).withOpacity(0.2),
-                          child: Container(
-                            margin: EdgeInsets.only(left: 20.0,right: 20.0,top: 20.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black,width: 2.0),
+                          Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(35.0)),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 40.0, vertical: 30.0),
+                            elevation: 26.0,
+                            shadowColor: Colors.white,
+                            color: Color(0X00aaaaaa).withOpacity(0.2),
+                            child: Container(
+                              margin: EdgeInsets.only(left: 20.0,right: 20.0,top: 20.0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: Colors.black,width: 2.0),
+                                        ),
+                                        child: ColoredBox(
+                                          color: Colors.red,
+                                          child: SizedBox(width: 12, height: 12),
+                                        ),
                                       ),
-                                      child: ColoredBox(
-                                        color: Colors.red,
-                                        child: SizedBox(width: 12, height: 12),
-                                      ),
-                                    ),
 
-                                    SizedBox(width: 10.0),
-                                    AutoSizeText('Total No. of Books',
-                                      style: GoogleFonts.montserrat(
-                                        textStyle: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.w500,
-                                        )
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 20.0),
-                                Row(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black,width: 2.0),
-                                      ),
-                                      child: ColoredBox(
-                                        color: Colors.blue,
-                                        child: SizedBox(width: 12, height: 12),
-                                      ),
-                                    ),
-
-                                    SizedBox(width: 10.0),
-                                    AutoSizeText('Total No. of Issued Books',
-                                      style: GoogleFonts.montserrat(
+                                      SizedBox(width: 10.0),
+                                      AutoSizeText('Total No. of Books',
+                                        style: GoogleFonts.montserrat(
                                           textStyle: TextStyle(
                                             color: Colors.white,
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.w500,
                                           )
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    PieChart(PieChartData(
-                                      sections: [
-                                        PieChartSectionData(
-                                          value: ((y / x) * 100).roundToDouble(),
-                                          title: '${((y / x) * 100).roundToDouble()}%',
-                                          color: Color(0Xaa231084).withOpacity(0.4),
-                                          radius: 100.0,
                                         ),
-                                        PieChartSectionData(
-                                          value:((x - y) * 100 / x).roundToDouble(),
-                                          radius:  100.0,
-                                          color: Color(0Xaf831014).withOpacity(0.4),
-                                          title: '${((x - y) * 100 / x).roundToDouble()}%',
-                                        ),
-                                      ],
-                                      centerSpaceRadius: 8.0,
-                                      startDegreeOffset: 0.0,
-                                      centerSpaceColor: Colors.black54,
-                                      sectionsSpace: 5,
-                                      pieTouchData: PieTouchData(enabled: true,),
-                                      borderData: FlBorderData(
-                                        show: false,
                                       ),
-                                    )),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                  SizedBox(height: 20.0),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: Colors.black,width: 2.0),
+                                        ),
+                                        child: ColoredBox(
+                                          color: Colors.blue,
+                                          child: SizedBox(width: 12, height: 12),
+                                        ),
+                                      ),
+
+                                      SizedBox(width: 10.0),
+                                      AutoSizeText('Total No. of Issued Books',
+                                        style: GoogleFonts.montserrat(
+                                            textStyle: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w500,
+                                            )
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      PieChart(PieChartData(
+                                        sections: [
+                                          PieChartSectionData(
+                                            value: ((y / x) * 100).roundToDouble(),
+                                            title: '${((y / x) * 100).roundToDouble()}%',
+                                            color: Color(0Xaa231084).withOpacity(0.4),
+                                            radius: 100.0,
+                                          ),
+                                          PieChartSectionData(
+                                            value:((x - y) * 100 / x).roundToDouble(),
+                                            radius:  100.0,
+                                            color: Color(0Xaf831014).withOpacity(0.4),
+                                            title: '${((x - y) * 100 / x).roundToDouble()}%',
+                                          ),
+                                        ],
+                                        centerSpaceRadius: 8.0,
+                                        startDegreeOffset: 0.0,
+                                        centerSpaceColor: Colors.black54,
+                                        sectionsSpace: 5,
+                                        pieTouchData: PieTouchData(enabled: true,),
+                                        borderData: FlBorderData(
+                                          show: false,
+                                        ),
+                                      )),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 70.0,
-                        ),
-                        Container(
-                          alignment: Alignment.bottomCenter,
-                            height: 240,
-                            width: 240,
-                            child: Image(image: AssetImage("images/sonepat.png"))),
-                      ],
+                          SizedBox(
+                            height: 70.0,
+                          ),
+                          Container(
+                            alignment: Alignment.bottomCenter,
+                              height: 240,
+                              width: 240,
+                              child: Image(image: AssetImage("images/sonepat.png"))),
+                        ],
+                      ),
                     ),
                   ),
                   Container(
