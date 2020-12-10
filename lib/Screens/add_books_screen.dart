@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class AddBooks extends StatefulWidget {
   static String id = 'add_books';
@@ -11,6 +13,7 @@ class AddBooks extends StatefulWidget {
 }
 
 class _AddBooksState extends State<AddBooks> {
+  String barcodeScanRes;
   final _firestore = FirebaseFirestore.instance;
   String bookCode;
   String bookName;
@@ -95,18 +98,20 @@ class _AddBooksState extends State<AddBooks> {
       body: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage("images/demo.png"),fit: BoxFit.cover),
+            image: DecorationImage(
+                image: AssetImage("images/demo.png"), fit: BoxFit.cover),
             gradient: LinearGradient(
                 begin: Alignment.centerRight,
                 end: Alignment.bottomLeft,
                 colors: [
-              Color(0Xff294D64),
-              Color(0Xff294D64),
-            ])),
+                  Color(0Xff294D64),
+                  Color(0Xff294D64),
+                ])),
         child: Card(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(35.0)),
-          margin: EdgeInsets.only(top: 210.0,left:40.0,right:40.0,bottom:170.0),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(35.0)),
+          margin: EdgeInsets.only(
+              top: 210.0, left: 40.0, right: 40.0, bottom: 170.0),
           elevation: 26.0,
           shadowColor: Colors.black54,
           color: Color(0X00aaaaaa).withOpacity(0.8),
@@ -115,17 +120,19 @@ class _AddBooksState extends State<AddBooks> {
               SizedBox(
                 height: 20,
               ),
+              FlatButton(onPressed: () async {
+                barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+                    'Colors.black', 'cancel', true, ScanMode.BARCODE);
+              }, child: Text('scan') ),
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 30.0,right: 70.0),
+                padding: const EdgeInsets.only(left: 30.0, right: 70.0),
                 child: TextFormField(
                   autofocus: true,
-
                   decoration: InputDecoration(
                     labelText: "Enter Book Code",
                     labelStyle: GoogleFonts.montserrat(
                       textStyle: TextStyle(
-                        fontWeight:FontWeight.w500,
+                        fontWeight: FontWeight.w500,
                         color: Colors.black87,
                       ),
                     ),
@@ -148,15 +155,14 @@ class _AddBooksState extends State<AddBooks> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 30.0,right: 70.0),
+                padding: const EdgeInsets.only(left: 30.0, right: 70.0),
                 child: TextFormField(
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Enter Book Name",
                     labelStyle: GoogleFonts.montserrat(
                       textStyle: TextStyle(
-                        fontWeight:FontWeight.w500,
+                        fontWeight: FontWeight.w500,
                         color: Colors.black87,
                       ),
                     ),
@@ -179,15 +185,14 @@ class _AddBooksState extends State<AddBooks> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 30.0,right: 70.0),
+                padding: const EdgeInsets.only(left: 30.0, right: 70.0),
                 child: TextFormField(
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Enter Edition Year",
                     labelStyle: GoogleFonts.montserrat(
                       textStyle: TextStyle(
-                        fontWeight:FontWeight.w500,
+                        fontWeight: FontWeight.w500,
                         color: Colors.black87,
                       ),
                     ),
@@ -210,15 +215,14 @@ class _AddBooksState extends State<AddBooks> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 30.0,right: 70.0),
+                padding: const EdgeInsets.only(left: 30.0, right: 70.0),
                 child: TextFormField(
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Enter Author Name",
                     labelStyle: GoogleFonts.montserrat(
                       textStyle: TextStyle(
-                        fontWeight:FontWeight.w500,
+                        fontWeight: FontWeight.w500,
                         color: Colors.black87,
                       ),
                     ),
@@ -241,15 +245,14 @@ class _AddBooksState extends State<AddBooks> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 30.0,right: 70.0),
+                padding: const EdgeInsets.only(left: 30.0, right: 70.0),
                 child: TextFormField(
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Enter Total Quantity",
                     labelStyle: GoogleFonts.montserrat(
                       textStyle: TextStyle(
-                        fontWeight:FontWeight.w500,
+                        fontWeight: FontWeight.w500,
                         color: Colors.black87,
                       ),
                     ),
@@ -272,7 +275,8 @@ class _AddBooksState extends State<AddBooks> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 100.0,vertical: 50.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 100.0, vertical: 50.0),
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -290,19 +294,20 @@ class _AddBooksState extends State<AddBooks> {
                         blurRadius: 2.0,
                         spreadRadius: 0.0,
                         offset:
-                        Offset(2.0, 2.0), // shadow direction: bottom right
+                            Offset(2.0, 2.0), // shadow direction: bottom right
                       )
                     ],
                   ),
                   child: FlatButton(
-                    child: Text('Add Book',
-                    style: GoogleFonts.montserrat(
-                      textStyle: TextStyle(
+                    child: Text(
+                      'Add Book',
+                      style: GoogleFonts.montserrat(
+                          textStyle: TextStyle(
                         color: Colors.white,
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500,
-                      )
-                    ),),
+                      )),
+                    ),
                     onPressed: () {
                       FocusScopeNode currentFocus = FocusScope.of(context);
                       if (!currentFocus.hasPrimaryFocus) {
