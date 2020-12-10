@@ -92,6 +92,8 @@ class _AddBooksState extends State<AddBooks> {
     }
   }
 
+  TextEditingController c = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,6 +127,7 @@ class _AddBooksState extends State<AddBooks> {
                 try{
                 setState(() async {
                   barcodeScanRes = await scanner.scan();
+                  c.text = barcodeScanRes.substring(7,12);
                 });}
                 catch(e){
                   print(e);
@@ -134,6 +137,7 @@ class _AddBooksState extends State<AddBooks> {
               Padding(
                 padding: const EdgeInsets.only(left: 30.0, right: 70.0),
                 child: TextFormField(
+                  controller: c,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Enter Book Code",
@@ -157,7 +161,7 @@ class _AddBooksState extends State<AddBooks> {
                     color: Colors.black,
                   ),
                   onChanged: (value) {
-                    bookCode = value == '' ? null : value;
+                    bookCode = value;
                   },
                 ),
               ),

@@ -25,8 +25,8 @@ dependencies:
   carousel_slider: ^2.3.1
   fluttertoast: ^7.1.5
   shared_preferences: ^0.5.12+4
-#  flutter_barcode_scanner: 0.0.9
   qrscan: ^0.2.21
+  permission_handler: ^5.0.1+1
 
 dev_dependencies:
   flutter_test:
