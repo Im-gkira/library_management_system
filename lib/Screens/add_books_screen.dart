@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
 class AddBooks extends StatefulWidget {
@@ -123,23 +122,29 @@ class _AddBooksState extends State<AddBooks> {
               SizedBox(
                 height: 20,
               ),
-              FlatButton(onPressed: ()  {
-                try{
-                setState(() async {
-                  barcodeScanRes = await scanner.scan();
-                  c.text = barcodeScanRes.substring(7,12);
-                });}
-                catch(e){
-                  print(e);
-                }
-                print(barcodeScanRes);
-              }, child: Text('scan') ),
               Padding(
                 padding: const EdgeInsets.only(left: 30.0, right: 70.0),
                 child: TextFormField(
                   controller: c,
                   autofocus: true,
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        Icons.qr_code_scanner,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        try{
+                          setState(() async {
+                            barcodeScanRes = await scanner.scan();
+                            c.text = barcodeScanRes.substring(1,6);
+                            bookCode = c.text;
+                          });}
+                        catch(e){
+                          print(e);
+                        }
+                      },
+                    ),
                     labelText: "Enter Book Code",
                     labelStyle: GoogleFonts.montserrat(
                       textStyle: TextStyle(
@@ -159,6 +164,7 @@ class _AddBooksState extends State<AddBooks> {
                   style: TextStyle(
                     fontFamily: "Poppins",
                     color: Colors.black,
+                    fontWeight: FontWeight.w500,
                   ),
                   onChanged: (value) {
                     bookCode = value;
