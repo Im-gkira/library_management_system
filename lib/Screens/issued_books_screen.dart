@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_system/components/issued_book_widget.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
 // This Class removes the books that are returned.
 class IssuedBooks extends StatefulWidget {
@@ -96,6 +97,9 @@ class _IssuedBooksState extends State<IssuedBooks> {
     super.dispose();
   }
 
+  TextEditingController c = new TextEditingController();
+  String barcodeScanRes;
+
   @override
   Widget build(BuildContext context) {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
@@ -137,7 +141,7 @@ class _IssuedBooksState extends State<IssuedBooks> {
                 ),
                 color: Colors.white,
               ),
-              child: ListView(
+              child: Column(
                 children: [
                   Card(
                     shape: RoundedRectangleBorder(
@@ -148,6 +152,7 @@ class _IssuedBooksState extends State<IssuedBooks> {
                     shadowColor: Colors.black,
                     color: Color(0Xaa999999).withOpacity(0.3),
                     child: TextFormField(
+                      controller: c,
                       autofocus: true,
                       keyboardAppearance: Brightness.dark,
                       onChanged: (value) {
@@ -187,14 +192,65 @@ class _IssuedBooksState extends State<IssuedBooks> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 10.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.centerRight,
+                            end: Alignment.bottomLeft,
+                            colors: [
+                              Color(0XAA6C63FF).withOpacity(0.9),
+                              Color(0Xaa6C63FF).withOpacity(0.9),
+                            ]),
+                        borderRadius: BorderRadius.circular(30.0),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 2.0,
+                            spreadRadius: 0.0,
+                            offset:
+                            Offset(2.0, 2.0), // shadow direction: bottom right
+                          )
+                        ],
+                      ),
+                      child: FlatButton(
+                        padding: EdgeInsets.symmetric(horizontal: 40.0),
+                        onPressed: () {
+                          try{
+                            setState(() async {
+                              barcodeScanRes = await scanner.scan();
+                              c.text = barcodeScanRes.substring(1,6);
+                              enteredCode = barcodeScanRes.substring(1,6);
+                            });}
+                          catch(e){
+                            print(e);
+                          }
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: AutoSizeText('Scan',
+                            maxLines: 1,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 1.6,
+                              color: Colors.white,
+                            )),
+                      ),
+                    ),
+                  ),
                   Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(35.0)),
                     margin:
                         EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
                     elevation: enteredBookWidgetList.length == 0 ? 0 : 26.0,
-                    shadowColor: Colors.black,
-                    color: Color(0Xff294D64),
+                    shadowColor: Colors.black54,
+                    color: Color(0X00FFFFFF).withOpacity(0.1),
                     child: SingleChildScrollView(
                       child: Padding(
                         padding: enteredBookWidgetList.length == 0
@@ -204,9 +260,9 @@ class _IssuedBooksState extends State<IssuedBooks> {
                         child: DefaultTextStyle(
                           style: GoogleFonts.montserrat(
                               textStyle: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black87,
                             fontSize: 16.0,
-                            fontWeight: FontWeight.normal,
+                            fontWeight: FontWeight.w500,
                             letterSpacing: 1.6,
                           )),
                           child: Builder(
@@ -235,16 +291,16 @@ class _IssuedBooksState extends State<IssuedBooks> {
                 //mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 20.0),
+                      margin: EdgeInsets.only(top: 20.0),
                       child: Center(
-                    child: Text(
-                      'To view Please Press the Button',
-                      style: GoogleFonts.montserrat(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  )),
+                        child: Text(
+                          'To view Please Press the Button',
+                          style: GoogleFonts.montserrat(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      )),
                   Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(35.0)),
@@ -294,7 +350,7 @@ class _IssuedBooksState extends State<IssuedBooks> {
                     ),
                   ),
                   Card(
-                    margin: EdgeInsets.only(left: 40,right: 40,top: 10),
+                    margin: EdgeInsets.only(left: 40, right: 40, top: 10),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0)),
                     child: Padding(
@@ -306,8 +362,8 @@ class _IssuedBooksState extends State<IssuedBooks> {
                               begin: Alignment.centerRight,
                               end: Alignment.bottomLeft,
                               colors: [
-                                Color(0XaaDD4040),
-                                Color(0XaaDD4040),
+                                Color(0Xaa6C63FF).withOpacity(0.9),
+                                Color(0Xaa6C63FF).withOpacity(0.9),
                               ]),
                           borderRadius: BorderRadius.circular(10.0),
                           color: Colors.white,
@@ -322,16 +378,15 @@ class _IssuedBooksState extends State<IssuedBooks> {
                           ],
                         ),
                         child: FlatButton(
-                          child: AutoSizeText('Check All Issued Books',
-                              maxLines: 1,
-                              style: GoogleFonts.montserrat(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 1.6,
-                                color: Colors.white,
-                              )),
-                          onPressed: viewIssuedBooks,
-                        ),
+                            child: AutoSizeText('Check All Issued Books',
+                                maxLines: 1,
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 1.6,
+                                  color: Colors.white,
+                                )),
+                            onPressed: viewIssuedBooks),
                       ),
                     ),
                   ),

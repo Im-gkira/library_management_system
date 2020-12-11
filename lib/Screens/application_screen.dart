@@ -147,8 +147,8 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
                         begin: Alignment.centerRight,
                         end: Alignment.bottomLeft,
                         colors: [
-                          Color(0XaaDD4040),
-                          Color(0XaaDD4040),
+                          Color(0Xaa6C63FF).withOpacity(0.9),
+                          Color(0Xaa6C63FF).withOpacity(0.9),
                         ]),
                     borderRadius: BorderRadius.circular(10.0),
                     color: Colors.white,
