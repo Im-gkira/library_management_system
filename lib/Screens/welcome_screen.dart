@@ -5,7 +5,6 @@ import 'package:library_management_system/authorization/registration.dart';
 import 'package:library_management_system/authorization/login.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:drawing_animation/drawing_animation.dart';
-import 'package:library_management_system/Animations/paths.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 // This Screen is the Welcome Screen That the User sees for the first time when the app starts.

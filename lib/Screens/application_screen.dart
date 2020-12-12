@@ -91,8 +91,8 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
                   borderRadius: BorderRadius.circular(35.0)),
               margin: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
               elevation: appWidgetList.length == 0 ? 0 : 26.0,
-              shadowColor: Colors.black,
-              color: Color(0Xff294D64).withOpacity(0.3),
+              shadowColor: Colors.white,
+              color: Color(0Xff294D64).withOpacity(0.1),
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -100,9 +100,9 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
                   child: DefaultTextStyle(
                     style: GoogleFonts.montserrat(
                         textStyle: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 16.0,
-                      fontWeight: FontWeight.normal,
+                      fontWeight: FontWeight.w500,
                       letterSpacing: 1.6,
                     )),
                     child: Builder(
@@ -119,7 +119,7 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
                                 SizedBox(
                                   height: 15.0,
                                 ),
-                                Text("xxxx"),
+                                Text("****"),
                                 SizedBox(
                                   height: 15.0,
                                 )
@@ -147,8 +147,8 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
                         begin: Alignment.centerRight,
                         end: Alignment.bottomLeft,
                         colors: [
-                          Color(0XaaDD4040),
-                          Color(0XaaDD4040),
+                          Color(0Xaa6C63FF).withOpacity(0.9),
+                          Color(0Xaa6C63FF).withOpacity(0.9),
                         ]),
                     borderRadius: BorderRadius.circular(10.0),
                     color: Colors.white,

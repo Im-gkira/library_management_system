@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:library_management_system/components/admin+book_widget.dart';
 import 'package:library_management_system/components/search_screen_widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
 // This Page simply searches for the book of the given name.
 class AdminSearchScreen extends StatefulWidget {
@@ -28,19 +30,24 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
   void bookSearch(String bookName) async {
     try {
       bookWidgetList = [];
-      final bookData = await _firestore
+      var bookData = await _firestore
           .collection('books')
           .where('Book Name', isEqualTo: bookName)
           .get();
       if (bookData.docs.isEmpty) {
+        bookData = await _firestore
+            .collection('books')
+            .where('Book Code', isEqualTo: bookName)
+            .get();
+        if(bookData.docs.isEmpty){
         Fluttertoast.showToast(
           msg: 'Book Not Found',
         );
-      }
+      }}
       for (var book in bookData.docs) {
         var bookContent = book.data();
         setState(() {
-          bookWidgetList.add(BookWidget(bookContent: bookContent));
+          bookWidgetList.add(AdminBookWidget(bookContent: bookContent));
         });
       }
     } catch (e) {
@@ -50,14 +57,17 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
     }
   }
 
+  TextEditingController c = new TextEditingController();
+  String barcodeScanRes;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomPadding: false,
         body: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage("images/Search.png")),
+            image: DecorationImage(image: AssetImage("images/Search.png"),alignment: Alignment.bottomCenter),
               color: Colors.white),
           child: Container(
             margin: EdgeInsets.only(top: 60),
@@ -71,6 +81,7 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                   shadowColor: Colors.black,
                   color: Color(0Xaa555555).withOpacity(0.2),
                   child: TextFormField(
+                    controller: c,
                     autofocus: true,
                     onChanged: (value) {
                       bookName = value;
@@ -86,6 +97,7 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                     style: new TextStyle(
                       fontFamily: "Poppins",
                       color: Colors.white,
+                      fontWeight: FontWeight.w500,
                     ),
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
@@ -94,8 +106,7 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                           color: Colors.white,
                         ),
                         onPressed: () {
-                          bookSearch(
-                              bookName == null ? '' : bookName.toLowerCase());
+                          bookSearch(bookName.toLowerCase());
                           bookWidgetList = [];
                         },
                       ),
@@ -124,8 +135,8 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                           begin: Alignment.centerRight,
                           end: Alignment.bottomLeft,
                           colors: [
-                            Color(0Xaa2E59CC),
-                            Color(0Xaa2E59CC),
+                            Color(0XAA6C63FF).withOpacity(0.9),
+                            Color(0Xaa6C63FF).withOpacity(0.9),
                           ]),
                       borderRadius: BorderRadius.circular(30.0),
                       color: Colors.white,
@@ -142,17 +153,20 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                     child: FlatButton(
                       padding: EdgeInsets.symmetric(horizontal: 40.0),
                       onPressed: () {
-                        FocusScopeNode currentFocus = FocusScope.of(context);
-                        if (!currentFocus.hasPrimaryFocus) {
-                          currentFocus.unfocus();
+                        try{
+                          setState(() async {
+                            barcodeScanRes = await scanner.scan();
+                            c.text = barcodeScanRes.substring(7,12);
+                            bookName = barcodeScanRes.substring(7,12);
+                          });}
+                        catch(e){
+                          print(e);
                         }
-                        bookSearch(bookName == null ? '' : bookName.toLowerCase());
-                        bookWidgetList = [];
-                        },
+                      },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
-                      child: AutoSizeText('Search',
+                      child: AutoSizeText('Scan',
                           maxLines: 1,
                           style: GoogleFonts.montserrat(
                             fontSize: 18.0,
@@ -169,10 +183,10 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                   margin: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
                   elevation: bookWidgetList.length == 0 ? 0 : 26.0,
                   shadowColor: Colors.black,
-                  color: Color(0Xff294D64),
+                  color: Color(0Xaa294564).withOpacity(0.2),
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: bookWidgetList.length == 0 ?EdgeInsets.all(0):const EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 10.0),
                       child: DefaultTextStyle(
                         style: GoogleFonts.montserrat(

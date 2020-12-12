@@ -37,6 +37,7 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
         '${userData['First Name']} ${userData['Last Name']}',
         style: GoogleFonts.montserrat(
           textStyle: TextStyle(
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.w500,
           ),
@@ -46,6 +47,7 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
         '${userData['Branch']}',
         style: GoogleFonts.montserrat(
           textStyle: TextStyle(
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.w500,
           ),
@@ -55,6 +57,7 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
         '${userData['Roll Number']}',
         style: GoogleFonts.montserrat(
           textStyle: TextStyle(
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.w500,
           ),
@@ -128,155 +131,162 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
   Widget buildBottomSheet(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
+        color: Color(0Xff737373),
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Container(
-          color: Color(0Xff757575),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0),
-              ),
+          decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage("images/issuedbottomSheet.png"),fit: BoxFit.fitWidth),
+            color: Color(0Xff737373),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30.0),
+              topRight: Radius.circular(30.0),
             ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-              child: Column(
-                children: [
-                  Text(
-                    '☞ Student Details ',
-                    style: GoogleFonts.montserrat(
-                      textStyle: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        decoration: TextDecoration.underline,
-                        decorationThickness: 4.0,
-                      ),
+          ),
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+            child: Column(
+              children: [
+                Text(
+                  'Borrower Details',
+                  style: GoogleFonts.montserrat(
+                    textStyle: TextStyle(
+                      color: Color(0Xff6B63FF),
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      decoration: TextDecoration.underline,
+                      decorationThickness: 4.0,
                     ),
                   ),
-                  SizedBox(height: 15.0,),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(35.0)),
-                    elevation: 26.0,
-                    shadowColor: Colors.black,
-                    color: Color(0Xff757575),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            SizedBox(height: 15.0),
-                            Text(
-                              '• Name     : ',
+                ),
+                SizedBox(height: 15.0,),
+                Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(35.0)),
+                  elevation: 26.0,
+                  shadowColor: Colors.black,
+                  color: Color(0Xaa6C63FF).withOpacity(0.2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          SizedBox(height: 15.0),
+                          Text(
+                            '• Name      : ',
+                            style: GoogleFonts.montserrat(
+                              textStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 15.0),
+                          Text('• Branch   : ',
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
+                                  color: Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                 ),
-                              ),
-                            ),
-                            SizedBox(height: 15.0),
-                            Text('• Branch  : ',
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                )),
-                            SizedBox(height: 15.0),
-                            Text('• Roll No  : ',
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                )),
-                            SizedBox(height: 15.0),
-                            Text('• Fine        : ',
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                )),
-                            SizedBox(height: 15.0),
-                            Text('• Due Date        : ',
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                )),
-                            SizedBox(height: 15.0),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 15.0),
-                            userInfoList[0],
-                            SizedBox(height: 15.0),
-                            userInfoList[1],
-                            SizedBox(height: 15.0),
-                            userInfoList[2],
-                            SizedBox(height: 15.0),
-                            Text('$fine',style: GoogleFonts.montserrat(
-                              textStyle: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),),),
-                            SizedBox(height: 15.0),
-                            Text('$trimmedDate',style: GoogleFonts.montserrat(
-                              textStyle: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),),),
-                            SizedBox(height: 15.0),
-                          ],
-                        ),
-                      ],
-                    ),
+                              )),
+                          SizedBox(height: 15.0),
+                          Text('• Roll No   : ',
+                              style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )),
+                          SizedBox(height: 15.0),
+                          Text('• Fine         : ',
+                              style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )),
+                          SizedBox(height: 15.0),
+                          Text('• Due Date: ',
+                              style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )),
+                          SizedBox(height: 15.0),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 15.0),
+                          userInfoList[0],
+                          SizedBox(height: 15.0),
+                          userInfoList[1],
+                          SizedBox(height: 15.0),
+                          userInfoList[2],
+                          SizedBox(height: 15.0),
+                          Text('$fine',style: GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),),),
+                          SizedBox(height: 15.0),
+                          Text('$trimmedDate',style: GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),),),
+                          SizedBox(height: 15.0),
+                        ],
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 15.0,),
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.centerRight,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            Color(0XaaDD4040),
-                            Color(0XaaDD4040),
-                          ]),
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black,
-                          blurRadius: 2.0,
-                          spreadRadius: 0.0,
-                          offset: Offset(
-                              2.0, 2.0), // shadow direction: bottom right
-                        )
-                      ],
-                    ),
-                    child: FlatButton(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 120.0),
-                      child: Text('Remove',
-                        style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                          ),),),
-                      onPressed: deleteIssuedBook,
-                    ),
+                ),
+                SizedBox(height: 15.0,),
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.centerRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color(0Xaa6C63FF),
+                          Color(0Xaa6C63FF),
+                        ]),
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black87,
+                        blurRadius: 2.0,
+                        spreadRadius: 0.0,
+                        offset: Offset(
+                            2.0, 2.0), // shadow direction: bottom right
+                      )
+                    ],
                   ),
-                ],
-              ),
+                  child: FlatButton(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 120.0),
+                    child: Text('Remove',
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),),),
+                    onPressed: deleteIssuedBook,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
