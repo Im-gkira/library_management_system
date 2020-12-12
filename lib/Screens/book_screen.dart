@@ -112,8 +112,6 @@ class _BookScreenState extends State<BookScreen> {
   @override
   void initState() {
     super.initState();
-    print('Icon made by Freepik from www.flaticon.com');
-    print('Icon made by Darius Dan from www.flaticon.com');
     isAvailable = widget.bookContent['Total Quantity'] > widget.bookContent['Issued Quantity'];
     try{
       final user = _auth.currentUser;
