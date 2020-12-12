@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:library_management_system/components/home_screen_widgets.dart';
 import 'package:library_management_system/Screens/search_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:library_management_system/Screens/about_screen.dart';
 
 // This is the home screen of the normal user and displays all the information of the user.
 class HomeScreen extends StatefulWidget {
@@ -170,6 +171,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Column(
                   children: applicationList,
+                ),
+                SizedBox(height: 20.0,),
+                FlatButton(
+                  child: Icon(
+                    Icons.info,
+                    size: 32.0,
+                    color: Colors.white,
+                  ),
+                  onPressed: (){
+                    Navigator.push(context,MaterialPageRoute(builder: (context){
+                      return AboutScreen(isAdmin: false,);
+                        }
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(height: 40.0,),
               ],

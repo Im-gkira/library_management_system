@@ -275,7 +275,7 @@ class _AppWidgetState extends State<AppWidget> {
                     ),
                   ),
                   BottomSheetContents(
-                      getIssued: getIssued,
+                      getIssued:getIssued,
                       deleteApplication: deleteApplication),
                 ],
               ),
