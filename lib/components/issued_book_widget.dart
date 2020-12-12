@@ -149,10 +149,10 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
             child: Column(
               children: [
                 Text(
-                  '☞ Student Details ',
+                  'Borrower Details',
                   style: GoogleFonts.montserrat(
                     textStyle: TextStyle(
-                      color: Color(0Xaa6B63FF),
+                      color: Color(0Xff6B63FF),
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
                       decoration: TextDecoration.underline,

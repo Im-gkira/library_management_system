@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:library_management_system/components/admin+book_widget.dart';
 import 'package:library_management_system/components/search_screen_widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
@@ -46,7 +47,7 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
       for (var book in bookData.docs) {
         var bookContent = book.data();
         setState(() {
-          bookWidgetList.add(BookWidget(bookContent: bookContent));
+          bookWidgetList.add(AdminBookWidget(bookContent: bookContent));
         });
       }
     } catch (e) {
@@ -66,7 +67,7 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
         body: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage("images/Search.png")),
+            image: DecorationImage(image: AssetImage("images/Search.png"),alignment: Alignment.bottomCenter),
               color: Colors.white),
           child: Container(
             margin: EdgeInsets.only(top: 60),

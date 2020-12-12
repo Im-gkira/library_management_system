@@ -32,13 +32,24 @@ class BookWidget extends StatelessWidget {
           // color: Colors.black54,
         ),
         margin: EdgeInsets.symmetric(vertical: 2.0,horizontal: 35.0),
-        child: Text(
-          'Name : ${bookContent['Book Name']}\nBook Id : ${bookContent['Book Code']}\n',
-          style: GoogleFonts.montserrat(
-            textStyle: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
+        child: Card(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0)),
+          margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+          elevation: 26.0,
+          shadowColor: Colors.black,
+          color: Color(0Xaa1a1a2e).withOpacity(0.6),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 30.0,top: 8,bottom: 8),
+            child: Text(
+              'Name : ${bookContent['Book Name']}\nBook Id : ${bookContent['Book Code']}',
+              style: GoogleFonts.permanentMarker(
+                textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ),
           ),
         ),
