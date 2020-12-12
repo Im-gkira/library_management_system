@@ -296,8 +296,8 @@ class _IssuedBooksState extends State<IssuedBooks> {
                         child: Text(
                           'To view Please Press the Button',
                           style: GoogleFonts.montserrat(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w800,
+                            fontSize: 21.0,
+                            fontWeight: FontWeight.w900,
                           ),
                         ),
                       )),

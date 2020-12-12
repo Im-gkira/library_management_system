@@ -114,17 +114,25 @@ class _AdminScreenState extends State<AdminScreen> {
                               ])),
                       child: ListView(
                         children: [
-                          Container(
-                              alignment: Alignment.bottomCenter,
-                              height: 120,
-                              width: 120,
-                              child: Image(
-                                image: AssetImage("images/sonepat.png"),
-                                fit: BoxFit.fitWidth,
-                              )),
+                          Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0)),
+                            margin: EdgeInsets.only(left: 40.0,top: 10.0,right: 40.0,bottom: 8.0),
+                            elevation: 26.0,
+                            shadowColor: Colors.white,
+                            color: Color(0X00aaaaaa).withOpacity(0.2),
+                            child: Container(
+                                alignment: Alignment.bottomCenter,
+                                height: 120,
+                                width: 120,
+                                child: Image(
+                                  image: AssetImage("images/sonepat.png"),
+                                  fit: BoxFit.fitWidth,
+                                )),
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [ 
+                            children: [
                               Expanded(
                                 child: Card(
                                   shape: RoundedRectangleBorder(
@@ -316,8 +324,8 @@ class _AdminScreenState extends State<AdminScreen> {
                 activeColor: Colors.red,
               ),
               BottomNavyBarItem(
-                  icon: Icon(Icons.people),
-                  title: AutoSizeText('Users'),
+                  icon: Icon(Icons.assignment_ind_outlined),
+                  title: AutoSizeText('Applications'),
                   activeColor: Colors.purpleAccent),
               BottomNavyBarItem(
                   icon: Icon(Icons.search),
@@ -335,11 +343,12 @@ class _AdminScreenState extends State<AdminScreen> {
 TextStyle _style = GoogleFonts.montserrat(
   fontSize: 34.0,
   fontWeight: FontWeight.w700,
-  color: Colors.white,
+  color: Color(0Xaa394867)
 );
 
 
 TextStyle _textStyle = GoogleFonts.montserrat(
   fontSize: 24.0,
   fontWeight: FontWeight.w700,
+  color: Color(0Xaa14274e)
 );
