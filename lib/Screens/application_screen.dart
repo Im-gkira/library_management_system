@@ -81,6 +81,7 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
                    child: Text(
                 'To view Please Press the Button',
                 style: GoogleFonts.montserrat(
+                  color: Color(0Xff394867),
                   fontSize: 20.0,
                   fontWeight: FontWeight.w900,
                 ),
@@ -92,7 +93,7 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
               margin: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
               elevation: appWidgetList.length == 0 ? 0 : 26.0,
               shadowColor: Colors.white,
-              color: Color(0Xff294D64).withOpacity(0.1),
+              color: Color(0Xffb963ff).withOpacity(0.2),
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -100,9 +101,9 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
                   child: DefaultTextStyle(
                     style: GoogleFonts.montserrat(
                         textStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      color: Color(0Xff14274e),
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w600,
                       letterSpacing: 1.6,
                     )),
                     child: Builder(

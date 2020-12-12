@@ -67,7 +67,7 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
         body: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage("images/Search.png"),alignment: Alignment.bottomCenter),
+            image: DecorationImage(image: AssetImage("images/Search.png"),alignment: Alignment.lerp(Alignment.bottomCenter, Alignment.center, 0.20)),
               color: Colors.white),
           child: Container(
             margin: EdgeInsets.only(top: 60),
@@ -78,8 +78,8 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                       borderRadius: BorderRadius.circular(35.0)),
                   margin: EdgeInsets.symmetric(horizontal: 40.0, vertical: 30.0),
                   elevation: 26.0,
-                  shadowColor: Colors.black,
-                  color: Color(0Xaa555555).withOpacity(0.2),
+                  shadowColor: Colors.white,
+                  color: Color(0Xaaffffff).withOpacity(0.2),
                   child: TextFormField(
                     controller: c,
                     autofocus: true,
@@ -94,16 +94,17 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                       }
                     },
                     keyboardType: TextInputType.visiblePassword,
-                    style: new TextStyle(
-                      fontFamily: "Poppins",
-                      color: Colors.white,
+                    style: GoogleFonts.montserrat(
+                      fontSize: 16,
+                      color: Colors.black,
                       fontWeight: FontWeight.w500,
                     ),
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
                         icon: Icon(
                           Icons.search,
-                          color: Colors.white,
+                          color: Colors.black,
+                          size: 24,
                         ),
                         onPressed: () {
                           bookSearch(bookName.toLowerCase());
@@ -182,27 +183,18 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                       borderRadius: BorderRadius.circular(35.0)),
                   margin: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
                   elevation: bookWidgetList.length == 0 ? 0 : 26.0,
-                  shadowColor: Colors.black,
-                  color: Color(0Xaa294564).withOpacity(0.2),
+                  shadowColor: Colors.white,
+                  color: Color(0Xaab963ff).withOpacity(0.2),
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: bookWidgetList.length == 0 ?EdgeInsets.all(0):const EdgeInsets.symmetric(
                           vertical: 20.0, horizontal: 10.0),
-                      child: DefaultTextStyle(
-                        style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.normal,
-                          letterSpacing: 1.6,
-                        )),
-                        child: Builder(
-                          builder: (context) {
-                            return Column(
-                              children: bookWidgetList,
-                            );
-                          },
-                        ),
+                      child: Builder(
+                        builder: (context) {
+                          return Column(
+                            children: bookWidgetList,
+                          );
+                        },
                       ),
                     ),
                   ),

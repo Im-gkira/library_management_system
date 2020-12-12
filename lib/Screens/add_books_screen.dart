@@ -115,8 +115,8 @@ class _AddBooksState extends State<AddBooks> {
           margin: EdgeInsets.only(
               top: 210.0, left: 40.0, right: 40.0, bottom: 170.0),
           elevation: 26.0,
-          shadowColor: Colors.black54,
-          color: Color(0X00aaaaaa).withOpacity(0.8),
+          // shadowColor: Colors.black54,
+          color: Color(0Xaab9cced).withOpacity(0.5),
           child: ListView(
             children: [
               SizedBox(
@@ -155,14 +155,14 @@ class _AddBooksState extends State<AddBooks> {
                   ),
                   validator: (val) {
                     if (val.length == 0) {
-                      return "Email cannot be empty";
+                      return "Book Code cannot be empty";
                     } else {
                       return null;
                     }
                   },
                   keyboardType: TextInputType.emailAddress,
-                  style: TextStyle(
-                    fontFamily: "Poppins",
+                  style: GoogleFonts.montserrat(
+                    fontSize: 16,
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
                   ),
@@ -186,15 +186,16 @@ class _AddBooksState extends State<AddBooks> {
                   ),
                   validator: (val) {
                     if (val.length == 0) {
-                      return "Email cannot be empty";
+                      return "Book Name cannot be empty";
                     } else {
                       return null;
                     }
                   },
                   keyboardType: TextInputType.emailAddress,
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    color: Colors.black54,
+                  style: GoogleFonts.montserrat(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
                   ),
                   onChanged: (value) {
                     bookName = value == '' ? null : value.toLowerCase();
@@ -216,15 +217,16 @@ class _AddBooksState extends State<AddBooks> {
                   ),
                   validator: (val) {
                     if (val.length == 0) {
-                      return "Email cannot be empty";
+                      return "Field cannot be empty";
                     } else {
                       return null;
                     }
                   },
                   keyboardType: TextInputType.datetime,
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    color: Colors.black54,
+                  style: GoogleFonts.montserrat(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
                   ),
                   onChanged: (value) {
                     editionYear = value == '' ? null : value;
@@ -246,15 +248,16 @@ class _AddBooksState extends State<AddBooks> {
                   ),
                   validator: (val) {
                     if (val.length == 0) {
-                      return "Email cannot be empty";
+                      return "Field cannot be empty";
                     } else {
                       return null;
                     }
                   },
                   keyboardType: TextInputType.name,
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    color: Colors.black54,
+                  style: GoogleFonts.montserrat(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
                   ),
                   onChanged: (value) {
                     author = value == '' ? null : value.toLowerCase();
@@ -276,15 +279,16 @@ class _AddBooksState extends State<AddBooks> {
                   ),
                   validator: (val) {
                     if (val.length == 0) {
-                      return "Email cannot be empty";
+                      return "Required Field";
                     } else {
                       return null;
                     }
                   },
                   keyboardType: TextInputType.number,
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    color: Colors.white,
+                  style: GoogleFonts.montserrat(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
                   ),
                   onChanged: (value) {
                     totalQuantity = int.parse(value);
@@ -300,8 +304,8 @@ class _AddBooksState extends State<AddBooks> {
                         begin: Alignment.centerRight,
                         end: Alignment.bottomLeft,
                         colors: [
-                          Color(0Xff393e46),
-                          Color(0Xaa393e46),
+                          Color(0Xff1b262c),
+                          Color(0Xaa1b262c),
                         ]),
                     borderRadius: BorderRadius.circular(30.0),
                     color: Colors.white,

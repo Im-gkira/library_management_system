@@ -31,13 +31,14 @@ class AdminBookWidget extends StatelessWidget {
         ),
         margin: EdgeInsets.symmetric(vertical: 2.0,horizontal: 35.0),
         child: Text(
-          'Name : ${bookContent['Book Name']}\nBook Id : ${bookContent['Book Code']}\n',
+          'Name : ${bookContent['Book Name']}\nBook Id : ${bookContent['Book Code']}',
           style: GoogleFonts.montserrat(
-            textStyle: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-            ),
+              textStyle: TextStyle(
+                color: Color(0Xff14274e),
+                fontSize: 18.0,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1.6,
+              ),
           ),
         ),
       ),

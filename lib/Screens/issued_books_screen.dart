@@ -138,6 +138,7 @@ class _IssuedBooksState extends State<IssuedBooks> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("images/allBooks.png"),
+                  alignment: Alignment.lerp(Alignment.bottomCenter,Alignment.center, 0.40)
                 ),
                 color: Colors.white,
               ),
@@ -149,8 +150,8 @@ class _IssuedBooksState extends State<IssuedBooks> {
                     margin:
                         EdgeInsets.symmetric(horizontal: 40.0, vertical: 30.0),
                     elevation: 26.0,
-                    shadowColor: Colors.black,
-                    color: Color(0Xaa999999).withOpacity(0.3),
+                    shadowColor: Colors.white,
+                    color: Color(0Xaaffffff).withOpacity(0.2),
                     child: TextFormField(
                       controller: c,
                       autofocus: true,
@@ -169,21 +170,24 @@ class _IssuedBooksState extends State<IssuedBooks> {
                         }
                       },
                       keyboardType: TextInputType.number,
-                      style: new TextStyle(
-                        fontFamily: "Poppins",
-                        color: Colors.black87,
+                      style: GoogleFonts.montserrat(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
                       ),
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
-                            icon: Icon(Icons.search),
+                            icon: Icon(Icons.search,color: Colors.black,
+                              size: 24,),
                             onPressed: viewEnteredBook),
                         labelText: "Enter Unique Code of the Book",
                         labelStyle: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w500,
-                        )),
+                          textStyle: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(35.0),
@@ -245,12 +249,12 @@ class _IssuedBooksState extends State<IssuedBooks> {
                   ),
                   Card(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(35.0)),
+                        borderRadius: BorderRadius.circular(20.0)),
                     margin:
                         EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
                     elevation: enteredBookWidgetList.length == 0 ? 0 : 26.0,
-                    shadowColor: Colors.black54,
-                    color: Color(0X00FFFFFF).withOpacity(0.1),
+                    shadowColor: Colors.white,
+                    color: Color(0Xaab963ff).withOpacity(0.2),
                     child: SingleChildScrollView(
                       child: Padding(
                         padding: enteredBookWidgetList.length == 0
@@ -259,12 +263,13 @@ class _IssuedBooksState extends State<IssuedBooks> {
                                 vertical: 20.0, horizontal: 10.0),
                         child: DefaultTextStyle(
                           style: GoogleFonts.montserrat(
-                              textStyle: TextStyle(
-                            color: Colors.black87,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 1.6,
-                          )),
+                            textStyle: TextStyle(
+                              color: Color(0Xff14274e),
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.6,
+                            ),
+                          ),
                           child: Builder(
                             builder: (context) {
                               return Column(
@@ -308,7 +313,7 @@ class _IssuedBooksState extends State<IssuedBooks> {
                         EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
                     elevation: issuedBookWidgetList.length == 0 ? 0 : 26.0,
                     shadowColor: Colors.white,
-                    color: Color(0X00FFFFFF).withOpacity(0.1),
+                    color: Color(0Xaab963ff).withOpacity(0.2),
                     child: SingleChildScrollView(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -316,11 +321,11 @@ class _IssuedBooksState extends State<IssuedBooks> {
                         child: DefaultTextStyle(
                           style: GoogleFonts.montserrat(
                               textStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 1.6,
-                          )),
+                                color: Color(0Xff14274e),
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 1.6,
+                              )),
                           child: Builder(
                             builder: (context) {
                               return SizedBox(

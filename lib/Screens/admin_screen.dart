@@ -118,17 +118,39 @@ class _AdminScreenState extends State<AdminScreen> {
                           Card(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25.0)),
-                            margin: EdgeInsets.only(left: 40.0,top: 10.0,right: 40.0,bottom: 8.0),
+                            margin: EdgeInsets.only(left: 40.0,top: 20.0,right: 40.0,bottom: 10.0),
                             elevation: 26.0,
                             shadowColor: Colors.white,
-                            color: Color(0X00aaaaaa).withOpacity(0.2),
+                            color: Color(0Xaab963ff).withOpacity(0.2),
                             child: Container(
-                                alignment: Alignment.bottomCenter,
-                                height: 120,
-                                width: 120,
-                                child: Image(
-                                  image: AssetImage("images/sonepat.png"),
-                                  fit: BoxFit.fitWidth,
+                                alignment: Alignment.bottomLeft,
+                                height: 60,
+                                width: 60,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image(
+                                      image: AssetImage("images/sonepat.png"),
+                                      fit: BoxFit.fill,
+                                      alignment: Alignment.topLeft,
+                                    ),
+                                    Container(
+                                      child: FlatButton(
+                                        child: Icon(
+                                          Icons.info,
+                                          size: 38.0,
+                                          color: Color(0Xff6B63FF),
+                                        ),
+                                        onPressed: (){
+                                          Navigator.push(context,MaterialPageRoute(builder: (context){
+                                            return AboutScreen(isAdmin: true,);
+                                          }
+                                          ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 )),
                           ),
                           Row(
@@ -138,10 +160,10 @@ class _AdminScreenState extends State<AdminScreen> {
                                 child: Card(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(25.0)),
-                                  margin: EdgeInsets.only(left: 40.0,top: 5.0,right: 5.0),
+                                  margin: EdgeInsets.only(left: 40.0,top: 3.0,right: 5.0),
                                   elevation: 26.0,
                                   shadowColor: Colors.white,
-                                  color: Color(0X00aaaaaa).withOpacity(0.2),
+                                  color: Color(0Xaab963ff).withOpacity(0.2),
                                   child: Container(
                                     child: Column(
                                       children: [
@@ -156,10 +178,10 @@ class _AdminScreenState extends State<AdminScreen> {
                                 child: Card(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(25.0)),
-                                  margin: EdgeInsets.only(left:5,right: 40.0,top: 5.0),
+                                  margin: EdgeInsets.only(left:5,right: 40.0,top: 3.0),
                                   elevation: 26.0,
                                   shadowColor: Colors.white,
-                                  color: Color(0X00aaaaaa).withOpacity(0.2),
+                                  color: Color(0Xaab963ff).withOpacity(0.2),
                                   child: Container(
                                     child: Column(
                                       children: [
@@ -178,12 +200,12 @@ class _AdminScreenState extends State<AdminScreen> {
                           ),
                           Card(
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(35.0)),
+                                borderRadius: BorderRadius.circular(30.0)),
                             margin: EdgeInsets.symmetric(
                                 horizontal: 40.0, vertical: 10.0),
                             elevation: 26.0,
                             shadowColor: Colors.white,
-                            color: Color(0X00aaaaaa).withOpacity(0.2),
+                            color: Color(0Xaab963ff).withOpacity(0.2),
                             child: Container(
                               margin: EdgeInsets.only(
                                   left: 20.0, right: 20.0, top: 20.0),
@@ -197,19 +219,19 @@ class _AdminScreenState extends State<AdminScreen> {
                                               color: Colors.black, width: 2.0),
                                         ),
                                         child: ColoredBox(
-                                          color: Colors.red,
+                                          color: Color(0XFFff6b63),
                                           child:
                                               SizedBox(width: 12, height: 12),
                                         ),
                                       ),
                                       SizedBox(width: 10.0),
                                       AutoSizeText(
-                                        'Total No. of Books',
+                                        'Total Books',
                                         style: GoogleFonts.montserrat(
                                             textStyle: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.w500,
+                                          color: Color(0Xaa000839),
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w600,
                                         )),
                                       ),
                                     ],
@@ -233,9 +255,9 @@ class _AdminScreenState extends State<AdminScreen> {
                                         'Total No. of Issued Books',
                                         style: GoogleFonts.montserrat(
                                             textStyle: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.w500,
+                                              color: Color(0Xaa000839),
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w600,
                                         )),
                                       ),
                                     ],
@@ -261,7 +283,7 @@ class _AdminScreenState extends State<AdminScreen> {
                                               value: ((x - y) * 100 / x)
                                                   .roundToDouble(),
                                               radius: 100.0,
-                                              color: Color(0XaaFF6584),
+                                              color: Color(0XffFF6584).withOpacity(0.9),
                                               title:
                                                   '${((x - y) * 100 / x).roundToDouble()}%',
                                               titlePositionPercentageOffset:
@@ -300,19 +322,6 @@ class _AdminScreenState extends State<AdminScreen> {
                   ),
                   Container(
                     child: IssuedBooks(),
-                  ),
-                  FlatButton(
-                    child: Icon(
-                        Icons.info,
-                      size: 32.0,
-                    ),
-                    onPressed: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context){
-                        return AboutScreen(isAdmin: true,);
-                          }
-                        ),
-                      );
-                    },
                   ),
                 ]),
           ),
