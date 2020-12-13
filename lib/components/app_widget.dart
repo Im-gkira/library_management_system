@@ -457,6 +457,8 @@ class _BottomSheetContentsState extends State<BottomSheetContents> {
                       setState(() async {
                       __date = await pickDate();
                       c1.text = __date.substring(0,10);
+                      c1.text = c1.text.split(" ")[0];
+                      c1.text = c1.text.split('-').reversed.join('-');
                       });
                   },
                 ),

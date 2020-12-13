@@ -81,7 +81,7 @@ class _AdminScreenState extends State<AdminScreen> {
     if (x == null || y == null)
       return Center(
           child: SizedBox(
-              height: 60.0, width: 60, child: CircularProgressIndicator(
+              child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
             strokeWidth: 5.0,
             backgroundColor: Colors.pink,)));
