@@ -37,7 +37,9 @@ class _AddBooksState extends State<AddBooks> {
     } else {
       final checkData =
           await _firestore.collection('books').doc(bookCode).get();
-      if (checkData.data() != null) {
+      final issuedCheckData =
+          await _firestore.collection('issued books').doc(bookCode).get();
+      if (checkData.data() != null  || issuedCheckData.data() != null) {
         toastMessage = 'Code Not Unique';
         check = false;
       } else {
