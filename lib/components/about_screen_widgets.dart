@@ -14,19 +14,19 @@ class ImageAvatar extends StatelessWidget {
 
     Path customPath1 = Path();
     customPath1.addOval(Rect.fromCircle(
-      center: Offset(52, 52),
-      radius: 53.0,
+      center: Offset(47, 47),
+      radius: 51.0,
     ));
 
     Path customPath2 = Path();
     customPath2.addOval(Rect.fromCircle(
-      center: Offset(54, 54),
+      center: Offset(49, 49),
       radius: 61.0,
     ));
 
     Path customPath3 = Path();
     customPath3.addOval(Rect.fromCircle(
-      center: Offset(56, 56),
+      center: Offset(51, 51),
       radius: 70.0,
     ));
 
@@ -60,10 +60,8 @@ class ImageAvatar extends StatelessWidget {
                 strokeWidth: 6,
                 strokeCap: StrokeCap.round,
                 child: CircleAvatar(
-                  child: Image(
-                    image: AssetImage('images/writer.png'),
-                  ),
-                  radius: 48.0,
+                  backgroundImage: AssetImage('images/$name.jpg'),
+                  radius: 45.0,
                   backgroundColor: Colors.black,
                 ),
               ),

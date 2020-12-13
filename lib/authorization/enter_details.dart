@@ -3,10 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:library_management_system/Screens/home_screen.dart';
+import 'package:library_management_system/authorization/login.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 // This Takes the Info of the newly registered users so that it can be utilized when the user apply for a book to be issued.
+
+enum Gender { male, female }
 
 class EnterDetails extends StatefulWidget {
   static String id = 'enter_details';
@@ -48,6 +50,10 @@ class _EnterDetailsState extends State<EnterDetails> {
   }
 
   Widget build(BuildContext context) {
+
+    Gender _gender = Gender.male;
+    String gender = 'male';
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -64,9 +70,9 @@ class _EnterDetailsState extends State<EnterDetails> {
           elevation: 26.0,
           shadowColor: Colors.black,
           color: Color(0Xff294D64),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
+            //crossAxisAlignment: CrossAxisAlignment.stretch,
+            //mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 5.0),
@@ -196,6 +202,36 @@ class _EnterDetailsState extends State<EnterDetails> {
                   },
                 ),
               ),
+              Column(
+                children: <Widget>[
+                  ListTile(
+                    title: const Text('Male'),
+                    leading: Radio(
+                      value: Gender.male,
+                      groupValue: _gender,
+                      onChanged: (Gender value) {
+                        setState(() {
+                          _gender = value;
+                          gender = 'male';
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Female'),
+                    leading: Radio(
+                      value: Gender.female,
+                      groupValue: _gender,
+                      onChanged: (Gender value) {
+                        setState(() {
+                          _gender = value;
+                          gender = 'female';
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 100.0,vertical: 30.0),
                 child: Container(
@@ -244,8 +280,12 @@ class _EnterDetailsState extends State<EnterDetails> {
                           'Email Id': emailAddress,
                           'Issued Books': issuedBooks,
                           'Applied': applied,
+                          'Gender': gender,
                         });
-                        Navigator.pushNamed(context, HomeScreen.id);
+                        Navigator.pushNamed(context, Login.id);
+                        final user = _auth.currentUser;
+                        await user.sendEmailVerification();
+                        Fluttertoast.showToast(msg: 'Verification email Send');
                       }
                       catch(e){
                         Fluttertoast.showToast(msg: e.toString(),);

@@ -19,6 +19,7 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
   // _firestore is the Firestore Instance.
   // bookWidgetList are the search results for the entered name.
   String bookName;
+  bool ignore = false;
   final _firestore = FirebaseFirestore.instance;
   List<Widget> bookWidgetList = [];
 
@@ -28,7 +29,7 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
   // bookWidgetsList is emptied before every search.
   void bookSearch(String bookName) async {
     try {
-      bookWidgetList = [];
+      bookWidgetList.clear();
       var bookData = await _firestore
           .collection('books')
           .where('Book Name', isEqualTo: bookName)
@@ -47,9 +48,13 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
         var bookContent = book.data();
         setState(() {
           bookWidgetList.add(AdminBookWidget(bookContent: bookContent));
+          ignore = false;
         });
       }
     } catch (e) {
+      setState(() {
+        ignore = false;
+      });
       Fluttertoast.showToast(
         msg: e.toString(),
       );
@@ -99,16 +104,20 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                       fontWeight: FontWeight.w500,
                     ),
                     decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.search,
-                          color: Colors.black,
-                          size: 24,
+                      suffixIcon: IgnorePointer(
+                        ignoring: ignore,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.search,
+                            color: Colors.black,
+                            size: 24,
+                          ),
+                          onPressed: () {
+                            ignore = true;
+                            bookSearch(bookName.toLowerCase());
+                            bookWidgetList.clear();
+                          },
                         ),
-                        onPressed: () {
-                          bookSearch(bookName.toLowerCase());
-                          bookWidgetList = [];
-                        },
                       ),
                       labelText: "Search Books",
                       labelStyle: GoogleFonts.montserrat(

@@ -22,6 +22,7 @@ class _LoginState extends State<Login> {
   bool isAdmin = true;
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
+  bool isLoading = false;
 
 
   // This Function Checks whether the current user is admin or not.
@@ -41,12 +42,42 @@ class _LoginState extends State<Login> {
     }
   }
 
+  void checkVerified() async {
+    if(isAdmin){
+      Navigator.pushNamed(
+          context, AdminScreen.id);
+    }
+    else{
+      final user = _auth.currentUser;
+      if(!user.emailVerified){
+        Fluttertoast.showToast(msg: 'Email Not Verified');
+        setState(() {
+          isLoading = false;
+        });
+      }
+      else{
+        Navigator.pushNamed(
+            context, HomeScreen.id);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     return Scaffold(
       // resizeToAvoidBottomInset: false,
-      body: Container(
+      body: isLoading ?
+      Container(
+        color: Colors.black,
+        child: Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+              strokeWidth: 5.0,
+              backgroundColor: Colors.pink,
+            )
+        ),
+      ) : Container(
         decoration: BoxDecoration(
             image: DecorationImage(image: AssetImage('images/Login.jpg'),fit: BoxFit.scaleDown,alignment: Alignment.lerp(Alignment.bottomCenter, Alignment.center, 0.35)),
           color: Colors.white,
@@ -57,7 +88,6 @@ class _LoginState extends State<Login> {
             Container(
               margin: EdgeInsets.only(left: 60,right:60,top: 100),
               child: TextFormField(
-                autofocus: true,
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email,size: 18.0,color: Color(0Xff6B63FF),),
                   labelText: "Enter Email",
@@ -155,16 +185,21 @@ class _LoginState extends State<Login> {
                     // The Function here logs users in with the help of Firebase Authorization.
                     // )n the basis of isAdmin user is sent to the admin screen or the home screen using ternary statement.
                     try {
+                      setState(() {
+                        isLoading = true;
+                      });
                       final newUser = await _auth.signInWithEmailAndPassword(
                           email: emailAddress, password: password);
                       if (newUser != null) {
                         // print('Login Successful');
                         await adminCheck();
-                        Navigator.pushNamed(
-                            context, isAdmin ? AdminScreen.id : HomeScreen.id);
+                        checkVerified();
                       }
                     } catch (e) {
                       Fluttertoast.showToast(msg: e.toString(),);
+                      setState(() {
+                        isLoading = false;
+                      });
                     }
                   },
                 ),

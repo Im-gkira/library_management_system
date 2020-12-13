@@ -86,7 +86,7 @@ class UserDataWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('${userData['First Name']} ${userData['Last Name']} \n${userData['Branch']} \n${userData['Roll Number']}',
+          Text('Name : ${userData['First Name']} ${userData['Last Name']} \nBranch : ${userData['Branch']} \nRoll Number : ${userData['Roll Number']}',
             style: GoogleFonts.concertOne(
               textStyle: TextStyle(
                 fontSize: 20.0,
@@ -169,9 +169,9 @@ class ApplicationWidget extends StatelessWidget {
 }
 
 class UserImage extends StatelessWidget {
-
-  UserImage({this.name});
+  UserImage({this.name,this.gender});
   final String name;
+  final String gender;
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +197,7 @@ class UserImage extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.all(20.0),
-      padding: EdgeInsets.only(top: 30.0),
+      padding: EdgeInsets.only(top: 40.0,bottom: 30.0,right: 10.0),
       decoration: BoxDecoration(
         color: Colors.black54,
         //shape: BoxShape.circle,
@@ -225,25 +225,67 @@ class UserImage extends StatelessWidget {
                 strokeWidth: 6,
                 strokeCap: StrokeCap.round,
                 child: CircleAvatar(
-                  child: Image(
-                    image: AssetImage('images/writer.png'),
-                  ),
-                  radius: 48.0,
-                  backgroundColor: Colors.black,
+                  backgroundImage: ExactAssetImage('images/$gender.jpg'),
+                  radius: 50.0,
+                  backgroundColor: Colors.black54,
                 ),
               ),
             ),
           ),
-          SizedBox(height: 40.0,),
-          // Text(
-          //   name,
-          //   style: GoogleFonts.permanentMarker(
-          //     textStyle: TextStyle(
-          //       color: Colors.white,
-          //       fontSize: 18.0,
-          //     ),
-          //   ),
-          // ),
+          SizedBox(height: 25.0,),
+          Text(
+            'Hey There! $name',
+            style: GoogleFonts.lobster(
+              textStyle:  TextStyle(
+                color: Colors.white,
+                fontSize: 25.0,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Quote extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 30.0,right: 20.0,left: 20.0),
+      padding: EdgeInsets.all(15.0),
+      decoration: BoxDecoration(
+        color: Colors.black54,
+        border: Border.all(width: 3.0,color: Colors.white),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'When in doubt go to the Library',
+                style: GoogleFonts.oldenburg(
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                  ),
+                ),
+              ),
+              Icon(Icons.format_quote,color: Colors.white,size: 24.0,),
+            ],
+          ),
+          Text(
+            '- J.K. Rowling',
+            style: GoogleFonts.oldenburg(
+              textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+              ),
+            ),
+          ),
         ],
       ),
     );

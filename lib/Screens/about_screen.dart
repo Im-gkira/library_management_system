@@ -39,7 +39,7 @@ class AboutScreen extends StatefulWidget {
 class _AboutScreenState extends State<AboutScreen> {
 
 
-  final List<String> developers = ['Keshav', 'Gurkirat', 'Siddhant'];
+  final List<String> developers = ['Keshav', 'Gurkirat', 'unsplash'];
   final CarouselController _controller = CarouselController();
   final List<Widget> instructionWidgetList = [];
   InstructionsFormat _instructionsFormat = InstructionsFormat();
@@ -71,7 +71,6 @@ class _AboutScreenState extends State<AboutScreen> {
       body: ListView(
         children: [
           SizedBox(height: 50.0,),
-          Image(image: AssetImage('images/logo.png'),),
           Center(
               child:
               Text(

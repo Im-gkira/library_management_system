@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   };
   List<String> bookNameList = [];
   List<Widget> applicationList = [];
+  bool isLoading = true;
 
   // This function calculated the due days of each books by subtracting the due date from the current days.
   // If it is -ve it means that the book is returned in time hence the fine is rounded to zero.
@@ -75,6 +76,10 @@ class _HomeScreenState extends State<HomeScreen> {
         bookNameList.add('Book Code: ${data.data()['Book Code']} \nBook Name: ${data.data()['Book Name']} \nUnique Book Code: ${data.data()['Unique Book Code']} \nDue Date: $trimmedDate \nFine: $fine');
       }
 
+      if(bookData.docs.isEmpty){
+        bookNameList.add('No Books Issued Yet!');
+      }
+
       applicationList = [];
       final applicationData = await _firestore.collection('applications').where('Borrower',isEqualTo: emailAddress).get();
       for(var appData in applicationData.docs){
@@ -104,6 +109,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Future.value(false);
   }
 
+  void delayBuild() async {
+    Duration threeSeconds = Duration(seconds: 3);
+    await Future.delayed(threeSeconds,(){});
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   // This function is executed as soon as the widget is build.
   // The function calls the fetchData()
   @override
@@ -118,6 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }catch(e){
       Fluttertoast.showToast(msg: e.toString(),);
     }
+    delayBuild();
   }
 
   @override
@@ -134,7 +148,18 @@ class _HomeScreenState extends State<HomeScreen> {
               fit: BoxFit.cover,
             ),
           ),
-          child:RefreshIndicator(
+          child: isLoading ?
+          Container(
+            color: Colors.black,
+            child: Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                  strokeWidth: 5.0,
+                  backgroundColor: Colors.pink,
+                )
+            ),
+          ) :
+          RefreshIndicator(
             // RefreshIndicator is added to bring the scroll down to refresh functionality.
             // key takes the global key declared.
             // onRefresh takes the function to be called when app is refreshed.
@@ -143,7 +168,9 @@ class _HomeScreenState extends State<HomeScreen> {
             onRefresh: fetchData,
             child: ListView(
               children: [
-                UserImage(name: 'Keshav',),
+                SizedBox(height: 20.0,),
+                UserImage(name: userData['First Name'],gender: userData['Gender']),
+                Quote(),
                 DivisionTitle(
                   title: 'Profile',
                   colour: Color(0xDDff499e),
