@@ -143,6 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onRefresh: fetchData,
             child: ListView(
               children: [
+                UserImage(name: 'Keshav',),
                 DivisionTitle(
                   title: 'Profile',
                   colour: Color(0xDDff499e),
@@ -150,22 +151,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 UserDataWidget(userData:userData,),
                 DivisionTitle(
                   title: 'Issued Books',
-                  colour: Color(0xDDd264b6),
+                  colour: Colors.purpleAccent,
                 ),
                 Carousel(bookNameList: bookNameList),
+                SizedBox(height: 50.0,),
                 Stack(
                   alignment: AlignmentDirectional.centerEnd,
                   children: [
                     DivisionTitle(
                       title: 'Applications',
-                      colour: Color(0xCCaf2bbf),
+                      colour: Colors.indigo,
                     ),
                     SmallButton(
                       buttonString: 'Apply',
                       onPressed: (){
                         Navigator.pushNamed(context, SearchScreen.id);
                       },
-                      colour: Color(0xFFaf2bbf),
+                      colour: Colors.indigoAccent,
                     ),
                   ],
                 ),

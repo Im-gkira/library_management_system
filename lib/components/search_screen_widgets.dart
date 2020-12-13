@@ -29,27 +29,17 @@ class BookWidget extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25.0),
-          // color: Colors.black54,
+          color: Colors.black54,
         ),
-        margin: EdgeInsets.symmetric(vertical: 2.0,horizontal: 35.0),
-        child: Card(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0)),
-          margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-          elevation: 26.0,
-          shadowColor: Colors.black,
-          color: Color(0Xaa1a1a2e).withOpacity(0.6),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 30.0,top: 8,bottom: 8),
-            child: Text(
-              'Name : ${bookContent['Book Name']}\nBook Id : ${bookContent['Book Code']}',
-              style: GoogleFonts.permanentMarker(
-                textStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+        margin: EdgeInsets.symmetric(vertical: 2.0,horizontal: 30.0),
+        padding: EdgeInsets.only(left:40.0,top: 10.0,right: 10.0,bottom: 10.0),
+        child: Text(
+          'Name : ${bookContent['Book Name']}\nBook Code : ${bookContent['Book Code']}',
+          style: GoogleFonts.permanentMarker(
+            textStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),

@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:library_management_system/components/admin+book_widget.dart';
-import 'package:library_management_system/components/search_screen_widgets.dart';
+import 'package:library_management_system/components/admin_search_widget.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 

@@ -52,6 +52,7 @@ class Details extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white60,
         borderRadius: BorderRadius.circular(25.0),
+        border: Border.all(width: 3.0,color: Colors.white),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,6 +114,7 @@ class IssueButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         color: colour,
+        border: Border.all(width: 3.0,color: textColour),
       ),
       child: Text(
         text,
