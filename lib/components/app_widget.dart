@@ -87,7 +87,7 @@ class _AppWidgetState extends State<AppWidget> {
           await _firestore.collection('issued books').doc(uniqueBookCode).get();
       final bookData = await _firestore.collection('books').doc(uniqueBookCode).get();
 
-      if (issuedBookContent.data() != null || bookData.data() != null) {
+      if (issuedBookContent.data() != null || bookData.data() != null || uniqueBookCode == null || uniqueBookCode == '') {
         Fluttertoast.showToast(
           msg: 'Enter Unique Code',
         );
