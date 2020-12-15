@@ -1,16 +1,20 @@
-# library_management_system
 
-A new Flutter application.
+![Logo](Images/Logo.png)
 
-## Getting Started
+#  Library Management System
 
-This project is a starting point for a Flutter application.
+## Intro
+Library Management system is a software which is developed to handle the basic tasks of a library. Today in most of the libraries records are maintained manually and thus it makes the current process cumbersome and hectic.
 
-A few resources to get you started if this is your first Flutter project:
+## Our Goal
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Altough we build this application due to our acadmic curriculum but the main motivation/objective of the project to learn basics and concepts of flutter and firebase.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## What we created
+So our library management app has two modules:
+1 admin module
+2 user module
+We provided all the basic functionalities of a library management app in our app with a eye soothing UI/UX.
+
+
+![End Banner](Documentation/readme-end-banner.png)
