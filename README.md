@@ -1,5 +1,5 @@
 
-![Logo](Images/Logo.png)
+![Logo](images/logo.png)
 
 #  Library Management System
 
