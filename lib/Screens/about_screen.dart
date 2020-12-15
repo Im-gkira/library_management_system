@@ -83,7 +83,7 @@ class _AboutScreenState extends State<AboutScreen> {
           ),
           Center(
               child: Text(
-                'Version 1.0',
+                'Version 0.1.0',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 20.0,

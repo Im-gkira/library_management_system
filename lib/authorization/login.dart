@@ -64,8 +64,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       // resizeToAvoidBottomInset: false,
       body: isLoading ?
       Container(
@@ -106,7 +106,7 @@ class _LoginState extends State<Login> {
                 },
                 keyboardType: TextInputType.emailAddress,
                 style: GoogleFonts.montserrat(
-                  color: Color(0Xff403D55),
+                  color: Colors.black,
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
                 ),
@@ -137,7 +137,7 @@ class _LoginState extends State<Login> {
                   }
                 },
                 style: GoogleFonts.montserrat(
-                  color: Color(0Xff403D55),
+                  color: Colors.black,
               fontWeight: FontWeight.w500,
               fontSize: 16,
             ),
@@ -147,7 +147,7 @@ class _LoginState extends State<Login> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 100.0,vertical: 50.0),
+              padding: const EdgeInsets.symmetric(horizontal: 100.0,vertical: 45.0),
               child: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
