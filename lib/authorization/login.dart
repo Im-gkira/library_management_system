@@ -115,8 +115,7 @@ class _LoginState extends State<Login> {
             image: DecorationImage(image: AssetImage('images/Login.jpg'),fit: BoxFit.scaleDown,alignment: Alignment.lerp(Alignment.bottomCenter, Alignment.center, 0.35)),
           color: Colors.white,
           ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: ListView(
           children: [
             Container(
               margin: EdgeInsets.only(left: 60,right:60,top: 100),
