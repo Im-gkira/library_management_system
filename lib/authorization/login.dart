@@ -62,6 +62,39 @@ class _LoginState extends State<Login> {
     }
   }
 
+  void resetPassword() async {
+    if(emailAddress == null){
+      Fluttertoast.showToast(msg: 'Enter A Valid Email');
+    }
+    else{
+      try{
+        _auth.sendPasswordResetEmail(email: emailAddress);
+        Fluttertoast.showToast(msg: 'Password reset link send to $emailAddress',timeInSecForIosWeb: 2);
+      }catch(e){
+        Fluttertoast.showToast(msg: e.toString());
+      }
+    }
+  }
+
+  void sendVerification() async {
+    if(emailAddress == null || password == null){
+      Fluttertoast.showToast(msg: 'Enter Email And Password',timeInSecForIosWeb: 2);
+    }
+    else{
+      try{
+        final newUser = await _auth.signInWithEmailAndPassword(
+            email: emailAddress, password: password);
+        if (newUser != null) {
+          final user = _auth.currentUser;
+          await user.sendEmailVerification();
+          Fluttertoast.showToast(msg: 'Verification email Send');
+        }
+      }catch(e){
+        Fluttertoast.showToast(msg: e.toString());
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,7 +144,7 @@ class _LoginState extends State<Login> {
                   fontSize: 16,
                 ),
                 onChanged: (value) {
-                  emailAddress = value;
+                  emailAddress = value == '' ? null : value;
                 },
               ),
             ),
@@ -142,7 +175,7 @@ class _LoginState extends State<Login> {
               fontSize: 16,
             ),
                 onChanged: (value) {
-                  password = value;
+                  password = value == '' ? null : value;
                 },
               ),
             ),
@@ -205,6 +238,43 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
+            FlatButton(
+              child: Text('Didn\'t get a verification email'),
+              onPressed: sendVerification,
+            ),
+            FlatButton(
+              child: Text('Forgot Password'),
+              onPressed: (){
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text('Enter email Address'),
+                    content: TextFormField(
+                      onChanged: (value){
+                        emailAddress = value == '' ? null : value;
+                      },
+                    ),
+                    actions: [
+                      FlatButton(
+                        onPressed: () {
+                          resetPassword();
+                          Navigator.pop(context);
+                        },
+                        child: Text('Send'),
+                      ),
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Cancel'),
+                      ),
+                    ],
+                    elevation: 20.0,
+                  ),
+                  barrierDismissible: true,
+                );
+              },
+            )
           ],
         ),
       ),
