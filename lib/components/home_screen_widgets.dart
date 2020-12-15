@@ -84,21 +84,85 @@ class UserDataWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Column(
+        children: [
+          SmallUserWidget(
+            title: 'Name: ',
+            name: '${userData['First Name']} ${userData['Last Name']}',
+            iconData: Icon(Icons.person_outline_rounded,color: Colors.pinkAccent,),
+          ),
+          SizedBox(height: 20.0,),
+          SmallUserWidget(
+            title: 'Branch: ',
+            name: '${userData['Branch']}',
+            iconData: Icon(Icons.account_balance_outlined,color: Colors.pinkAccent,),
+          ),
+          SizedBox(height: 20.0,),
+          SmallUserWidget(
+            title: 'Roll Number: ',
+            name: '${userData['Roll Number']}',
+            iconData: Icon(Icons.assignment_ind_outlined,color: Colors.pinkAccent,),
+          ),
+          SizedBox(height: 20.0,),
+          SmallUserWidget(
+            title:  'Email ID:',
+            name: '${userData['Email Id']}',
+            iconData: Icon(Icons.assignment_ind_outlined,color: Colors.pinkAccent,),
+          ),
+          SizedBox(height: 20.0,),
+        ],
+      ),
+    );
+  }
+}
+
+class SmallUserWidget extends StatelessWidget {
+  SmallUserWidget({this.name,this.title,this.iconData});
+  final String name;
+  final String title;
+  final Icon iconData;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Name : ${userData['First Name']} ${userData['Last Name']} \nBranch : ${userData['Branch']} \nRoll Number : ${userData['Roll Number']}',
+          Text(title,
             style: GoogleFonts.concertOne(
               textStyle: TextStyle(
                 fontSize: 20.0,
-                color: Colors.pinkAccent,
+                color: Colors.white,
               ),
             ),
+          ),
+          Divider(
+            thickness: 2.0,
+            endIndent: 40.0,
+            color: Colors.pinkAccent,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              iconData,
+              SizedBox(width: 40.0,),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: Text(name,
+                  style: GoogleFonts.concertOne(
+                    textStyle: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 }
+
 
 class DivisionTitle extends StatelessWidget {
 
