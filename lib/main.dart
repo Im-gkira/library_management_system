@@ -11,6 +11,7 @@ import 'package:library_management_system/Screens/admin_screen.dart';
 import 'package:library_management_system/Screens/issued_books_screen.dart';
 import 'package:library_management_system/Screens/add_books_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 // This is the Main Dart File which contains the Route to all the screens except the book screen since it requires arguments to passed to it.
 // This also contains the Firebase Core which is required to use the Firebase Authenticator and FireStore.
@@ -22,6 +23,17 @@ void main() async {
   if(await Permission.camera.isGranted == true){
   runApp(
     MaterialApp(
+        builder: (context, widget) => ResponsiveWrapper.builder(
+            ClampingScrollWrapper.builder(context, widget),
+            maxWidth: 1980,
+            minWidth: 480,
+            defaultScale: true,
+            breakpoints: [
+              ResponsiveBreakpoint.autoScale(480, name: MOBILE),
+              ResponsiveBreakpoint.autoScale(800, name: TABLET),
+              ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+            ],
+            background: Container(color: Color(0xFFF5F5F5))),
       initialRoute: WelcomeScreen.id,
       routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
