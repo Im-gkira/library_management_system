@@ -25,9 +25,9 @@ void main() async {
     MaterialApp(
         builder: (context, widget) => ResponsiveWrapper.builder(
             ClampingScrollWrapper.builder(context, widget),
-            maxWidth: 1980,
+            maxWidth: 1280,
             minWidth: 480,
-            defaultScale: true,
+            defaultScale: false,
             breakpoints: [
               ResponsiveBreakpoint.autoScale(480, name: MOBILE),
               ResponsiveBreakpoint.autoScale(800, name: TABLET),
