@@ -107,7 +107,7 @@ class UserDataWidget extends StatelessWidget {
           SmallUserWidget(
             title:  'Email ID:',
             name: '${userData['Email Id']}',
-            iconData: Icon(Icons.assignment_ind_outlined,color: Colors.pinkAccent,),
+            iconData: Icon(Icons.mail_outline_outlined,color: Colors.pinkAccent,),
           ),
           SizedBox(height: 20.0,),
         ],
@@ -267,18 +267,18 @@ class UserImage extends StatelessWidget {
         children: [
           DottedBorder(
             customPath: (_) => customPath2,
-            color: Color(0xFF161931),
+            color: Colors.purple,
             dashPattern: [18, 10],
             strokeWidth: 8,
             strokeCap: StrokeCap.round,
             child: DottedBorder(
               customPath: (_) => customPath1,
-              color: Color(0xFF0C8FE7),
+              color: Colors.pink,
               dashPattern: [10, 9],
               strokeWidth: 6,
               strokeCap: StrokeCap.round,
               child: CircleAvatar(
-                backgroundImage: ExactAssetImage('images/$gender.jpg'),
+                backgroundImage: ExactAssetImage('images/$gender.png'),
                 radius: 50.0,
                 backgroundColor: Colors.black54,
               ),

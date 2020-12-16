@@ -8,7 +8,6 @@ import 'package:library_management_system/Screens/admin_screen.dart';
 import 'package:library_management_system/Screens/home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 
 // The Login Page is the Main Gateway To The App.
 // It takes the already Registered user to the home screen or the admin screen depending upon isAdmin.
@@ -119,7 +118,7 @@ class _LoginState extends State<Login> {
         child: ListView(
           children: [
             Container(
-              margin: EdgeInsets.only(left: 60, right: 60, top: 100),
+              margin: EdgeInsets.only(left: 60, right: 60, top: 60),
               child: TextFormField(
                 decoration: InputDecoration(
                   prefixIcon: Icon(

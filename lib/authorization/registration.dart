@@ -98,7 +98,6 @@ class _RegistrationState extends State<Registration> {
         gender = 'female';
         femaleColour = Colors.pinkAccent.withOpacity(0.5);
         maleColour = Colors.white10;
-        print('$gender');
       });
     }
     else{
@@ -106,7 +105,6 @@ class _RegistrationState extends State<Registration> {
         gender = 'male';
         maleColour = Colors.blueAccent.withOpacity(0.5);
         femaleColour = Colors.white10;
-        print('$gender');
       });
     }
   }

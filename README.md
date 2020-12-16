@@ -1,5 +1,5 @@
 
-![Logo](images/logo.png)
+![Logo](images/small_logo.png)
 
 #  Library Management System
 
@@ -17,4 +17,4 @@ So our library management app has two modules:
 We provided all the basic functionalities of a library management app in our app with a eye soothing UI/UX.
 
 
-![End Banner](Documentation/readme-end-banner.png)
+

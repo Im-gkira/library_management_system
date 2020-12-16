@@ -35,7 +35,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.black,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/branches.jpg'),fit: BoxFit.cover,
+          ),
+        ),
         child: Center(
           child: Container(
             decoration: BoxDecoration(
@@ -66,7 +70,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         this.run = false;
                       }),
                     ),
-                    secondChild: SvgPicture.asset('images/LMS logo.svg',width: 240,color: Color(0XFF6B63FF)),
+                    secondChild: SvgPicture.asset('images/LMS logo.svg',width: 240,color: Colors.deepPurpleAccent),
                     crossFadeState: _crossFadeState,
                   ),
                 ),
