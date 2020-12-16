@@ -39,7 +39,7 @@ class AboutScreen extends StatefulWidget {
 class _AboutScreenState extends State<AboutScreen> {
 
 
-  final List<String> developers = ['Keshav', 'Gurkirat', 'unsplash'];
+  final List<String> developers = ['Keshav', 'Gurkirat', 'Siddhant'];
   final CarouselController _controller = CarouselController();
   final List<Widget> instructionWidgetList = [];
   InstructionsFormat _instructionsFormat = InstructionsFormat();
