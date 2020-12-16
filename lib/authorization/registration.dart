@@ -36,6 +36,7 @@ class _RegistrationState extends State<Registration> {
   Color femaleColour = Colors.white10;
   String gender = 'male';
   bool ignore = false;
+  bool hidePass = true;
 
   void makeRecord() async {
     if(firstName == null || lastName == null || rollNumber == null || branch == null || emailAddress == null || password == null){
@@ -121,9 +122,9 @@ class _RegistrationState extends State<Registration> {
             // height: MediaQuery.of(context).size.height * 0.95,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('images/SignIn.png'),
+                image: AssetImage('images/SignIn.png',),
                 fit: BoxFit.scaleDown,
-                alignment: Alignment.lerp(Alignment.center, Alignment.bottomCenter, 0.4),
+                alignment: Alignment.lerp(Alignment.bottomLeft, Alignment.bottomRight, 0.4),
               ),
               color: Colors.white,
             ),
@@ -287,8 +288,21 @@ class _RegistrationState extends State<Registration> {
                 Container(
                   margin: EdgeInsets.only(left: 60,right:60,top: 5),
                   child: TextFormField(
-                    obscureText: true,
+                    obscureText: hidePass,
                     decoration: InputDecoration(
+                      suffix: GestureDetector(
+                        child: hidePass
+                            ? Icon(
+                          FontAwesomeIcons.eyeSlash,
+                          color: Colors.black,
+                        )
+                            : Icon(FontAwesomeIcons.eye),
+                        onTap: () {
+                          setState(() {
+                            hidePass = !hidePass;
+                          });
+                        },
+                      ),
                       prefixIcon: Icon(FontAwesomeIcons.key,size: 18.0,color: Color(0Xff6B63FF),),
                       labelText: "Enter Password",
                       labelStyle: GoogleFonts.montserrat(
@@ -365,27 +379,50 @@ class _RegistrationState extends State<Registration> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 75.0),
+                  margin: EdgeInsets.only(
+                      top: 5, left: 115, right: 115),
                   decoration: BoxDecoration(
-                    color: Colors.deepPurpleAccent.withOpacity(0.6),
+                    gradient: LinearGradient(
+                        begin: Alignment.centerRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color(0Xaa6C63FF).withOpacity(0.9),
+                          Color(0Xaa6C63FF).withOpacity(0.9),
+                        ]),
                     borderRadius: BorderRadius.circular(25.0),
-                    border: Border.all(color: Colors.deepPurple.shade800,width: 4.0),
+                    border: Border.all(color: Color(0XFF403D55), width: 4.0),
+                    boxShadow: [
+                      BoxShadow(
+                        // color: Colors.black,
+                        blurRadius: 2.0,
+                        spreadRadius: 0.0,
+                        offset:
+                        Offset(2.0, 2.0), // shadow direction: bottom right
+                      )
+                    ],
                   ),
                   child: IgnorePointer(
                     ignoring: ignore,
                     child: FlatButton(
-                      child: Text('Register',
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontFamily: 'Cubano',
-                            fontSize: 18.0,
-                            color: Colors.deepPurple.shade800,
-                          ),
+                      child: Text(
+                        'Register',
+                        maxLines: 1,
+                        style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 18.0,
+                          color: Colors.white,
+                        ),
                       ),
                       onPressed: (){
-                        setState(() {
-                          ignore = true;
+                        // setState(() {
+                        //   ignore = true;
+                        // });
+                        Future.delayed(Duration(milliseconds: 800),(){
+                          setState(() {
+                            ignore = false;
+                          });
                         });
+
                         makeRecord();
                       },
                     ),

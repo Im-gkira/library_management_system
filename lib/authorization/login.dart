@@ -113,7 +113,7 @@ class _LoginState extends State<Login> {
               image: AssetImage('images/Login.jpg'),
               fit: BoxFit.scaleDown,
               alignment: Alignment.lerp(
-                  Alignment.bottomCenter, Alignment.center, 0.25)),
+                  Alignment.bottomCenter, Alignment.center, 0.01)),
           color: Colors.white,
         ),
         child: ListView(
@@ -250,16 +250,33 @@ class _LoginState extends State<Login> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
+                  padding: EdgeInsets.zero,
                   margin: EdgeInsets.only(
-                      top: 35, bottom: 10, left: 105, right: 105),
+                      top: 55, bottom: 10, left: 115, right: 115),
                   decoration: BoxDecoration(
-                    color: Color(0Xaa6B63FF).withOpacity(0.9),
+                    gradient: LinearGradient(
+                        begin: Alignment.centerRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color(0Xaa6C63FF).withOpacity(0.9),
+                          Color(0Xaa6C63FF).withOpacity(0.9),
+                        ]),
                     borderRadius: BorderRadius.circular(25.0),
                     border: Border.all(color: Color(0XFF403D55), width: 4.0),
+                    boxShadow: [
+                      BoxShadow(
+                        // color: Colors.black,
+                        blurRadius: 2.0,
+                        spreadRadius: 0.0,
+                        offset:
+                        Offset(2.0, 2.0), // shadow direction: bottom right
+                      )
+                    ],
                   ),
                   child: IgnorePointer(
                     ignoring: ignore,
                     child: FlatButton(
+                      padding: EdgeInsets.all(0),
                       child: Text(
                         'Login',
                         maxLines: 1,

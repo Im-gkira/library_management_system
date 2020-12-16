@@ -66,7 +66,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         this.run = false;
                       }),
                     ),
-                    secondChild: SvgPicture.asset('images/LMS logo.svg',width: 240,color: Colors.deepPurpleAccent),
+                    secondChild: SvgPicture.asset('images/LMS logo.svg',width: 240,color: Color(0XFF6B63FF)),
                     crossFadeState: _crossFadeState,
                   ),
                 ),
