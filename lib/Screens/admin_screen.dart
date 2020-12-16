@@ -79,12 +79,16 @@ class _AdminScreenState extends State<AdminScreen> {
   @override
   Widget build(BuildContext context) {
     if (x == null || y == null)
-      return Center(
-          child: SizedBox(
+      return Container(
+          color: Colors.black,
+          child: Center(
               child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-            strokeWidth: 5.0,
-            backgroundColor: Colors.pink,)));
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                strokeWidth: 5.0,
+                backgroundColor: Colors.pink,
+              )
+          ),
+        );
     else
       return Scaffold(
           body: SizedBox.expand(

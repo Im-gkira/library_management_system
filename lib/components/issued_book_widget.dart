@@ -37,9 +37,9 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
         '${userData['First Name']} ${userData['Last Name']}',
         style: GoogleFonts.montserrat(
           textStyle: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 20,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ));
@@ -47,9 +47,9 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
         '${userData['Branch']}',
         style: GoogleFonts.montserrat(
           textStyle: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 20,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ));
@@ -57,9 +57,9 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
         '${userData['Roll Number']}',
         style: GoogleFonts.montserrat(
           textStyle: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 20,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ));
@@ -166,7 +166,7 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
                       borderRadius: BorderRadius.circular(35.0)),
                   elevation: 26.0,
                   shadowColor: Colors.black,
-                  color: Color(0Xaa6C63FF).withOpacity(0.2),
+                  color:  Color(0Xffb963ff).withOpacity(0.5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -177,9 +177,9 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
                             '• Name      : ',
                             style: GoogleFonts.montserrat(
                               textStyle: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 20,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -187,36 +187,36 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
                           Text('• Branch   : ',
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               )),
                           SizedBox(height: 15.0),
                           Text('• Roll No   : ',
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               )),
                           SizedBox(height: 15.0),
                           Text('• Fine         : ',
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               )),
                           SizedBox(height: 15.0),
                           Text('• Due Date: ',
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               )),
                           SizedBox(height: 15.0),
@@ -234,16 +234,16 @@ class _IssuedBookWidgetState extends State<IssuedBookWidget> {
                           SizedBox(height: 15.0),
                           Text('$fine',style: GoogleFonts.montserrat(
                             textStyle: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 20,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                             ),),),
                           SizedBox(height: 15.0),
                           Text('$trimmedDate',style: GoogleFonts.montserrat(
                             textStyle: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 20,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                             ),),),
                           SizedBox(height: 15.0),
                         ],

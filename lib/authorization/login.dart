@@ -24,7 +24,6 @@ class _LoginState extends State<Login> {
   final _firestore = FirebaseFirestore.instance;
   bool isLoading = false;
 
-
   // This Function Checks whether the current user is admin or not.
   // It accesses the admin collection in firestore and checks if their is any entry with the current emailAddress.
   // It returns false and then uses setState to change isAdmin to new value, if the user has no entry in admin collection means the user is not an admin.
@@ -100,17 +99,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // resizeToAvoidBottomInset: false,
-      body: isLoading ?
-      Container(
-        color: Colors.black,
-        child: Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-              strokeWidth: 5.0,
-              backgroundColor: Colors.pink,
-            )
-        ),
-      ) : Container(
+      body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(image: AssetImage('images/Login.jpg'),fit: BoxFit.scaleDown,alignment: Alignment.lerp(Alignment.bottomCenter, Alignment.center, 0.35)),
           color: Colors.white,

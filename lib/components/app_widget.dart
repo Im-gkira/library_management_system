@@ -34,9 +34,9 @@ class _AppWidgetState extends State<AppWidget> {
           '${userData['First Name']} ${userData['Last Name']}',
           style: GoogleFonts.montserrat(
             textStyle: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 20,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ));
@@ -44,9 +44,9 @@ class _AppWidgetState extends State<AppWidget> {
           '${userData['Branch']}',
           style: GoogleFonts.montserrat(
             textStyle: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 20,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ));
@@ -54,9 +54,9 @@ class _AppWidgetState extends State<AppWidget> {
           '${userData['Roll Number']}',
           style: GoogleFonts.montserrat(
             textStyle: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 20,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ));
@@ -186,7 +186,8 @@ class _AppWidgetState extends State<AppWidget> {
             decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("images/applicationBottom.png"),
-                  fit: BoxFit.fitWidth),
+                  fit: BoxFit.scaleDown,
+              alignment: Alignment.lerp(Alignment.centerLeft, Alignment.center, 13)),
               color: Colors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30.0),
@@ -202,7 +203,7 @@ class _AppWidgetState extends State<AppWidget> {
                     'Application',
                     style: GoogleFonts.montserrat(
                       textStyle: TextStyle(
-                        color: Color(0Xaa6B63FF),
+                        color:  Color(0Xff6C63FF),
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
                         decoration: TextDecoration.underline,
@@ -218,7 +219,7 @@ class _AppWidgetState extends State<AppWidget> {
                         borderRadius: BorderRadius.circular(35.0)),
                     elevation: 26.0,
                     shadowColor: Colors.black,
-                    color: Color(0Xaa6C63FF).withOpacity(0.2),
+                    color:  Color(0Xffb963ff).withOpacity(0.4),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -229,9 +230,9 @@ class _AppWidgetState extends State<AppWidget> {
                               '• Name      : ',
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
@@ -240,9 +241,9 @@ class _AppWidgetState extends State<AppWidget> {
                               '• Branch      : ',
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
@@ -251,9 +252,9 @@ class _AppWidgetState extends State<AppWidget> {
                               '• Roll No.      : ',
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),

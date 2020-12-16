@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:library_management_system/authorization/login.dart';
-
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 // The Registration Page creates a new account using the Firebase Authorization.
 
 class Registration extends StatefulWidget {
@@ -107,157 +108,49 @@ class _RegistrationState extends State<Registration> {
         color: Colors.greenAccent,
         child: Center(
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.9,
-            height: MediaQuery.of(context).size.height * 0.95,
+            // width: MediaQuery.of(context).size.width * 0.9,
+            // height: MediaQuery.of(context).size.height * 0.95,
             decoration: BoxDecoration(
-              border: Border.all(width: 5.0,color: Colors.white),
+              image: DecorationImage(image: AssetImage('images/SignIn.png'),fit: BoxFit.scaleDown,alignment: Alignment.lerp(Alignment.bottomCenter, Alignment.center, 0.1)),
+              color: Colors.white,
             ),
             child: ListView(
               children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: "Enter First Name",
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    style: TextStyle(
-                      fontFamily: "Poppins",
-                      color: Colors.white,
-                    ),
-                    onChanged: (value){
-                      firstName = value == '' ? null : value;
-                    },
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: "Enter Last Name",
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    style: TextStyle(
-                      fontFamily: "Poppins",
-                      color: Colors.white,
-                    ),
-                    onChanged: (value){
-                      lastName = value == '' ? null : value;
-                    },
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: "Enter Roll Number",
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    style: TextStyle(
-                      fontFamily: "Poppins",
-                      color: Colors.white,
-                    ),
-                    onChanged: (value){
-                      rollNumber = value == '' ? null : value;
-                    },
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: "Enter Branch Name",
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    style: TextStyle(
-                      fontFamily: "Poppins",
-                      color: Colors.white,
-                    ),
-                    onChanged: (value){
-                      branch = value == '' ? null : value;
-                    },
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: "Enter Email",
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    style: TextStyle(
-                      fontFamily: "Poppins",
-                      color: Colors.white,
-                    ),
-                    onChanged: (value){
-                      emailAddress = value == '' ? null : value;
-                    },
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
-                  child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: "Enter Password",
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                      ),
-                      fillColor: Colors.white,
-                    ),
-                    style: TextStyle(
-                      fontFamily: "Poppins",
-                      color: Colors.white,
-                    ),
-                    onChanged: (value){
-                      password = value == '' ? null : value;
-                    },
-                  ),
-                ),
-                SizedBox(height: 10.0,),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Select Gender',
-                        style: TextStyle(
-                            fontFamily: "Poppins",
-                            color: Colors.white,
-                            fontSize: 17.0
-                        ),
-                      ),
+                      // Center(
+                      //   child: Text(
+                      //     'Select Gender',
+                      //     style: TextStyle(
+                      //         fontFamily: "Poppins",
+                      //         color: Colors.black,
+                      //         fontSize: 17.0
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(height: 10.0,),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Expanded(
+                          Container(
                             child: GestureDetector(
                               child: Container(
                                 margin: EdgeInsets.all(10.0),
                                 color: maleColour,
-                                child: Icon(Icons.person),
+                                child: Icon(LineAwesomeIcons.male,size: 60),
                               ),
                               onTap: setGender,
                             ),
                           ),
-                          Expanded(
+                          Container(
                             child: GestureDetector(
                               child: Container(
                                 margin: EdgeInsets.all(10.0),
                                 color: femaleColour,
-                                child: Icon(Icons.person),
+                                child: Icon(LineAwesomeIcons.female,size: 60,),
                               ),
                               onTap: setGender,
                             ),
@@ -267,18 +160,231 @@ class _RegistrationState extends State<Registration> {
                     ],
                   ),
                 ),
-                FlatButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Text('Register',
-                      style: GoogleFonts.montserrat(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w800,
+                Container(
+                  margin: EdgeInsets.only(left: 60,right:60,top: 10),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(FontAwesomeIcons.edit,size: 18.0,color: Color(0Xff6B63FF),),
+                      labelText: "Enter First Name",
+                      labelStyle: GoogleFonts.montserrat(
                         color: Colors.black,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
                       ),
+                    ),
+                    validator: (val) {
+                      if(val.length==0) {
+                        Fluttertoast.showToast(msg: 'Required Field',);
+                        return "Required Field";
+                      }else{
+                        return null;
+                      }
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                    style: GoogleFonts.montserrat(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    onChanged: (value) {
+                      emailAddress = value == '' ? null : value;
+                    },
                   ),
-                  onPressed: makeRecord,
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 60,right:60,top: 5),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(FontAwesomeIcons.edit,size: 18.0,color: Color(0Xff6B63FF),),
+                      labelText: "Enter Last Name",
+                      labelStyle: GoogleFonts.montserrat(
+                        color: Colors.black,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    validator: (val) {
+                      if(val.length==0) {
+                        Fluttertoast.showToast(msg: 'Required Field',);
+                        return "Required Field";
+                      }else{
+                        return null;
+                      }
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                    style: GoogleFonts.montserrat(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    onChanged: (value) {
+                      emailAddress = value == '' ? null : value;
+                    },
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 60,right:60,top: 5),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(FontAwesomeIcons.idCard,size: 18.0,color: Color(0Xff6B63FF),),
+                      labelText: "Enter Roll Number",
+                      labelStyle: GoogleFonts.montserrat(
+                        color: Colors.black,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    validator: (val) {
+                      if(val.length==0) {
+                        Fluttertoast.showToast(msg: 'Required Field',);
+                        return "Required Field";
+                      }else{
+                        return null;
+                      }
+                    },
+                    keyboardType: TextInputType.number,
+                    style: GoogleFonts.montserrat(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    onChanged: (value) {
+                      emailAddress = value == '' ? null : value;
+                    },
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 60,right:60,top: 5),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(FontAwesomeIcons.graduationCap,size: 18.0,color: Color(0Xff6B63FF),),
+                      labelText: "Enter Branch Name",
+                      labelStyle: GoogleFonts.montserrat(
+                        color: Colors.black,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    validator: (val) {
+                      if(val.length==0) {
+                        Fluttertoast.showToast(msg: 'Required Field',);
+                        return "Required Field";
+                      }else{
+                        return null;
+                      }
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                    style: GoogleFonts.montserrat(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    onChanged: (value) {
+                      emailAddress = value == '' ? null : value;
+                    },
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 60,right:60,top: 5),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(FontAwesomeIcons.user,size: 18.0,color: Color(0Xff6B63FF),),
+                      labelText: "Enter Email",
+                      labelStyle: GoogleFonts.montserrat(
+                        color: Colors.black,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    validator: (val) {
+                      if(val.length==0) {
+                        Fluttertoast.showToast(msg: 'Required Field',);
+                        return "Required Field";
+                      }else{
+                        return null;
+                      }
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                    style: GoogleFonts.montserrat(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    onChanged: (value) {
+                      emailAddress = value == '' ? null : value;
+                    },
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 60,right:60,top: 5),
+                  child: TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(FontAwesomeIcons.key,size: 18.0,color: Color(0Xff6B63FF),),
+                      labelText: "Enter Password",
+                      labelStyle: GoogleFonts.montserrat(
+                        color: Colors.black,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    validator: (val) {
+                      if(val.length==0) {
+                        Fluttertoast.showToast(msg: 'Required Field',);
+                        return "Required Field";
+                      }else{
+                        return null;
+                      }
+                    },
+                    keyboardType: TextInputType.visiblePassword,
+                    style: GoogleFonts.montserrat(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    onChanged: (value) {
+                      emailAddress = value == '' ? null : value;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 100.0,vertical: 45.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.centerRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Color(0Xff440047).withOpacity(0.4),
+                            Color(0Xff440047).withOpacity(0.2),
+                          ]),
+                      borderRadius: BorderRadius.circular(30.0),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black,
+                          blurRadius: 2.0,
+                          spreadRadius: 0.0,
+                          offset:
+                          Offset(2.0, 2.0), // shadow direction: bottom right
+                        )
+                      ],
+                    ),
+                    child: FlatButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Text('Register',
+                          style: GoogleFonts.montserrat(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 1.6,
+                            color: Colors.white,
+                          )
+                      ),
+                      onPressed: makeRecord,
+                    ),
+                  ),
                 ),
               ],
             ),
