@@ -46,6 +46,7 @@ class SmallButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(right: 10.0,),
       padding: EdgeInsets.all(3.0),
       height: 40.0,
       decoration: BoxDecoration(
@@ -243,19 +244,13 @@ class UserImage extends StatelessWidget {
     Path customPath1 = Path();
     customPath1.addOval(Rect.fromCircle(
       center: Offset(52, 52),
-      radius: 53.0,
+      radius: 56.0,
     ));
 
     Path customPath2 = Path();
     customPath2.addOval(Rect.fromCircle(
       center: Offset(54, 54),
-      radius: 61.0,
-    ));
-
-    Path customPath3 = Path();
-    customPath3.addOval(Rect.fromCircle(
-      center: Offset(56, 56),
-      radius: 70.0,
+      radius: 66.0,
     ));
 
 
@@ -271,28 +266,21 @@ class UserImage extends StatelessWidget {
       child: Column(
         children: [
           DottedBorder(
-            customPath: (_) => customPath3,
-            color: Colors.pink,
-            dashPattern: [25, 10],
-            strokeWidth: 6,
+            customPath: (_) => customPath2,
+            color: Color(0xFF161931),
+            dashPattern: [18, 10],
+            strokeWidth: 8,
             strokeCap: StrokeCap.round,
             child: DottedBorder(
-              customPath: (_) => customPath2,
-              color: Colors.purple,
-              dashPattern: [15, 9],
+              customPath: (_) => customPath1,
+              color: Color(0xFF0C8FE7),
+              dashPattern: [10, 9],
               strokeWidth: 6,
               strokeCap: StrokeCap.round,
-              child: DottedBorder(
-                customPath: (_) => customPath1,
-                color: Colors.indigo,
-                dashPattern: [10, 9],
-                strokeWidth: 6,
-                strokeCap: StrokeCap.round,
-                child: CircleAvatar(
-                  backgroundImage: ExactAssetImage('images/$gender.jpg'),
-                  radius: 50.0,
-                  backgroundColor: Colors.black54,
-                ),
+              child: CircleAvatar(
+                backgroundImage: ExactAssetImage('images/$gender.jpg'),
+                radius: 50.0,
+                backgroundColor: Colors.black54,
               ),
             ),
           ),

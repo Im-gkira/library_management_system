@@ -34,14 +34,14 @@ class BookWidget extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 2.0,horizontal: 30.0),
         padding: EdgeInsets.only(left:40.0,top: 10.0,right: 10.0,bottom: 10.0),
         child: Text(
-          'Name : ${bookContent['Book Name']}\nBook Code : ${bookContent['Book Code']}',
+          'Book Name : ${bookContent['Book Name']}\nBook Code : ${bookContent['Book Code']}',
           style: GoogleFonts.permanentMarker(
             textStyle: TextStyle(
               color: Colors.white,
               fontSize: 18.0,
               fontWeight: FontWeight.w500,
             ),
-          ),
+          )
         ),
       ),
     );

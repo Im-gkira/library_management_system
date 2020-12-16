@@ -94,6 +94,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Column(
               children: bookWidgetList,
             ),
+            SizedBox(height: 40.0,),
           ],
         ),
       ),
