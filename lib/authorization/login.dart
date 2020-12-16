@@ -22,7 +22,7 @@ class _LoginState extends State<Login> {
   bool isAdmin = true;
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
-  bool isLoading = false;
+  bool ignore = false;
 
   // This Function Checks whether the current user is admin or not.
   // It accesses the admin collection in firestore and checks if their is any entry with the current emailAddress.
@@ -45,13 +45,16 @@ class _LoginState extends State<Login> {
     if(isAdmin){
       Navigator.pushNamed(
           context, AdminScreen.id);
+      setState(() {
+        ignore = false;
+      });
     }
     else{
       final user = _auth.currentUser;
       if(!user.emailVerified){
         Fluttertoast.showToast(msg: 'Email Not Verified');
         setState(() {
-          isLoading = false;
+          ignore = false;
         });
       }
       else{
@@ -190,39 +193,42 @@ class _LoginState extends State<Login> {
                     )
                   ],
                 ),
-                child: FlatButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: AutoSizeText('Login',
-                      maxLines: 1,
-                      style: GoogleFonts.montserrat(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 1.6,
-                        color: Colors.white,
-                      )),
-                  onPressed: () async {
-                    // The Function here logs users in with the help of Firebase Authorization.
-                    // )n the basis of isAdmin user is sent to the admin screen or the home screen using ternary statement.
-                    try {
-                      setState(() {
-                        isLoading = true;
-                      });
-                      final newUser = await _auth.signInWithEmailAndPassword(
-                          email: emailAddress, password: password);
-                      if (newUser != null) {
-                        // print('Login Successful');
-                        await adminCheck();
-                        checkVerified();
+                child: IgnorePointer(
+                  ignoring: ignore,
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: AutoSizeText('Login',
+                        maxLines: 1,
+                        style: GoogleFonts.montserrat(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 1.6,
+                          color: Colors.white,
+                        )),
+                    onPressed: () async {
+                      // The Function here logs users in with the help of Firebase Authorization.
+                      // )n the basis of isAdmin user is sent to the admin screen or the home screen using ternary statement.
+                      try {
+                        setState(() {
+                          ignore = true;
+                        });
+                        final newUser = await _auth.signInWithEmailAndPassword(
+                            email: emailAddress, password: password);
+                        if (newUser != null) {
+                          // print('Login Successful');
+                          await adminCheck();
+                          checkVerified();
+                        }
+                      } catch (e) {
+                        Fluttertoast.showToast(msg: e.toString(),);
+                        setState(() {
+                          ignore = false;
+                        });
                       }
-                    } catch (e) {
-                      Fluttertoast.showToast(msg: e.toString(),);
-                      setState(() {
-                        isLoading = false;
-                      });
-                    }
-                  },
+                    },
+                  ),
                 ),
               ),
             ),

@@ -23,6 +23,7 @@ void main() async {
   if(await Permission.camera.isGranted == true){
   runApp(
     MaterialApp(
+        debugShowCheckedModeBanner: false,
         builder: (context, widget) => ResponsiveWrapper.builder(
             ClampingScrollWrapper.builder(context, widget),
             maxWidth: 1280,

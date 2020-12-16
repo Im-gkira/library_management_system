@@ -29,7 +29,9 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
   // bookWidgetsList is emptied before every search.
   void bookSearch(String bookName) async {
     try {
-      bookWidgetList.clear();
+      setState(() {
+        bookWidgetList.clear();
+      });
       var bookData = await _firestore
           .collection('books')
           .where('Book Name', isEqualTo: bookName)
@@ -48,9 +50,11 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
         var bookContent = book.data();
         setState(() {
           bookWidgetList.add(AdminBookWidget(bookContent: bookContent));
-          ignore = false;
         });
       }
+      setState(() {
+        ignore = false;
+      });
     } catch (e) {
       setState(() {
         ignore = false;
@@ -86,7 +90,7 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                   color: Color(0Xaaffffff).withOpacity(0.2),
                   child: TextFormField(
                     controller: c,
-                    autofocus: true,
+                    //autofocus: true,
                     onChanged: (value) {
                       bookName = value;
                     },
@@ -114,8 +118,7 @@ class _AdminSearchScreenState extends State<AdminSearchScreen> {
                           ),
                           onPressed: () {
                             ignore = true;
-                            bookSearch(bookName.toLowerCase());
-                            bookWidgetList.clear();
+                            bookSearch(bookName == null ? '' : bookName);
                           },
                         ),
                       ),
