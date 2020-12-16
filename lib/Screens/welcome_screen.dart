@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:library_management_system/Screens/Gender.dart';
 import 'package:library_management_system/authorization/registration.dart';
 import 'package:library_management_system/authorization/login.dart';
 import 'package:drawing_animation/drawing_animation.dart';
@@ -113,7 +114,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           color: Colors.purple.shade800,)
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(context, Registration.id);
+                      Navigator.pushNamed(context, GenderScreen.id);
+                      // Navigator.pushNamed(context, Registration.id);
                     },
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:library_management_system/Screens/Gender.dart';
 import 'package:library_management_system/Screens/admin_search_screen.dart';
 import 'package:library_management_system/Screens/application_screen.dart';
 import 'package:library_management_system/authorization/registration.dart';
@@ -38,6 +39,7 @@ void main() async {
       initialRoute: WelcomeScreen.id,
       routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
+        GenderScreen.id: (context) => GenderScreen(),
         Login.id: (context) => Login(),
         Registration.id: (context) => Registration(),
         SearchScreen.id: (context) => SearchScreen(),

@@ -5,11 +5,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:library_management_system/Screens/Gender.dart';
 import 'package:library_management_system/authorization/login.dart';
 // The Registration Page creates a new account using the Firebase Authorization.
 
 class Registration extends StatefulWidget {
   static String id = 'registration';
+
+  Registration({this.gender});
+  String gender;
+
   @override
   _RegistrationState createState() => _RegistrationState();
 }
@@ -32,9 +37,8 @@ class _RegistrationState extends State<Registration> {
   String branch;
   Map issuedBooks= {};
   Map applied = {};
-  Color maleColour = Colors.blueAccent.withOpacity(0.5);
-  Color femaleColour = Colors.white10;
-  String gender = 'male';
+  // Color maleColour = Colors.blueAccent.withOpacity(0.5);
+  // Color femaleColour = Colors.white10;
   bool ignore = false;
   bool hidePass = true;
 
@@ -92,23 +96,6 @@ class _RegistrationState extends State<Registration> {
     }
   }
 
-  void setGender() {
-    if(gender == 'male'){
-      setState(() {
-        gender = 'female';
-        femaleColour = Colors.pinkAccent.withOpacity(0.5);
-        maleColour = Colors.white10;
-      });
-    }
-    else{
-      setState(() {
-        gender = 'male';
-        maleColour = Colors.blueAccent.withOpacity(0.5);
-        femaleColour = Colors.white10;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,7 +116,7 @@ class _RegistrationState extends State<Registration> {
             child: ListView(
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 60,right:60,top: 10),
+                  margin: EdgeInsets.only(left: 60,right:60,top:40),
                   child: TextFormField(
                     decoration: InputDecoration(
                       prefixIcon: Icon(FontAwesomeIcons.edit,size: 18.0,color: Color(0Xff6B63FF),),
@@ -284,7 +271,7 @@ class _RegistrationState extends State<Registration> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 60,right:60,top: 5),
+                  margin: EdgeInsets.only(left: 60,right:60,top: 5,bottom: 50),
                   child: TextFormField(
                     obscureText: hidePass,
                     decoration: InputDecoration(
@@ -328,54 +315,6 @@ class _RegistrationState extends State<Registration> {
                     },
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 10.0,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            child: GestureDetector(
-                              child: Container(
-                                height: 75,
-                                width: 75,
-                                decoration: BoxDecoration(
-                                  color: maleColour,
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                margin: EdgeInsets.all(10.0),
-                                padding: EdgeInsets.all(10.0),
-                                child: Image(image: AssetImage('images/man.png'),
-                                ),
-                              ),
-                              onTap: setGender,
-                            ),
-                          ),
-                          Container(
-                            child: GestureDetector(
-                              child: Container(
-                                height: 75,
-                                width: 75,
-                                decoration: BoxDecoration(
-                                  color: femaleColour,
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                margin: EdgeInsets.all(10.0),
-                                padding: EdgeInsets.all(10.0),
-                                child: Image(image: AssetImage('images/woman.png'),
-                                ),
-                              ),
-                              onTap: setGender,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
                 Container(
                   margin: EdgeInsets.only(
                       top: 5, left: 115, right: 115),
@@ -412,9 +351,9 @@ class _RegistrationState extends State<Registration> {
                         ),
                       ),
                       onPressed: (){
-                        // setState(() {
-                        //   ignore = true;
-                        // });
+                        setState(() {
+                          ignore = true;
+                        });
                         Future.delayed(Duration(milliseconds: 800),(){
                           setState(() {
                             ignore = false;
