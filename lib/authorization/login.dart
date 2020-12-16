@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:library_management_system/Screens/admin_screen.dart';
 import 'package:library_management_system/Screens/home_screen.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -37,6 +36,9 @@ class _LoginState extends State<Login> {
         });
       }
     }catch(e){
+      setState(() {
+        ignore = false;
+      });
       Fluttertoast.showToast(msg: e.toString(),);
     }
   }
@@ -170,65 +172,45 @@ class _LoginState extends State<Login> {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 100.0,vertical: 45.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.centerRight,
-                      end: Alignment.bottomLeft,
-                      colors: [
-                        Color(0Xff440047).withOpacity(0.7),
-                        Color(0Xff440047).withOpacity(0.8),
-                      ]),
-                  borderRadius: BorderRadius.circular(30.0),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black,
-                      blurRadius: 2.0,
-                      spreadRadius: 0.0,
-                      offset:
-                      Offset(2.0, 2.0), // shadow direction: bottom right
-                    )
-                  ],
-                ),
-                child: IgnorePointer(
-                  ignoring: ignore,
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 75.0),
+              decoration: BoxDecoration(
+                color: Colors.deepPurpleAccent.withOpacity(0.6),
+                borderRadius: BorderRadius.circular(25.0),
+                border: Border.all(color: Colors.deepPurple.shade800,width: 4.0),
+              ),
+              child: IgnorePointer(
+                ignoring: ignore,
+                child: FlatButton(
+                  child: Text('Login',
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontFamily: 'Cubano',
+                      color: Colors.deepPurple.shade800,
                     ),
-                    child: AutoSizeText('Login',
-                        maxLines: 1,
-                        style: GoogleFonts.montserrat(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 1.6,
-                          color: Colors.white,
-                        )),
-                    onPressed: () async {
-                      // The Function here logs users in with the help of Firebase Authorization.
-                      // )n the basis of isAdmin user is sent to the admin screen or the home screen using ternary statement.
-                      try {
-                        setState(() {
-                          ignore = true;
-                        });
-                        final newUser = await _auth.signInWithEmailAndPassword(
-                            email: emailAddress, password: password);
-                        if (newUser != null) {
-                          // print('Login Successful');
-                          await adminCheck();
-                          checkVerified();
-                        }
-                      } catch (e) {
-                        Fluttertoast.showToast(msg: e.toString(),);
-                        setState(() {
-                          ignore = false;
-                        });
-                      }
-                    },
                   ),
+                  onPressed: () async {
+                    // The Function here logs users in with the help of Firebase Authorization.
+                    // )n the basis of isAdmin user is sent to the admin screen or the home screen using ternary statement.
+                    try {
+                      setState(() {
+                        ignore = true;
+                      });
+                      final newUser = await _auth.signInWithEmailAndPassword(
+                          email: emailAddress, password: password);
+                      if (newUser != null) {
+                        // print('Login Successful');
+                        await adminCheck();
+                        checkVerified();
+                      }
+                    } catch (e) {
+                      Fluttertoast.showToast(msg: e.toString(),);
+                      setState(() {
+                        ignore = false;
+                      });
+                    }
+                  },
                 ),
               ),
             ),

@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:library_management_system/authorization/registration.dart';
 import 'package:library_management_system/authorization/login.dart';
 import 'package:drawing_animation/drawing_animation.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 // This Screen is the Welcome Screen That the User sees for the first time when the app starts.
 // The Static String is Used so that the routes are not named incorrectly as they are used in many places.
@@ -76,12 +75,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 50.0),
                   decoration: BoxDecoration(
-                    color: Colors.pinkAccent,
+                    color: Colors.pinkAccent.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10.0),
                     border: Border.all(color: Colors.pink.shade800,width: 4.0),
                   ),
                   child: FlatButton(
-                    child: AutoSizeText('Login',
+                    child: Text('Login',
                         maxLines: 1,
                         style: TextStyle(
                           fontSize: 18.0,
@@ -97,12 +96,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 50.0),
                   decoration: BoxDecoration(
-                    color: Colors.purpleAccent,
+                    color: Colors.purpleAccent.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10.0),
                     border: Border.all(color: Colors.purple.shade800,width: 4.0),
                   ),
                   child: FlatButton(
-                    child: AutoSizeText('Register',
+                    child: Text('Register',
                         maxLines: 1,
                         style: TextStyle(
                           fontFamily: 'Cubano',

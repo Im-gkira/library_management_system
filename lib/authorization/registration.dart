@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:library_management_system/authorization/login.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 // The Registration Page creates a new account using the Firebase Authorization.
 
 class Registration extends StatefulWidget {
@@ -33,13 +32,17 @@ class _RegistrationState extends State<Registration> {
   String branch;
   Map issuedBooks= {};
   Map applied = {};
-  Color maleColour = Colors.blue;
-  Color femaleColour = Colors.white;
+  Color maleColour = Colors.blueAccent.withOpacity(0.5);
+  Color femaleColour = Colors.white10;
   String gender = 'male';
+  bool ignore = false;
 
   void makeRecord() async {
     if(firstName == null || lastName == null || rollNumber == null || branch == null || emailAddress == null || password == null){
       Fluttertoast.showToast(msg: 'Field can\'t be empty');
+      setState(() {
+        ignore = false;
+      });
     }
     else{
       try{
@@ -59,6 +62,9 @@ class _RegistrationState extends State<Registration> {
         createAccount();
       }
       catch(e){
+        setState(() {
+          ignore = false;
+        });
         Fluttertoast.showToast(msg: e.toString(),);
       }
     }
@@ -78,6 +84,9 @@ class _RegistrationState extends State<Registration> {
       }
     }
     catch(e){
+      setState(() {
+        ignore = false;
+      });
       Fluttertoast.showToast(msg: e.toString(),);
     }
   }
@@ -86,16 +95,16 @@ class _RegistrationState extends State<Registration> {
     if(gender == 'male'){
       setState(() {
         gender = 'female';
-        femaleColour = Colors.pink;
-        maleColour = Colors.white;
+        femaleColour = Colors.pinkAccent.withOpacity(0.5);
+        maleColour = Colors.white10;
         print('$gender');
       });
     }
     else{
       setState(() {
         gender = 'male';
-        maleColour = Colors.blue;
-        femaleColour = Colors.white;
+        maleColour = Colors.blueAccent.withOpacity(0.5);
+        femaleColour = Colors.white10;
         print('$gender');
       });
     }
@@ -111,55 +120,15 @@ class _RegistrationState extends State<Registration> {
             // width: MediaQuery.of(context).size.width * 0.9,
             // height: MediaQuery.of(context).size.height * 0.95,
             decoration: BoxDecoration(
-              image: DecorationImage(image: AssetImage('images/SignIn.png'),fit: BoxFit.scaleDown,alignment: Alignment.lerp(Alignment.bottomCenter, Alignment.center, 0.1)),
+              image: DecorationImage(
+                image: AssetImage('images/SignIn.png'),
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.lerp(Alignment.center, Alignment.bottomCenter, 0.4),
+              ),
               color: Colors.white,
             ),
             child: ListView(
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Center(
-                      //   child: Text(
-                      //     'Select Gender',
-                      //     style: TextStyle(
-                      //         fontFamily: "Poppins",
-                      //         color: Colors.black,
-                      //         fontSize: 17.0
-                      //     ),
-                      //   ),
-                      // ),
-                      SizedBox(height: 10.0,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            child: GestureDetector(
-                              child: Container(
-                                margin: EdgeInsets.all(10.0),
-                                color: maleColour,
-                                child: Icon(LineAwesomeIcons.male,size: 60),
-                              ),
-                              onTap: setGender,
-                            ),
-                          ),
-                          Container(
-                            child: GestureDetector(
-                              child: Container(
-                                margin: EdgeInsets.all(10.0),
-                                color: femaleColour,
-                                child: Icon(LineAwesomeIcons.female,size: 60,),
-                              ),
-                              onTap: setGender,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
                 Container(
                   margin: EdgeInsets.only(left: 60,right:60,top: 10),
                   child: TextFormField(
@@ -187,7 +156,7 @@ class _RegistrationState extends State<Registration> {
                       fontSize: 16,
                     ),
                     onChanged: (value) {
-                      emailAddress = value == '' ? null : value;
+                      firstName = value == '' ? null : value;
                     },
                   ),
                 ),
@@ -218,7 +187,7 @@ class _RegistrationState extends State<Registration> {
                       fontSize: 16,
                     ),
                     onChanged: (value) {
-                      emailAddress = value == '' ? null : value;
+                      lastName = value == '' ? null : value;
                     },
                   ),
                 ),
@@ -249,7 +218,7 @@ class _RegistrationState extends State<Registration> {
                       fontSize: 16,
                     ),
                     onChanged: (value) {
-                      emailAddress = value == '' ? null : value;
+                      rollNumber = value == '' ? null : value;
                     },
                   ),
                 ),
@@ -280,7 +249,7 @@ class _RegistrationState extends State<Registration> {
                       fontSize: 16,
                     ),
                     onChanged: (value) {
-                      emailAddress = value == '' ? null : value;
+                      branch = value == '' ? null : value;
                     },
                   ),
                 ),
@@ -343,46 +312,82 @@ class _RegistrationState extends State<Registration> {
                       fontSize: 16,
                     ),
                     onChanged: (value) {
-                      emailAddress = value == '' ? null : value;
+                      password = value == '' ? null : value;
                     },
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 100.0,vertical: 45.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.centerRight,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            Color(0Xff440047).withOpacity(0.4),
-                            Color(0Xff440047).withOpacity(0.2),
-                          ]),
-                      borderRadius: BorderRadius.circular(30.0),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black,
-                          blurRadius: 2.0,
-                          spreadRadius: 0.0,
-                          offset:
-                          Offset(2.0, 2.0), // shadow direction: bottom right
-                        )
-                      ],
-                    ),
+                  padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 10.0,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            child: GestureDetector(
+                              child: Container(
+                                height: 75,
+                                width: 75,
+                                decoration: BoxDecoration(
+                                  color: maleColour,
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                margin: EdgeInsets.all(10.0),
+                                padding: EdgeInsets.all(10.0),
+                                child: Image(image: AssetImage('images/man.png'),
+                                ),
+                              ),
+                              onTap: setGender,
+                            ),
+                          ),
+                          Container(
+                            child: GestureDetector(
+                              child: Container(
+                                height: 75,
+                                width: 75,
+                                decoration: BoxDecoration(
+                                  color: femaleColour,
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                margin: EdgeInsets.all(10.0),
+                                padding: EdgeInsets.all(10.0),
+                                child: Image(image: AssetImage('images/woman.png'),
+                                ),
+                              ),
+                              onTap: setGender,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 75.0),
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurpleAccent.withOpacity(0.6),
+                    borderRadius: BorderRadius.circular(25.0),
+                    border: Border.all(color: Colors.deepPurple.shade800,width: 4.0),
+                  ),
+                  child: IgnorePointer(
+                    ignoring: ignore,
                     child: FlatButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
                       child: Text('Register',
-                          style: GoogleFonts.montserrat(
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontFamily: 'Cubano',
                             fontSize: 18.0,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 1.6,
-                            color: Colors.white,
-                          )
+                            color: Colors.deepPurple.shade800,
+                          ),
                       ),
-                      onPressed: makeRecord,
+                      onPressed: (){
+                        setState(() {
+                          ignore = true;
+                        });
+                        makeRecord();
+                      },
                     ),
                   ),
                 ),
