@@ -41,7 +41,7 @@ class _GenderScreenState extends State<GenderScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // color: Color(0XFF262729),
+      color: Color(0XFF262729),
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,8 +115,8 @@ class _GenderScreenState extends State<GenderScreen> {
                     begin: Alignment.centerRight,
                     end: Alignment.bottomLeft,
                     colors: [
-                      // Color(0Xaa6C63FF).withOpacity(0.9),
-                      // Color(0Xaa6C63FF).withOpacity(0.9),
+                      Color(0Xaa6C63FF).withOpacity(0.9),
+                      Color(0Xaa6C63FF).withOpacity(0.9),
                     ]),
                 borderRadius: BorderRadius.circular(20.0),
                 color: Colors.white,
