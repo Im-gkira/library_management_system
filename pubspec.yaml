@@ -44,6 +44,7 @@ flutter:
     - images/
     - images/logo copy 4.svg
     - images/demo.png
+    - images/welcome.jpg
 
   fonts:
     - family: Cubano

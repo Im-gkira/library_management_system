@@ -136,10 +136,22 @@ class _AdminScreenState extends State<AdminScreen> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Image(
-                                      image: AssetImage("images/sonepat.png"),
-                                      fit: BoxFit.fill,
-                                      alignment: Alignment.topLeft,
+                                    Row(
+                                      children: [
+                                        Image(
+                                          image: AssetImage("images/sonepat.png"),
+                                          fit: BoxFit.fill,
+                                          alignment: Alignment.topLeft,
+                                        ),
+                                        SizedBox(width: 10,),
+                                        Text('IIITS',
+                                          style: GoogleFonts.arvo(
+                                            fontSize: 32.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0Xcc33415c),
+                                            letterSpacing: 1.6,
+                                          ),),
+                                      ],
                                     ),
                                     Container(
                                       child: FlatButton(

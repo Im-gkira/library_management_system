@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_system/Screens/gender_screen.dart';
 import 'package:library_management_system/authorization/login.dart';
 import 'package:drawing_animation/drawing_animation.dart';
@@ -37,7 +38,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/welcome.png'),fit: BoxFit.cover,
+            image: AssetImage('images/welcome.jpg'),fit: BoxFit.cover,
           ),
         ),
         child: Center(
@@ -69,27 +70,43 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         this.run = false;
                       }),
                     ),
-                    secondChild: SvgPicture.asset('images/LMS logo.svg',width: 240,color: Colors.black),
+                    secondChild: SvgPicture.asset('images/LMS logo.svg',width: 240,color: Color(0Xcf3D3854)),
                     crossFadeState: _crossFadeState,
                   ),
                 ),
                 //
                 //   ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 70.0),
+                  padding: EdgeInsets.zero,
+                  margin: EdgeInsets.only(bottom: 5, left: 85, right: 85),
                   decoration: BoxDecoration(
-                    color: Colors.pinkAccent.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(color: Colors.pink.shade800,width: 4.0),
+                    gradient: LinearGradient(
+                        begin: Alignment.centerRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color(0Xaa6C63FF).withOpacity(0.9),
+                          Color(0Xaa6C63FF).withOpacity(0.9),
+                        ]),
+                    borderRadius: BorderRadius.circular(25.0),
+                    border: Border.all(color: Color(0XFF403D55), width: 4.0),
+                    boxShadow: [
+                      BoxShadow(
+                        // color: Colors.black,
+                        blurRadius: 2.0,
+                        spreadRadius: 0.0,
+                        offset:
+                        Offset(2.0, 2.0), // shadow direction: bottom right
+                      )
+                    ],
                   ),
                   child: FlatButton(
                     child: Text('Login',
                         maxLines: 1,
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontFamily: 'Cubano',
-                          color: Colors.pink.shade800,
-                        ),
+                        style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 18.0,
+                        color: Color(0XFF003d5b),
+                      ),
                     ),
                     onPressed: () {
                       Navigator.pushNamed(context, Login.id);
@@ -97,19 +114,37 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 70.0),
+                  padding: EdgeInsets.zero,
+                  margin: EdgeInsets.only(
+                      top: 20, bottom: 10, left: 85, right: 85),
                   decoration: BoxDecoration(
-                    color: Colors.purpleAccent.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(color: Colors.purple.shade800,width: 4.0),
+                    gradient: LinearGradient(
+                        begin: Alignment.centerRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color(0Xaa6C63FF).withOpacity(0.9),
+                          Color(0Xaa6C63FF).withOpacity(0.9),
+                        ]),
+                    borderRadius: BorderRadius.circular(25.0),
+                    border: Border.all(color: Color(0XFF403D55), width: 4.0),
+                    boxShadow: [
+                      BoxShadow(
+                        // color: Colors.black,
+                        blurRadius: 2.0,
+                        spreadRadius: 0.0,
+                        offset:
+                        Offset(2.0, 2.0), // shadow direction: bottom right
+                      )
+                    ],
                   ),
                   child: FlatButton(
                     child: Text('Register',
                         maxLines: 1,
-                        style: TextStyle(
-                          fontFamily: 'Cubano',
-                          fontSize: 18.0,
-                          color: Colors.purple.shade800,)
+                        style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 18.0,
+                        color: Color(0XFF003d5b),
+                      ),
                     ),
                     onPressed: () {
                       Navigator.pushNamed(context, GenderScreen.id);
