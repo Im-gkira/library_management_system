@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_system/authorization/registration.dart';
 
-String gender;
-
 class GenderScreen extends StatefulWidget {
   static String id = 'Gender_screen';
   @override
@@ -15,6 +13,7 @@ class _GenderScreenState extends State<GenderScreen> {
   Color femaleColour = Color(0XFF77d8d8);
   Color maleBorder = Color(0XFF0779e4);
   Color femaleBorder = Colors.white;
+  String gender;
 
   void setGender() {
     if (gender == 'male') {
@@ -41,13 +40,13 @@ class _GenderScreenState extends State<GenderScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0XFF262729),
+      color: Colors.deepPurpleAccent,
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.14,
+            height: MediaQuery.of(context).size.height * 0.1,
           ),
           Text(
             'Hey Buddy!',
@@ -71,8 +70,8 @@ class _GenderScreenState extends State<GenderScreen> {
           Container(
             child: GestureDetector(
               child: Container(
-                height: 150,
-                width: 150,
+                height: MediaQuery.of(context).size.height * 0.22,
+                width: MediaQuery.of(context).size.height * 0.22,
                 decoration: BoxDecoration(
                   color: maleColour,
                   shape: BoxShape.circle,
@@ -91,8 +90,8 @@ class _GenderScreenState extends State<GenderScreen> {
             margin: EdgeInsets.only(right: 20),
             child: GestureDetector(
               child: Container(
-                height: 150,
-                width: 150,
+                height: MediaQuery.of(context).size.height * 0.22,
+                width: MediaQuery.of(context).size.height * 0.22,
                 decoration: BoxDecoration(
                   color: femaleColour,
                     shape: BoxShape.circle,
@@ -115,8 +114,8 @@ class _GenderScreenState extends State<GenderScreen> {
                     begin: Alignment.centerRight,
                     end: Alignment.bottomLeft,
                     colors: [
-                      Color(0Xaa6C63FF).withOpacity(0.9),
-                      Color(0Xaa6C63FF).withOpacity(0.9),
+                      Colors.purple,
+                      Colors.purpleAccent,
                     ]),
                 borderRadius: BorderRadius.circular(20.0),
                 color: Colors.white,
@@ -132,8 +131,15 @@ class _GenderScreenState extends State<GenderScreen> {
                       )),
                 ),
                 onPressed: () {
-                  Registration(gender: gender);
-                  Navigator.pushNamed(context, Registration.id);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context){
+                          return Registration(gender: gender,
+                          );
+                        }
+                    ),
+                  );
                 },
               ),
             ),

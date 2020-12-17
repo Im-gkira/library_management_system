@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:library_management_system/Screens/Gender.dart';
+import 'package:library_management_system/Screens/gender_screen.dart';
 import 'package:library_management_system/Screens/admin_search_screen.dart';
 import 'package:library_management_system/Screens/application_screen.dart';
-import 'package:library_management_system/authorization/registration.dart';
 import 'package:library_management_system/authorization/login.dart';
 import 'package:library_management_system/Screens/welcome_screen.dart';
 import 'package:library_management_system/Screens/search_screen.dart';
@@ -41,7 +40,6 @@ void main() async {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         GenderScreen.id: (context) => GenderScreen(),
         Login.id: (context) => Login(),
-        Registration.id: (context) => Registration(),
         SearchScreen.id: (context) => SearchScreen(),
         HomeScreen.id: (context) => HomeScreen(),
         AdminScreen.id: (context) => AdminScreen(),

@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:library_management_system/Screens/Gender.dart';
-import 'package:library_management_system/authorization/registration.dart';
+import 'package:library_management_system/Screens/gender_screen.dart';
 import 'package:library_management_system/authorization/login.dart';
 import 'package:drawing_animation/drawing_animation.dart';
 

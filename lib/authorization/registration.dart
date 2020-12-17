@@ -5,15 +5,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:library_management_system/Screens/Gender.dart';
 import 'package:library_management_system/authorization/login.dart';
 // The Registration Page creates a new account using the Firebase Authorization.
 
 class Registration extends StatefulWidget {
-  static String id = 'registration';
-
   Registration({this.gender});
-  String gender;
+  final String gender;
 
   @override
   _RegistrationState createState() => _RegistrationState();
@@ -62,7 +59,7 @@ class _RegistrationState extends State<Registration> {
           'Email Id': emailAddress,
           'Issued Books': issuedBooks,
           'Applied': applied,
-          'Gender': gender,
+          'Gender': widget.gender,
         });
         createAccount();
       }
