@@ -37,18 +37,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/branches.jpg'),fit: BoxFit.cover,
+            image: AssetImage('images/welcome.png'),fit: BoxFit.cover,
           ),
         ),
         child: Center(
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white54,
-              border: Border.all(color: Colors.white,width: 5.0,),
+              //color: Colors.white54,
               borderRadius: BorderRadius.circular(20.0),
             ),
             height: MediaQuery.of(context).size.height * 0.8,
-            width: MediaQuery.of(context).size.width * 0.8,
+            margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.14),
             child: ListView(
               children: [
                 //SizedBox(height: MediaQuery.of(context).size.height * 0.2,),
@@ -70,14 +69,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         this.run = false;
                       }),
                     ),
-                    secondChild: SvgPicture.asset('images/LMS logo.svg',width: 240,color: Colors.deepPurpleAccent),
+                    secondChild: SvgPicture.asset('images/LMS logo.svg',width: 240,color: Colors.black),
                     crossFadeState: _crossFadeState,
                   ),
                 ),
                 //
                 //   ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 50.0),
+                  margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 70.0),
                   decoration: BoxDecoration(
                     color: Colors.pinkAccent.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10.0),
@@ -98,7 +97,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 50.0),
+                  margin: EdgeInsets.symmetric(vertical: 10.0,horizontal: 70.0),
                   decoration: BoxDecoration(
                     color: Colors.purpleAccent.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10.0),
