@@ -96,7 +96,6 @@ class _GenderScreenState extends State<GenderScreen> {
                 decoration: BoxDecoration(
                   color: femaleColour,
                     shape: BoxShape.circle,
-                    // color: femaleColour,
                     image: DecorationImage(
                         image: AssetImage('images/Girl.jpg'),
                         fit: BoxFit.fill),
@@ -133,7 +132,15 @@ class _GenderScreenState extends State<GenderScreen> {
                 ),
                 onPressed: () {
                   Registration(gender: gender);
-                  Navigator.pushNamed(context, Registration.id);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context){
+                          return Registration(gender: gender,
+                          );
+                        }
+                    ),
+                  );
                 },
               ),
             ),
