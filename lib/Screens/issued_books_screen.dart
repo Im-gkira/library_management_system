@@ -62,6 +62,9 @@ class _IssuedBooksState extends State<IssuedBooks> {
         Fluttertoast.showToast(
           msg: 'Book Not Found',
         );
+        setState(() {
+          enteredBookWidgetList = [];
+        });
         // print('Book Not Found');
       } else {
         setState(() {

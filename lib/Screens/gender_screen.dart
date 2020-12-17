@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:library_management_system/authorization/registration.dart';
 
-String gender;
-
 class GenderScreen extends StatefulWidget {
   static String id = 'Gender_screen';
   @override
@@ -11,6 +9,7 @@ class GenderScreen extends StatefulWidget {
 }
 
 class _GenderScreenState extends State<GenderScreen> {
+  String gender;
   Color maleColour = Colors.blue;
   Color femaleColour = Color(0XFF77d8d8);
   Color maleBorder = Color(0XFF0779e4);
@@ -47,7 +46,7 @@ class _GenderScreenState extends State<GenderScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.14,
+            height: MediaQuery.of(context).size.height * 0.1,
           ),
           Text(
             'Hey Buddy!',
@@ -71,8 +70,8 @@ class _GenderScreenState extends State<GenderScreen> {
           Container(
             child: GestureDetector(
               child: Container(
-                height: 150,
-                width: 150,
+                height: MediaQuery.of(context).size.height * 0.22,
+                width: MediaQuery.of(context).size.height * 0.22,
                 decoration: BoxDecoration(
                   color: maleColour,
                   shape: BoxShape.circle,
@@ -91,8 +90,8 @@ class _GenderScreenState extends State<GenderScreen> {
             margin: EdgeInsets.only(right: 20),
             child: GestureDetector(
               child: Container(
-                height: 150,
-                width: 150,
+                height: MediaQuery.of(context).size.height * 0.22,
+                width: MediaQuery.of(context).size.height * 0.22,
                 decoration: BoxDecoration(
                   color: femaleColour,
                     shape: BoxShape.circle,
@@ -131,7 +130,6 @@ class _GenderScreenState extends State<GenderScreen> {
                       )),
                 ),
                 onPressed: () {
-                  Registration(gender: gender);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
