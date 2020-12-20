@@ -9,7 +9,7 @@ class GenderScreen extends StatefulWidget {
 }
 
 class _GenderScreenState extends State<GenderScreen> {
-  String gender;
+  String gender = 'male';
   Color maleColour = Colors.blue;
   Color femaleColour = Color(0XFF77d8d8);
   Color maleBorder = Color(0XFF0779e4);

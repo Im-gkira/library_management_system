@@ -49,6 +49,7 @@ class SmallButton extends StatelessWidget {
       margin: EdgeInsets.only(right: 10.0,),
       padding: EdgeInsets.all(3.0),
       height: 40.0,
+      width: MediaQuery.of(context).size.width * 0.2,
       decoration: BoxDecoration(
         border: Border.all(
           color: colour,
@@ -177,14 +178,16 @@ class DivisionTitle extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-            height: 59.0,
+            height: 60.0,
             width: 5.0,
             margin: EdgeInsets.only(left: 20.0,top: 20.0,bottom: 20.0),
             color: colour
         ),
         Container(
+          height: 60.0,
+          width: MediaQuery.of(context).size.width * 0.65,
           margin: EdgeInsets.only(top: 20.0,bottom: 20.0),
-          padding: EdgeInsets.only(right: 20.0,left: 20.0,bottom: 20.0),
+          padding: EdgeInsets.only(left: 20.0,right: 5.0,top: 5.0),
           decoration: BoxDecoration(
             color: Colors.black54,
             borderRadius: BorderRadius.only(topRight: Radius.circular(5.0),bottomRight: Radius.circular(5.0)),
@@ -193,7 +196,7 @@ class DivisionTitle extends StatelessWidget {
             title,
             style: GoogleFonts.concertOne(
               textStyle: TextStyle(
-                  fontSize: 40.0,
+                  fontSize: 35.0,
                   color: colour
               ),
             ),
@@ -211,10 +214,9 @@ class ApplicationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80.0,
       width: MediaQuery.of(context).size.width,
-
       margin: EdgeInsets.symmetric(horizontal: 35.0,vertical: 10.0),
+      padding: EdgeInsets.all(20.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
         border: Border.all(width: 3.0,color: Colors.white),
@@ -304,6 +306,7 @@ class Quote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.only(bottom: 30.0,right: 20.0,left: 20.0),
       padding: EdgeInsets.all(15.0),
       decoration: BoxDecoration(

@@ -61,7 +61,7 @@ class _RegistrationState extends State<Registration> {
           'Applied': applied,
           'Gender': widget.gender,
         });
-        createAccount();
+        Navigator.pushNamed(context, Login.id);
       }
       catch(e){
         setState(() {
@@ -82,7 +82,7 @@ class _RegistrationState extends State<Registration> {
         final user = _auth.currentUser;
         await user.sendEmailVerification();
         Fluttertoast.showToast(msg: 'Verification email Send');
-        Navigator.pushNamed(context, Login.id);
+        makeRecord();
       }
     }
     catch(e){
@@ -356,8 +356,7 @@ class _RegistrationState extends State<Registration> {
                             ignore = false;
                           });
                         });
-
-                        makeRecord();
+                        createAccount();
                       },
                     ),
                   ),
