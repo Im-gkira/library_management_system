@@ -139,7 +139,7 @@ class _AddBooksState extends State<AddBooks> {
                         try{
                           setState(() async {
                             barcodeScanRes = await scanner.scan();
-                            c.text = barcodeScanRes.substring(1,6);
+                            c.text = barcodeScanRes.substring(7,12);
                             bookCode = c.text;
                           });}
                         catch(e){

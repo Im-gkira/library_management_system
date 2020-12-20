@@ -421,7 +421,7 @@ class _BottomSheetContentsState extends State<BottomSheetContents> {
                     }
                   },
                 ),
-                labelText: "Enter Book Code",
+                labelText: "Enter Unique Code",
                 labelStyle: GoogleFonts.montserrat(
                   textStyle: TextStyle(
                     fontWeight: FontWeight.w500,
