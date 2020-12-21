@@ -223,13 +223,11 @@ class ApplicationWidget extends StatelessWidget {
         border: Border.all(width: 3.0,color: Colors.white),
         color: Colors.black45,
       ),
-      child: Center(
-        child: Text('Book Name: ${appData.data()['Book Name']} \nBook Code: ${appData.data()['Book Code']}',
-          style: TextStyle(
-            color: Colors.indigoAccent,
-            fontSize: 18.0,
-            fontFamily: 'Cubano',
-          ),
+      child: Text('Book Name: ${appData.data()['Book Name']} \nBook Code: ${appData.data()['Book Code']}',
+        style: TextStyle(
+          color: Colors.indigoAccent,
+          fontSize: 18.0,
+          fontFamily: 'Cubano',
         ),
       ),
     );
