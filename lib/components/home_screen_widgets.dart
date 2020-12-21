@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class Carousel extends StatelessWidget {
   Carousel({this.bookNameList});
@@ -59,7 +60,7 @@ class SmallButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(18.0),
       ),
       child: RaisedButton(
-        child: Text(buttonString),
+        child: AutoSizeText(buttonString),
         color: colour,
         textColor: Colors.black,
         shape: RoundedRectangleBorder(
