@@ -60,7 +60,7 @@ class SmallButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(18.0),
       ),
       child: RaisedButton(
-        child: AutoSizeText(buttonString),
+        child: AutoSizeText(buttonString,maxLines: 1,),
         color: colour,
         textColor: Colors.black,
         shape: RoundedRectangleBorder(
