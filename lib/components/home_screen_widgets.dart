@@ -50,7 +50,7 @@ class SmallButton extends StatelessWidget {
       margin: EdgeInsets.only(right: 10.0,),
       padding: EdgeInsets.all(3.0),
       height: 40.0,
-      width: MediaQuery.of(context).size.width * 0.2,
+      width: MediaQuery.of(context).size.width * 0.25,
       decoration: BoxDecoration(
         border: Border.all(
           color: colour,
@@ -186,7 +186,7 @@ class DivisionTitle extends StatelessWidget {
         ),
         Container(
           height: 60.0,
-          width: MediaQuery.of(context).size.width * 0.65,
+          width: MediaQuery.of(context).size.width * 0.62,
           margin: EdgeInsets.only(top: 20.0,bottom: 20.0),
           padding: EdgeInsets.only(left: 20.0,right: 5.0,top: 5.0),
           decoration: BoxDecoration(
@@ -324,7 +324,7 @@ class Quote extends StatelessWidget {
                 style: GoogleFonts.oldenburg(
                   textStyle: TextStyle(
                     color: Colors.white,
-                    fontSize: 18.0,
+                    fontSize: 16.0,
                   ),
                 ),
               ),
@@ -336,7 +336,7 @@ class Quote extends StatelessWidget {
             style: GoogleFonts.oldenburg(
               textStyle: TextStyle(
                 color: Colors.white,
-                fontSize: 18.0,
+                fontSize: 16.0,
               ),
             ),
           ),

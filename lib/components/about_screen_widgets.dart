@@ -158,7 +158,7 @@ class MoreInfo extends StatelessWidget {
         showAboutDialog(
           applicationName: 'LMS',
           context: context,
-          applicationVersion: 'v1.0',
+          applicationVersion: 'v1.0.1',
           applicationIcon: Image(image: AssetImage('images/small_logo.png'),),
           applicationLegalese: 'Icon made by Darius Dan and Freepik from www.flaticon.com\nWallpapers made Available by\nunsplash.com\nundraw.io\nFiqih Anggun from artstation.com',
         );

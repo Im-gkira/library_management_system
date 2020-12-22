@@ -47,7 +47,7 @@ class Details extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.symmetric(vertical: 20.0,horizontal: 40.0),
+      margin: EdgeInsets.symmetric(vertical: 20.0,horizontal: 20.0),
       padding: EdgeInsets.symmetric(vertical: 10.0,horizontal: 30.0),
       decoration: BoxDecoration(
         color: Colors.white60,
@@ -76,16 +76,16 @@ class Details extends StatelessWidget {
                   image: AssetImage('images/$imageName'),
                 ),
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.3,
+              Container(
+                width: MediaQuery.of(context).size.width * 0.4,
+                child: Align(
+                  alignment: Alignment.center,
                   child: Text(
                     value,
                     style: GoogleFonts.concertOne(
                       textStyle: TextStyle(
                         color: Colors.black,
-                        fontSize: 30.0,
+                        fontSize: 25.0,
                       ),
                     ),
                   ),
